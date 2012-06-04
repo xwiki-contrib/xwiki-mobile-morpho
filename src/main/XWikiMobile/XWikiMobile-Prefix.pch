@@ -1,0 +1,7 @@
+//
+// Prefix header for all source files of the 'XWikiMobile' target in the 'XWikiMobile' project
+//
+
+#ifdef __OBJC__
+    #import <UIKit/UIKit.h>
+#endif

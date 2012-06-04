@@ -1,0 +1,76 @@
+
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+
+<html>
+    
+    <head>
+        
+        <meta name="viewport" content="width=device-width; height=device-height; user-scalable=no" />
+        
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+            
+            <title>Beer Me</title>
+            
+            <link rel="stylesheet" href="/master.css" type="text/css" media="screen" />
+            
+            <script type="text/javascript" src="cordova-1.7.0.js"></script>
+            <script type="text/javascript" src="scripts/phonegap.js"></script>
+            
+            <script type="text/javascript">
+                
+                function loader() {
+                    
+                    var state = document.readyState;
+                    
+                    if (state == 'loaded' || state == 'complete') {
+                        
+                        // run();
+                        
+                    } else {
+                        
+                        if (navigator.userAgent.indexOf('Browzr') > -1) {
+                            
+                            setTimeout(run, 250);
+                            
+                        } else {
+                            
+                            document.addEventListener('deviceready',run,false);
+                            
+                        }
+                        
+                    }
+                    
+                }
+               /* 
+                function run() {
+                    var win = function(position) {                          // Grab coordinates object from the Position object passed into success callback.
+                        var coords = position.coords;
+                        // Call for static google maps data - make sure you use your own Google Maps API key!
+                        var url = "http://maps.google.com/maps/api/staticmap?center=" + coords.latitude + "," + coords.longitude + "&zoom=13&size=320x480&maptype=roadmap&key=MyGoogleMapsAPIKey&sensor=true";
+                        document.getElementById('map').setAttribute('src',url);
+                        alert(url);
+                    };
+                    var fail = function(e) {
+                        alert('Can\'t retrieve position.\nError: ' + e);
+                    };
+                    navigator.geolocation.getCurrentPosition(win, fail);
+                } 
+                */
+                </script>
+            
+            </head>
+    
+    <body onload="loader();">
+        <!-- <a href="xwiki/index.html">XWiki</a>
+        <br />
+        <a href="demos/index.html">JQuery demos</a>        
+        <br />
+        <a href="http://ludovic.cloud.xwiki.com">XWiki Cloud</a>
+         -->
+        <script type="text/javascript">
+            location = "xwiki/index.html";
+        </script>
+    </body>
+    
+</html>

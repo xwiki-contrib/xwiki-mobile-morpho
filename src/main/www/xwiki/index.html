@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>XWiki Mobile Application</title>
+	<link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/jquery.mobile-1.1.0.css" />
+    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-theme.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-widget.css"/>
+    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/xwiki.css" />
+    <script src="js/cordova-1.7.0.js"></script>
+    <script src="scripts/phonegap.js"></script>
+ 	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.1.0.js"></script>	
+    <script src="js/web-ui-fw-libs.js"></script>
+    <script src="js/web-ui-fw.js"></script>
+    <script src="js/xwiki.js"></script>
+</head>
+<body>
+<div data-role="page" class="type-home" id="home">
+	<div data-role="content">
+		<div class="content-primary">
+			<div id="xw-homeheader">
+				<h1 id="xw-logo"><img src="css/themes/default/images/xwiki.png" alt="XWiki" /></h1>
+				<p>A mobile interface to access XWiki Cloud instances.</p>
+			</div>
+			<p class="intro"><strong>Welcome.</strong> using this application you will be able to easily access your XWiki Cloud instances.</p>
+
+            <div id="home-content">
+            </div>
+
+            <ul data-role="listview" data-inset="true" data-dividertheme="f">
+				<li data-role="list-divider">More</li>
+   			    <li><a href="offlineall.html">Offline</a></li>
+   			    <li><a href="config.html">Configuration</a></li>
+			</ul>
+        </div><!--/content-primary-->
+	</div>
+    <div data-role="footer" class="footer-docs" data-position="fixed">
+        <a href="index.html" data-icon="home" data-iconpos="notext" class="ui-btn-left">&nbsp;</a>
+        <a href="config.html" data-icon="gear" class="ui-btn-right">Options</a>
+        <span class="ui-title">&copy; 2012 XWiki SAS</span>
+    </div>
+</div>
+</body>
+</html>
