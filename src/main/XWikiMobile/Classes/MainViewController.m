@@ -104,6 +104,12 @@
 
 - (void) webViewDidFinishLoad:(UIWebView*) theWebView 
 {
+    //turn multi touch on for theWebView!!!
+    theWebView.multipleTouchEnabled   = YES;
+    //control bounces and bounesZoom for the boundary
+    [[theWebView.subviews objectAtIndex:0] setBounces:YES];
+    [[theWebView.subviews objectAtIndex:0] setBouncesZoom:NO];
+
     // only valid if ___PROJECTNAME__-Info.plist specifies a protocol to handle
     if (self.invokeString)
     {

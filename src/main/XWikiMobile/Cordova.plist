@@ -9,7 +9,7 @@
 	<key>EnableLocation</key>
 	<false/>
 	<key>EnableViewportScale</key>
-	<false/>
+	<true/>
 	<key>AutoHideSplashScreen</key>
 	<true/>
 	<key>ShowSplashScreenSpinner</key>
@@ -22,6 +22,8 @@
 	<true/>
 	<key>ExternalHosts</key>
 	<array>
+		<string>*.sankore.org</string>
+		<string>*.devxwiki.com</string>
 		<string>localhost</string>
 		<string>*.xwikisas.com</string>
 		<string>*.cloud.xwiki.com</string>

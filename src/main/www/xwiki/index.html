@@ -2,8 +2,9 @@
 <html>
 <head>
 	<meta charset="utf-8" />
-	<meta name="viewport" content="width=device-width, initial-scale=1" />
-	<title>XWiki Mobile Application</title>
+    <meta name="viewport" content="width=device-width user-scalable=yes maximum-scale=5" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+  	<title>XWiki Mobile Application</title>
 	<link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/jquery.mobile-1.1.0.css" />
     <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-theme.css"/>
     <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-widget.css"/>
@@ -14,7 +15,19 @@
 	<script src="js/jquery.mobile-1.1.0.js"></script>	
     <script src="js/web-ui-fw-libs.js"></script>
     <script src="js/web-ui-fw.js"></script>
+    <script src="js/xwiki-config.js"></script>
     <script src="js/xwiki.js"></script>
+    <script src="js/xwiki-offline.js"></script>
+    <script type="text/javascript" src="js/xwe/xwe.nocache.js"></script>
+    <script type="text/javascript" src="js/smartclient/initsc.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_Core.js"></script>
+    <script type="text/javascript" src="js/smartclient/overwritesc.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_Foundation.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_Containers.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_Grids.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_Forms.js"></script>
+    <script type="text/javascript" src="js/smartclient/modules/ISC_DataBinding.js"></script>
+    <script type="text/javascript" src="js/smartclient/skins/Enterprise/load_skin.js"></script>
 </head>
 <body>
 <div data-role="page" class="type-home" id="home">
@@ -31,7 +44,7 @@
 
             <ul data-role="listview" data-inset="true" data-dividertheme="f">
 				<li data-role="list-divider">More</li>
-   			    <li><a href="offlineall.html">Offline</a></li>
+   			    <li><a href="offlinelist.html">Offline Bookmarks</a></li>
    			    <li><a href="config.html">Configuration</a></li>
 			</ul>
         </div><!--/content-primary-->

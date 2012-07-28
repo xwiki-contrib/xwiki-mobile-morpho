@@ -1,8 +1,10 @@
 
-.page-content {
-    
+.page-content {    
 }
 
 .xwiki-iframe {
     padding: 0px;
+    height: auto;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
 }

@@ -69,6 +69,10 @@
 		NSLog(@"XWikiMobile launchOptions = %@", url);
     }    
     
+    // Special debugging
+    // Remove me after debugging
+    [NSClassFromString(@"WebView") _enableRemoteInspector];
+    
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
     self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
     self.window.autoresizesSubviews = YES;

@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		430AC7A915C31F3100AF55A6 /* xwiki-offline.js in Sources */ = {isa = PBXBuildFile; fileRef = 430AC7A815C31F3100AF55A6 /* xwiki-offline.js */; };
 		43484F53157910E300B5D3D9 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43484F52157910E300B5D3D9 /* Foundation.framework */; };
 		43484F55157910E300B5D3D9 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43484F54157910E300B5D3D9 /* UIKit.framework */; };
 		43484F57157910E300B5D3D9 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43484F56157910E300B5D3D9 /* CoreGraphics.framework */; };
@@ -43,6 +44,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		430AC7A815C31F3100AF55A6 /* xwiki-offline.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; name = "xwiki-offline.js"; path = "www/xwiki/js/xwiki-offline.js"; sourceTree = "<group>"; };
 		43484F4E157910E300B5D3D9 /* XWikiMobile.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = XWikiMobile.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		43484F52157910E300B5D3D9 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		43484F54157910E300B5D3D9 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -120,6 +122,7 @@
 		43484F40157910E200B5D3D9 = {
 			isa = PBXGroup;
 			children = (
+				430AC7A815C31F3100AF55A6 /* xwiki-offline.js */,
 				434850571579112E00B5D3D9 /* www */,
 				43484F6C157910E300B5D3D9 /* XWikiMobile */,
 				43484F51157910E300B5D3D9 /* Frameworks */,
@@ -369,6 +372,7 @@
 				43484F9B157910E300B5D3D9 /* AppDelegate.m in Sources */,
 				43484F9E157910E300B5D3D9 /* MainViewController.m in Sources */,
 				4348505F1579181300B5D3D9 /* FileDownload.m in Sources */,
+				430AC7A915C31F3100AF55A6 /* xwiki-offline.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,6 +557,7 @@
 				43484FA9157910E300B5D3D9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
