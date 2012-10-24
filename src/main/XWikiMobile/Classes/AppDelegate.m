@@ -27,14 +27,9 @@
 
 #import "AppDelegate.h"
 #import "MainViewController.h"
+#import "PushNotification.h"
 
-#ifdef CORDOVA_FRAMEWORK
-    #import <Cordova/CDVPlugin.h>
-    #import <Cordova/CDVURLProtocol.h>
-#else
-    #import "CDVPlugin.h"
-    #import "CDVURLProtocol.h"
-#endif
+#import <Cordova/CDVPlugin.h>
 
 
 @implementation AppDelegate
@@ -49,9 +44,8 @@
     NSHTTPCookieStorage *cookieStorage = [NSHTTPCookieStorage sharedHTTPCookieStorage]; 
     [cookieStorage setCookieAcceptPolicy:NSHTTPCookieAcceptPolicyAlways];
         
-    [CDVURLProtocol registerURLProtocol];
-    
-    return [super init];
+    self = [super init];
+    return self;
 }
 
 #pragma UIApplicationDelegate implementation
@@ -69,22 +63,23 @@
 		NSLog(@"XWikiMobile launchOptions = %@", url);
     }    
     
+    /* CHANGES: Adding debugging */
     // Special debugging
     // Remove me after debugging
     [NSClassFromString(@"WebView") _enableRemoteInspector];
+    /* CHANGES: Adding debugging */
     
     CGRect screenBounds = [[UIScreen mainScreen] bounds];
-    self.window = [[[UIWindow alloc] initWithFrame:screenBounds] autorelease];
+    self.window = [[UIWindow alloc] initWithFrame:screenBounds];
     self.window.autoresizesSubviews = YES;
     
-    CGRect viewBounds = [[UIScreen mainScreen] applicationFrame];
-    
-    self.viewController = [[[MainViewController alloc] init] autorelease];
+    self.viewController = [[MainViewController alloc] init];
     self.viewController.useSplashScreen = YES;
     self.viewController.wwwFolderName = @"www";
     self.viewController.startPage = @"index.html";
     self.viewController.invokeString = invokeString;
-    self.viewController.view.frame = viewBounds;
+    
+    // NOTE: To control the view's frame size, override [self.viewController viewWillAppear:] in your view controller.
     
     // check whether the current orientation is supported: if it is, keep it, rather than forcing a rotation
     BOOL forceStartupRotation = YES;
@@ -96,24 +91,42 @@
     }
     
     if (UIDeviceOrientationIsValidInterfaceOrientation(curDevOrientation)) {
-        for (NSNumber *orient in self.viewController.supportedOrientations) {
-            if ([orient intValue] == curDevOrientation) {
-                forceStartupRotation = NO;
-                break;
-            }
+        if ([self.viewController supportsOrientation:curDevOrientation]) {
+            forceStartupRotation = NO;
         }
-    } 
+    }
     
     if (forceStartupRotation) {
-        NSLog(@"supportedOrientations: %@", self.viewController.supportedOrientations);
-        // The first item in the supportedOrientations array is the start orientation (guaranteed to be at least Portrait)
-        UIInterfaceOrientation newOrient = [[self.viewController.supportedOrientations objectAtIndex:0] intValue];
+        UIInterfaceOrientation newOrient;
+        if ([self.viewController supportsOrientation:UIInterfaceOrientationPortrait])
+            newOrient = UIInterfaceOrientationPortrait;
+        else if ([self.viewController supportsOrientation:UIInterfaceOrientationLandscapeLeft])
+            newOrient = UIInterfaceOrientationLandscapeLeft;
+        else if ([self.viewController supportsOrientation:UIInterfaceOrientationLandscapeRight])
+            newOrient = UIInterfaceOrientationLandscapeRight;
+        else
+            newOrient = UIInterfaceOrientationPortraitUpsideDown;
+        
         NSLog(@"AppDelegate forcing status bar to: %d from: %d", newOrient, curDevOrientation);
         [[UIApplication sharedApplication] setStatusBarOrientation:newOrient];
     }
     
-    [self.window addSubview:self.viewController.view];
+    self.window.rootViewController = self.viewController;
     [self.window makeKeyAndVisible];
+    
+    /* CHANGES: START BLOCK PUSHNOTIFICATION */
+    
+    // PushNotification - Handle launch from a push notification
+    NSDictionary* userInfo = [launchOptions objectForKey:UIApplicationLaunchOptionsRemoteNotificationKey];
+    if(userInfo) {
+        PushNotification *pushHandler = [self.viewController getCommandInstance:@"PushNotification"];
+        NSMutableDictionary* mutableUserInfo = [userInfo mutableCopy];
+        [mutableUserInfo setValue:@"1" forKey:@"applicationLaunchNotification"];
+        [mutableUserInfo setValue:@"0" forKey:@"applicationStateActive"];
+        [pushHandler.pendingNotifications addObject:mutableUserInfo];
+    }
+    
+    /* CHANGES: STOP BLOCK PUSHNOTIFICATION */
     
     return YES;
 }
@@ -141,4 +154,43 @@
 	[super dealloc];
 }
 
+/* CHANGES: START BLOCK PUSHNOTIFICATION*/
+
+#pragma PushNotification delegation
+
+- (void)application:(UIApplication*)app didRegisterForRemoteNotificationsWithDeviceToken:(NSData*)deviceToken
+{
+    PushNotification* pushHandler = [self.viewController getCommandInstance:@"PushNotification"];
+    [pushHandler didRegisterForRemoteNotificationsWithDeviceToken:deviceToken];
+}
+
+- (void)application:(UIApplication*)app didFailToRegisterForRemoteNotificationsWithError:(NSError*)error
+{
+    PushNotification* pushHandler = [self.viewController getCommandInstance:@"PushNotification"];
+    [pushHandler didFailToRegisterForRemoteNotificationsWithError:error];
+}
+
+- (void)application:(UIApplication*)application didReceiveRemoteNotification:(NSDictionary*)userInfo
+{
+    PushNotification* pushHandler = [self.viewController getCommandInstance:@"PushNotification"];
+    NSMutableDictionary* mutableUserInfo = [userInfo mutableCopy];
+    
+    // Get application state for iOS4.x+ devices, otherwise assume active
+    UIApplicationState appState = UIApplicationStateActive;
+    if ([application respondsToSelector:@selector(applicationState)]) {
+        appState = application.applicationState;
+    }
+    
+    [mutableUserInfo setValue:@"0" forKey:@"applicationLaunchNotification"];
+    if (appState == UIApplicationStateActive) {
+        [mutableUserInfo setValue:@"1" forKey:@"applicationStateActive"];
+        [pushHandler didReceiveRemoteNotification:mutableUserInfo];
+    } else {
+        [mutableUserInfo setValue:@"0" forKey:@"applicationStateActive"];
+        [mutableUserInfo setValue:[NSNumber numberWithDouble: [[NSDate date] timeIntervalSince1970]] forKey:@"timestamp"];
+        [pushHandler.pendingNotifications addObject:mutableUserInfo];
+    }
+}
+
+/* CHANGES: STOP BLOCK PUSHNOTIFICATION */
 @end

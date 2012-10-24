@@ -21,8 +21,8 @@
 //  MainViewController.h
 //  XWikiMobile
 //
-//  Created by Ludovic Dubost on 01/06/12.
-//  Copyright XWiki 2012. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
 #import "MainViewController.h"
@@ -47,6 +47,15 @@
 }
 
 #pragma mark - View lifecycle
+
+- (void)viewWillAppear:(BOOL)animated
+{
+    // Set the main view to utilize the entire application frame space of the device.
+    // Change this to suit your view's UI footprint needs in your application.
+    self.view.frame = [[UIScreen mainScreen] applicationFrame];
+    
+    [super viewWillAppear:animated];
+}
 
 - (void) viewDidLoad
 {
@@ -104,23 +113,27 @@
 
 - (void) webViewDidFinishLoad:(UIWebView*) theWebView 
 {
+    /* 
+    // not sure this is needed
     //turn multi touch on for theWebView!!!
     theWebView.multipleTouchEnabled   = YES;
     //control bounces and bounesZoom for the boundary
     [[theWebView.subviews objectAtIndex:0] setBounces:YES];
     [[theWebView.subviews objectAtIndex:0] setBouncesZoom:NO];
-
-    // only valid if ___PROJECTNAME__-Info.plist specifies a protocol to handle
-    if (self.invokeString)
-    {
+    */
+    
+     // only valid if ___PROJECTNAME__-Info.plist specifies a protocol to handle
+     if (self.invokeString)
+     {
         // this is passed before the deviceready event is fired, so you can access it in js when you receive deviceready
+		NSLog(@"DEPRECATED: window.invokeString - use the window.handleOpenURL(url) function instead, which is always called when the app is launched through a custom scheme url.");
         NSString* jsString = [NSString stringWithFormat:@"var invokeString = \"%@\";", self.invokeString];
         [theWebView stringByEvaluatingJavaScriptFromString:jsString];
-    }
-    
-    // Black base color for background matches the native apps
-    theWebView.backgroundColor = [UIColor blackColor];
-    
+     }
+     
+     // Black base color for background matches the native apps
+     theWebView.backgroundColor = [UIColor blackColor];
+
 	return [super webViewDidFinishLoad:theWebView];
 }
 
@@ -138,16 +151,19 @@
 }
 */
 
+/* CHANGES: Changing handling of external URLs */
 - (BOOL) webView:(UIWebView*)theWebView shouldStartLoadWithRequest:(NSURLRequest*)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSURL *url = [request URL];
-    if (([self.whitelist URLIsAllowed:url] != YES)  && ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"])) {
-        [[UIApplication sharedApplication] openURL:url];
-        return NO;
-    }
-    else {
-        return [ super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType ];
-    }
+        NSURL *url = [request URL];
+        if (([self.whitelist URLIsAllowed:url] != YES)  && ([[url scheme] isEqualToString:@"http"] || [[url scheme] isEqualToString:@"https"])) {
+            [[UIApplication sharedApplication] openURL:url];
+            return NO;
+        }
+        else {
+            return [ super webView:theWebView shouldStartLoadWithRequest:request navigationType:navigationType ];
+        }
 }
+/* CHANGES: Changing handling of external URLs */
+
 
 @end

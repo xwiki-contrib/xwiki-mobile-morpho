@@ -21,18 +21,13 @@
 //  AppDelegate.h
 //  XWikiMobile
 //
-//  Created by Ludovic Dubost on 01/06/12.
-//  Copyright XWiki 2012. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
-#ifdef CORDOVA_FRAMEWORK
-    #import <Cordova/CDVViewController.h>
-#else
-    #import "CDVViewController.h"
-#endif
-
+#import <Cordova/CDVViewController.h>
 
 @interface AppDelegate : NSObject < UIApplicationDelegate > {
 
@@ -43,8 +38,8 @@
 // a simple tutorial can be found here : 
 // http://iphonedevelopertips.com/cocoa/launching-your-own-application-via-a-custom-url-scheme.html
 
-@property (nonatomic, retain) IBOutlet UIWindow* window;
-@property (nonatomic, retain) IBOutlet CDVViewController* viewController;
+@property (nonatomic, strong) IBOutlet UIWindow* window;
+@property (nonatomic, strong) IBOutlet CDVViewController* viewController;
 
 @end
 

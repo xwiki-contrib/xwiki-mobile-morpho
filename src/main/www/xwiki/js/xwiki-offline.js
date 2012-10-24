@@ -1,6 +1,6 @@
 
 offlinecontent = {};
-defaultsyncspaces = "space:Sandbox:0:xwiki:Sandbox";
+defaultsyncspaces = "space:Sandbox:0::Sandbox,space:Procedures:4:projects:Procedures";
 
 syncinprogress = false;
 syncstopping = false;
@@ -22,7 +22,7 @@ function getOfflinePageList() {
   var list = JSON.parse(window.localStorage.getItem("offlinepagelist"));
     if (list==null || list.length==0) {
         list = [];
-        list.push("3::Sandbox.TestMerge");
+        list.push("0::Sandbox.TestMerge");
         window.localStorage.setItem("offlinepagelist", JSON.stringify(list));
     }
     return list;
@@ -398,12 +398,12 @@ function updateOfflinePageEdit(key, wysiwyg) {
         if (offlinepage.status=="modified") {
             if (wysiwyg==true&&offlinepage.editmode=="wiki") {
                 alert("This page has already been edited in wiki mode and cannot be edited in wysiwyg mode until it is synced to the server.");
-                location = "offlinepageedit.html";
+                $.mobile.changePage("offlinepageedit.html");
                 return;
             }
             if (wysiwyg==false&&offlinepage.editmode=="wysiwyg") {
                 alert("This page has already been edited in wysiwyg mode and cannot be edited in wiki mode until it is synced to the server.");
-                location = "offlinepageeditwysiwyg.html";
+                $.mobile.changePage("offlinepageeditwysiwyg.html");
                 return;
             }            
         }
@@ -422,6 +422,8 @@ function updateOfflinePageEdit(key, wysiwyg) {
         $('#offlinepagemenu-remoteversion').html("Version: " + offlinepage.version);
         if (wysiwyg)
             editmode = "wysiwyg";
+        else 
+            editmode = "wiki";
         offlinepageCheck = true;
         offlinepageCheckNewVersion();
     }
@@ -455,7 +457,6 @@ function offlinepageSync(mode, fromview) {
         if (!confirm('Local version will be overidden')) 
             return;
     }
-    
     var key = getUrlVars(sessionStorage.offlinepage).page;
     var offlinepage = JSON.parse(window.localStorage.getItem("page-" + key));
     var newwikicontent;
@@ -466,7 +467,7 @@ function offlinepageSync(mode, fromview) {
             newwikicontent = offlinepage.wikicontent;
             currenteditmode = "wiki";
         } else {
-            newwikicontent = content;
+            newwikicontent = offlinepage.content;
             currenteditmode = "wysiwyg";
         }
     } else {
@@ -489,6 +490,7 @@ function offlinepageSync(mode, fromview) {
         mergeurl = mergeurl + "&mode=update";
     else 
         mergeurl = mergeurl + "&mode=merge";
+    alert(mergeurl);
     $.ajax({
            url: mergeurl,
            dataType: 'json',
@@ -525,11 +527,11 @@ function offlinepageSync(mode, fromview) {
                       // merge successful
                       alert("Merge has been successfull");
                       if (fromview)
-                       location = "offlinepage.html";
+                       $.mobile.changePage("offlinepage.html");
                       else if (editmode=="wiki")
-                      location = "offlinepageedit.html";
+                       $.mobile.changePage("offlinepageedit.html");
                       else
-                      location = "offlinepageeditwysiwyg.html";
+                       $.mobile.changePage("offlinepageeditwysiwyg.html");
                       
                       if (offlinepageCheck==false) {
                       offlinepageCheck = true;

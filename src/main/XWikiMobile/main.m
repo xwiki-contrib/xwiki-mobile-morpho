@@ -20,16 +20,16 @@
 //  main.m
 //  XWikiMobile
 //
-//  Created by Ludovic Dubost on 01/06/12.
-//  Copyright XWiki 2012. All rights reserved.
+//  Created by ___FULLUSERNAME___ on ___DATE___.
+//  Copyright ___ORGANIZATIONNAME___ ___YEAR___. All rights reserved.
 //
 
 #import <UIKit/UIKit.h>
 
 int main(int argc, char *argv[]) {
     
-    NSAutoreleasePool * pool = [[NSAutoreleasePool alloc] init];
-    int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
-    [pool release];
-    return retVal;
+    @autoreleasepool {
+	int retVal = UIApplicationMain(argc, argv, nil, @"AppDelegate");
+	return retVal;
+    }
 }

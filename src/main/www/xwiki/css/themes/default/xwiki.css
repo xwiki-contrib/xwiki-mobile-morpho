@@ -4,7 +4,16 @@
 
 .xwiki-iframe {
     padding: 0px;
-    height: auto;
+    height: 100%;
+    width: 100%;
     overflow: scroll;
     -webkit-overflow-scrolling: touch;
+}
+
+.pageitem-name {
+    font-size: 70%;
+}
+
+.pageitem-modified {
+    font-size: 70%;
 }
