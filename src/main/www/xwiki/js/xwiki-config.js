@@ -9,9 +9,9 @@ xwikiconfig = [
                name: "Local Account",
                xem : false,
                wikis : [""],
-               baseurl : "http://localhost:9080/xwiki",
-               resturl : "http://localhost:9080/xwiki/rest/wikis/xwiki/",
-               viewurl : "http://localhost:9080/xwiki/bin/view/",
+               baseurl : "http://localhost:3080/xwiki",
+               resturl : "http://localhost:3080/xwiki/rest/wikis/xwiki/",
+               viewurl : "http://localhost:3080/xwiki/bin/view/",
                apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },                            
                username : "Admin",
                password : "admin"

@@ -537,6 +537,7 @@ function updatePage(config, wiki, pagename) {
 }
 
 
+
 function getUrlVars(page) {
     var vars = [], hash;
     var href = (page==null) ? window.location.href : page;
@@ -548,6 +549,14 @@ function getUrlVars(page) {
         vars[hash[0]] = decodeURIComponent(hash[1]);
     }
     return vars;
+}
+
+
+function showStatusMessage(msg) {
+    if (msg=="")
+        $('.ui-title').html("&copy; 2012 XWiki SAS");
+    else
+        $('.ui-title').html("&copy; 2012 XWiki SAS: " + msg);
 }
 
 function isLevel1() {
@@ -580,6 +589,7 @@ function xwikigetplainurl(config, wiki, page) {
      template = xwikiconfig[config].template;
     return xwikiconfig[config].viewurl.replace(/__wiki__/g, wiki) + page.replace(".", "/") + "?xpage=" + template;
 }
+                                                            
 
 function xwikigetdownloadurl2(config, wiki, page, filename) {
     return xwikiconfig[config].downloadurl.replace(/__wiki__/g, wiki) + page.replace(".", "/") + "/" + filename;
@@ -588,24 +598,37 @@ function xwikigetdownloadurl2(config, wiki, page, filename) {
 function xwikionload(wiki, cb) {
     xwikilogin(xwikiconfig[sessionStorage.xwikiconfig], xwikiconfig[sessionStorage.xwikiconfig].baseurl.replace(/__wiki__/g, wiki), xwikiconfig[sessionStorage.xwikiconfig].username, xwikiconfig[sessionStorage.xwikiconfig].password,cb);
 }
-
+  
+                                                                   
+                                                                   
+                                                                   
 /*
  Perform XWiki login
  */
 function xwikilogin(xwikiconfig, xbaseurl, username, password, cb) {
+    showStatusMessage("connecting...");
     var url = xbaseurl + "/bin/loginsubmit/XWiki/XWikiLogin";
     xwikiconfig.level = 1;
     $.ajax({
            url: url,
            type: "POST",
            data: { j_username : username, j_password: password, j_rememberme : "true" }
-           }).complete(function ( data ) {
+           }).complete(function (jqXHR, textStatus) {
+                       
+                       if (jqXHR.status==200)
+                          showStatusMessage("success.");
+                       else
+                          showStatusMessage("connection failure (code " + jqXHR.status + ").");
+                       
                        // if this URL is not found then we have rest level 1, other wise reset level 2 (additional query URLs are available).
                        var queryUrl = xwikigetresturl(sessionStorage.currentwiki, "query?media=json");
-                       $.getJSON(queryUrl, function ( data , textStatus, jqXHR) {
+                       $.getJSON(queryUrl, function (data, textStatus2, jqXHR2) {
                                  // success so we are level 2
                                  xwikiconfig.level = 2;
-                                }).complete(function() {
+                                 showStatusMessage("success (new version).");                                 
+                                }).complete(function(jqXHR2, textStatus2) {
+                                   if (jqXHR2.status==200 && é"'§(&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&& "xwikiconfig.level!=2)
+                                       showStatusMessage("success (old version).");
                                    if (typeof cb!="undefined")
                                    cb();
                                    });
