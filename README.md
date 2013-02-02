@@ -11,7 +11,9 @@ It also includes experimental offline and local editing capabilities.
 ## Legal Notices
 
 Authors: Ludovic Dubost, XWiki SAS
+
 Copyright: 2012, 2013, Ludovic Dubost, XWiki SAS
+
 Licence: LGPL
 
 Portion of this software uses software licenced under the MIT and Apache Software Licences and authored by their respective authors.
