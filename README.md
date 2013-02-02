@@ -6,7 +6,9 @@ This is a Mobile Application using Cordova/HTML5/JQuery Mobile allowing to acces
 
 It is currently at prototype level.
 
-It also includes experimental offline and local editing capabilities.
+It also includes experimental offline and local editing capabilities, only for iOS.
+
+This application has been mostly tested on iPhone and iPad, but the basic features should also work on other devices.
 
 ## Legal Notices
 
