@@ -8,6 +8,8 @@
 //  Modified by Johnathan Iannotti on 04/20/2012
 //  Twitter: @notticode
 
+// WARNING THIS MODULE HAS NO LICENCE AND WILL NEED TO BE REMOVED TO DISTRIBUTE AS BINARY
+
 #import "FileDownload.h"
 
 
