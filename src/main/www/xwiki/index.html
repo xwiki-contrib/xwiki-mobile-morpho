@@ -1,79 +1,121 @@
-<!DOCTYPE html>
-<!--
- * See the NOTICE file distributed with this work for additional
- * information regarding copyright ownership.
- *
- * This is free software; you can redistribute it and/or modify it
- * under the terms of the GNU Lesser General Public License as
- * published by the Free Software Foundation; either version 2.1 of
- * the License, or (at your option) any later version.
- *
- * This software is distributed in the hope that it will be useful,
- * but WITHOUT ANY WARRANTY; without even the implied warranty of
- * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU
- * Lesser General Public License for more details.
- *
- * You should have received a copy of the GNU Lesser General Public
- * License along with this software; if not, write to the Free
- * Software Foundation, Inc., 51 Franklin St, Fifth Floor, Boston, MA
- * 02110-1301 USA, or see the FSF site: http://www.fsf.org.
- -->
+<!DOCTYPE html><!--HTML5 doctype-->
 <html>
 <head>
-	<meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width user-scalable=yes maximum-scale=5" />
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-  	<title>XWiki Mobile Application</title>
-	<link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/jquery.mobile-1.2.0.css" />
-    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-theme.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/web-ui-fw-widget.css"/>
-    <link rel="stylesheet" type="text/css" media="screen" href="css/themes/default/xwiki.css" />
-    <script src="js/cordova-2.1.0.js"></script>
-    <script src="js/plugins/PushNotification.js"></script>
-    <script src="js/jquery-1.7.2.js"></script>
-	<script src="js/jquery.mobile-1.2.0.js"></script>	
-    <script src="js/web-ui-fw-libs.js"></script>
-    <script src="js/web-ui-fw.js"></script>
-    <script src="js/xwiki-config.js"></script>
-    <script src="js/xwiki.js"></script>
-    <script src="js/xwiki-offline.js"></script>
-    <script src="js/date.format.js"></script>
-    <script type="text/javascript" src="js/xwe/xwe.nocache.js"></script>
-    <script type="text/javascript" src="js/smartclient/initsc.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_Core.js"></script>
-    <script type="text/javascript" src="js/smartclient/overwritesc.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_Foundation.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_Containers.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_Grids.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_Forms.js"></script>
-    <script type="text/javascript" src="js/smartclient/modules/ISC_DataBinding.js"></script>
-    <script type="text/javascript" src="js/smartclient/skins/Enterprise/load_skin.js"></script>
+<title>XWiki Mobile</title>
+<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
+<meta name="format-detection" content="telephone=no" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+<link rel="stylesheet" type="text/css" href="../css/icons.css" />
+<link rel="stylesheet" type="text/css" href="../css/index.css" />
+<link rel="stylesheet"  type="text/css" href="../css/jq.ui.css" title="default" />
+<link rel="stylesheet"  type="text/css" href="css/xwiki.css" title="default" />
+<script type="text/javascript" src="../cordova-2.3.0.js"></script>
+<script type="text/javascript" src="../js/index.js"></script>
+<script type="text/javascript" charset="utf-8" src="../js/jq.ui.min.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/xwiki-network.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/xwiki-service.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/xwiki-mobile.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/xwiki-config.js"></script>
+    <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
+    <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
+<script>
+app.initialize();
+if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
+    var script=document.createElement("script");
+    script.src="../js/jq.desktopBrowsers.js";
+    var tag=$("head").append(script);
+}
+
+$(document).ready(function(){
+
+});
+
+</script>
+<script type="text/javascript">
+    /* This function runs once the page is loaded, but appMobi is not yet active */
+	var webRoot="./";
+	$.ui.autoLaunch=false;
+    $.ui.resetScrollers=false;
+    var init = function(){
+	   $.ui.backButtonText="Back";  
+	   window.setTimeout(function(){$.ui.launch();},1500);
+       //$.ui.removeFooterMenu(); This would remove the bottom nav menu
+    };
+    document.addEventListener("DOMContentLoaded",init,false);  
+	$.ui.ready(function(){console.log('ready'); /* alert('here'); */ });
+   
+    /* This code is used to run as soon as appMobi activates */
+    var onDeviceReady=function(){
+		AppMobi.device.setRotateOrientation("portrait");
+        AppMobi.device.setAutoRotate(false);
+		webRoot=AppMobi.webRoot+"/";
+	    //hide splash screen
+	    AppMobi.device.hideSplashScreen();	
+		
+    };
+    document.addEventListener("appMobi.device.ready",onDeviceReady,false);    
+	
+</script>
 </head>
 <body>
-<div data-role="page" class="type-home" id="home">
-	<div data-role="content">
-		<div class="content-primary">
-			<div id="xw-homeheader">
-				<h1 id="xw-logo"><img src="css/themes/default/images/xwiki.png" alt="XWiki" /></h1>
-				<p>A mobile interface to access XWiki Cloud instances.</p>
-			</div>
-			<p class="intro"><strong>Welcome.</strong> using this application you will be able to easily access your XWiki Cloud instances.</p>
-
-            <div id="home-content">
+    <div id="jQUi">
+        <!-- this is the header div -->
+        <div id="header">
+         <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
+        </div>
+    
+        <div id="content">
+            <div title='Welcome' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
+                <h2 class='expanded' onclick='showHide(this,"main_info");'>Welcome</h2>
+                <p id='main_info' class='xheader'>Welcome to XWiki Mobile.</p>
+                <ul>
+                    <li class='red'><a href="#xhome" id='jqmlink' onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
+                    <li class="blue"><a href="#xhome" onclick="xmobile.setCurrentConfig('intranet');" >Sales</a></li>
+                    <li class="blue"><a href="#xhome" onclick="xmobile.setCurrentConfig('projects');" >Projects</a></li>
+                </ul>
+                <p id='main_info2' class='xheader'>Tools.</p>
+                <ul>
+                    <li class='red'><a href="#xconfig" id='jqmlink'>Config</a></li>
+                    <li class='red'><a href="#xnetwork" id='jqmlink'>Status</a></li>
+                </ul>
             </div>
+            <div title="Wiki Home" id="xhome" class="panel" data-nav="menu_jqmobi" data-header="testheader" data-footer="testfooter" data-load="showWikiHome">
+                <ul>
+                    <li><a href="#xrecentdocs" >Recent Changes</a></li>
+                    <li><a href="#xsearch" >Search</a></li>
+                </ul>
+            </div>
+            <div id="xrecentdocs" title="Recent Docs" class="panel" data-defer="recentdocs.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showRecentDocs">
+            </div>
+            <div id="xpage" title="Page" class="panel" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showPage">
+                <iframe id="xpageframe" src="pageframe.html" width="98%" height="100%" style="magin: auto; border: 0;" frameborder="0">
+                </iframe>
+            </div>
+            <div id="xnetwork" title="Status" class="panel" data-defer="network.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showNetworkStatus">
+            </div>
+        </div>
 
-            <ul data-role="listview" data-inset="true" data-dividertheme="f">
-				<li data-role="list-divider">More</li>
-   			    <li><a href="offlinelist.html">Offline Bookmarks</a></li>
-   			    <li><a href="config.html">Configuration</a></li>
-			</ul>
-        </div><!--/content-primary-->
-	</div>
-    <div data-role="footer" class="footer-docs" data-position="fixed">
-        <a href="index.html" data-icon="home" data-iconpos="notext" class="ui-btn-left">&nbsp;</a>
-        <a href="config.html" data-icon="gear" class="ui-btn-right">Options</a>
-        <span class="ui-title">&copy; 2012 XWiki SAS</span>
+        <!-- bottom navbar.  Add additional tabs here -->
+        <div id="navbar">
+            <a href="#main" id='navbar_home' class='icon home' >Home</a>
+            <a href="javascript:void(0)" id='navbar_refresh' class='icon refresh' onclick="xmobile.reloadCurrentPage(); return false;">refresh</a>
+            <a href="javascript:void(0)" id='navbar_relogin' class='icon user' onclick="xmobile.relogin(); return false;">relogin</a>
+            <a href="javascript:void(0)" id='navbar_relogin' class='icon magnifier' onclick="squeezeFrame(); return false;">squeeze</a>
+            <a href="#xnetwork" id='navbar_network' class='icon wifi' >status</a>
+        </div>
+        
+        <!-- this is the default left side nav menu -->
+        <nav class="off">
+            <div class='title'>Home</div>
+                <ul>
+                    <li class="icon home mini"><a href="#main">Home</a></li>
+                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
+                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
+                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('projects');">Projects</a></li>
+                    <li class="icon home mini"><a href="#xnetwork">Status</a></li>
+                </ul>
+        </nav>
     </div>
-</div>
 </body>
 </html>

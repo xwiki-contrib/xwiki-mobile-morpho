@@ -1,0 +1,28 @@
+#jQUi #backButton {
+    display: block;
+    position: absolute;
+    left: 30px;
+    top: 0px;
+    max-width: 60px;
+    text-overflow: ellipsis;
+}
+
+#jQUi p.xheader {
+    color: #ffffff;
+    background: #BBBBBB;
+    background: linear-gradient(#DDDDDD, #BBBBBB) repeat scroll 0 0 #BBBBBB;
+}
+
+#menubadge {
+  float: left;
+  margin-top: 10px;
+  margin-left: 5px;
+  background-color: transparent !important;
+  background-image: url("../img/smico.png") !important;
+  height: 23px;
+  width: 23px !important;
+}
+
+#jQUi .panel {
+    background: #ffffff;
+}

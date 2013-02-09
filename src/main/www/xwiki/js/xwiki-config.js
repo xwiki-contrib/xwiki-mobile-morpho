@@ -20,20 +20,58 @@
 
 /* Configuration module */
 
-sessionStorage.xwikiconfig = 0;
-sessionStorage.currentwiki = "";
+defaultConfig = "intranet";
+defaultWiki = "default";
+defaultPage = "";
 
-xwikiconfig = [
-               {
-               id : "local",
-               name: "Local Account",
-               xem : false,
-               wikis : [""],
-               baseurl : "http://localhost:3080/xwiki",
-               resturl : "http://localhost:3080/xwiki/rest/wikis/xwiki/",
-               viewurl : "http://localhost:3080/xwiki/bin/view/",
-               apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },                            
-               username : "Admin",
-               password : "admin"
-               }
-               ]
+xservices = {
+    local : new XWikiService({
+                             id : "local",
+                             name: "Local Account",
+                             xem : false,
+                             wikis : [""],
+                             baseurl : "http://localhost:7080/xwiki",
+                             resturl : "http://localhost:7080/xwiki/rest/wikis/xwiki/",
+                             viewurl : "http://localhost:7080/xwiki/bin/view/",
+                             apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },
+                             username : "Admin",
+                             password : "admin1",
+                             protocol : 3,
+                             autoconnect : true
+                             })
+    ,
+    intranet : new XWikiService({
+                                id : "intranet",
+                                name: "XWiki Sales Intranet",
+                                xem : false,
+                                wikis : [""],
+                                baseurl : "https://sales.xwikisas.com/xwiki",
+                                resturl : "https://sales.xwikisas.com/xwiki/rest/wikis/sales/",
+                                viewurl : "https://sales.xwikisas.com/xwiki/bin/view/",
+                                apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },
+                                username : "TestTest",
+                                password : "xwtt2013",
+                                protocol : 2,
+                                autoconnect : false
+                                })
+    ,
+    projects : new XWikiService({
+                                id : "projects",
+                                name: "XWiki Projects Intranet",
+                                xem : false,
+                                wikis : [""],
+                                baseurl : "https://projects.xwikisas.com/xwiki",
+                                resturl : "https://projects.xwikisas.com/xwiki/rest/wikis/projects/",
+                                viewurl : "https://projects.xwikisas.com/xwiki/bin/view/",
+                                apps : { "" : [{ name: "Projects", space: "Projects", classname : "PMCode.XProjectClasss" }] },
+                                username : "TestTest",
+                                password : "xwtt2013",
+                                protocol : 2,
+                                autoconnect : false
+                                })
+}
+
+xmobile = new XWikiMobile(xservices);
+xmobile.setCurrentConfig(defaultConfig);
+xmobile.setCurrentWiki(defaultWiki);
+xmobile.setCurrentPage(defaultPage);
