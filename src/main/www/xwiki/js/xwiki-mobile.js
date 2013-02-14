@@ -26,6 +26,10 @@ function XWikiMobile(xservices) {
     this.xservices = xservices;
 }
 
+XWikiMobile.prototype.initialize = function() {
+    this.xscreens = { recentdocs : showRecentDocs, page: showPage, network : showNetworkStatus, spaces : showSpaces, space: showSpace };
+}
+
 XWikiMobile.prototype.loginToServices = function() {
     $.each(this.xservices, function(key, xservice) {
            xservice.setNetworkQueue(nq);
@@ -35,10 +39,12 @@ XWikiMobile.prototype.loginToServices = function() {
 }
 
 XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
-    var pageName = this.getCurrentConfig() + "." + this.getCurrentWiki() + "." + screenName;
+    var screenPageName = this.getCurrentConfig() + "." + this.getCurrentWiki() + "." + screenName;
     if (screenName=="page")
-        pageName += "." + this.getCurrentPage();
-    return pageName;
+        screenPageName += "." + this.getCurrentPage();
+    if (screenName=="space")
+        screenPageName += "." + this.getCurrentSpace();
+    return screenPageName;
 }
 
 XWikiMobile.prototype.showNetworkActive = function() {
@@ -124,6 +130,14 @@ XWikiMobile.prototype.setCurrentWiki = function(wiki) {
     sessionStorage.currentWiki = wiki;
 }
 
+XWikiMobile.prototype.getCurrentSpace = function() {
+    return sessionStorage.currentSpace;
+}
+
+XWikiMobile.prototype.setCurrentSpace = function(space) {
+    sessionStorage.currentSpace = space;
+}
+
 
 XWikiMobile.prototype.getCurrentPage = function() {
     return sessionStorage.currentPage;
@@ -136,7 +150,7 @@ XWikiMobile.prototype.setCurrentPage = function(page) {
 XWikiMobile.prototype.showWikiHome = function(cache) {
     var xservice = this.getCurrentService();
     if (!xservice.isLoggedIn())
-        xservice.login();
+        xservice.login("default");
     
 }
 
@@ -151,6 +165,35 @@ XWikiMobile.prototype.showRecentDocs = function(cache) {
                items += '<li>' + that.getPageHTML(val) + '</li>';
                }); 
         $("#xwikirecentdocslist").html(items);
+    }
+}
+
+XWikiMobile.prototype.showSpaces = function(cache) {
+    this.updateNetworkActive();
+    $("#xwikispaceslist").html("");
+    var data = this.getCurrentService().getSpaces(this.getCurrentWiki(), cache);
+    if (data!=null) {
+        var items = "";
+        var that = this;
+        $.each(data.spaces, function(key, val) {
+               var link = "<a href='#xspace' onclick='xmobile.setCurrentSpace(\"" + val.name + "\");'>" + val.name + "</a>"
+               items += '<li>' + link + '</li>';
+               });
+        $("#xwikispaceslist").html(items);
+    }
+}
+
+XWikiMobile.prototype.showSpace = function(cache) {
+    this.updateNetworkActive();
+    $("#xwikispacedocslist").html("");
+    var data = this.getCurrentService().getSpaceDocs(this.getCurrentWiki(), this.getCurrentSpace(), cache);
+    if (data!=null) {
+        var items = "";
+        var that = this;
+        $.each(data.searchResults, function(key, val) {
+               items += '<li>' + that.getPageHTML(val) + '</li>';
+               });
+        $("#xwikispacedocslist").html(items);
     }
 }
 
@@ -216,13 +259,16 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
     return false;
 }
 
-
-XWikiMobile.prototype.initialize = function() {
-    this.xscreens = { recentdocs : showRecentDocs, page: showPage, network : showNetworkStatus };
-}
-
 function showRecentDocs(cache) {
     return xmobile.showRecentDocs(cache);
+}
+
+function showSpaces(cache) {
+    return xmobile.showSpaces(cache);
+}
+
+function showSpace(cache) {
+    return xmobile.showSpace(cache);
 }
 
 function showPage(cache) {

@@ -31,7 +31,7 @@ function NetworkQueue() {
     this.runningQueue = [];
     this.lastResults = [];
     this.requestsByName = {};
-
+    
     this.maxSimultaneousRequest = 1;
     this.maxRetries = 3;
 };
@@ -178,13 +178,59 @@ NetworkQueue.prototype.nextRequest = function() {
 
 NetworkQueue.prototype.getQueueStatus = function() {
     var status = "";
-    status += "Status: " + this.started + " Stopping: " + this.stopping + " High priority: " + this.highPriorityQueue.length + " Low priority: " + this.lowPriorityQueue.length + " Running: "
-    + this.runningQueue.length + " last results: " + this.lastResults.length + "<br />";
+    status += "<ul>"
+    + "<li>Status: " + this.started + "</li>"
+    + "<li>Stopping: " + this.stopping + "</li>"
+    + "<li>High priority: " + this.highPriorityQueue.length + "</li>"
+    + "<li>Low priority: " + this.lowPriorityQueue.length + "</li>"
+    + "<li>Running: " + this.runningQueue.length + "</li>"
+    + "<li>HP Queue: "
+    + "<ul>";
     var that = this;
     $.each(this.highPriorityQueue, function(key, val) {
            var req = that.requestsByName[val];
-           status += req.name + ": " + req.startDate + " " + req.priority + " " + req.status + " " + req.url + "<br />";
+           status += "<li>" + req.name + " " + req.priority + "</li>"
+           + "<li>" + req.startDate + "</li>"
+           + "<li>status " + req.status + "</li>"
+           + "<li>" + req.url + "</li>";
            });
+    status += "</ul></li>"
+    + "<li>LP Queue: "
+    + "<ul>";
+    $.each(this.lowPriorityQueue, function(key, val) {
+           var req = that.requestsByName[val];
+           status += "<li>" + req.name + " " + req.priority + "</li>"
+           + "<li>" + req.startDate + "</li>"
+           + "<li>status " + req.status + "</li>"
+           + "<li>" + req.url + "</li>";
+           });
+    status += "</ul></li>"
+    + "<li>Running Queue: "
+    + "<ul>";
+    $.each(this.runningQueue, function(key, val) {
+           var req = that.requestsByName[val];
+           status += "<li>" + req.name + " " + req.priority + "</li>"
+           + "<li>" + req.startDate + "</li>"
+           + "<li>status " + req.status + "</li>"
+           + "<li>" + req.url + "</li>";
+           });
+    status += "</ul></li>"
+    status += "<li>Last results: " + this.lastResults.length
+    + "<ul>";
+    var counter = 0;
+    $.each(this.lastResults.reverse(), function(key, val) {
+           var req = that.requestsByName[val];
+           if (counter<5 && req.status!=1) {
+           counter++;
+           status += "<li>" + req.name + " " + req.priority + "</li>"
+           + "<li>status " + req.status + " " + req.resultCode + "</li>"
+           + "<li>" + req.startDate + "</li>"
+           + "<li>status " + req.status + "</li>"
+           + "<li>" + req.url + "</li>";
+           }
+           });
+    status += "</ul></li>"
+    status + "</ul>"
     return status;
 };
 

@@ -26,3 +26,19 @@
 #jQUi .panel {
     background: #ffffff;
 }
+
+#xnetwork ul {
+    display: list;
+    list-style: none;
+}
+
+#xnetwork ul > li {
+ display: list-item;
+ height: auto;
+ list-style: disc outside none;
+ text-transform: none;
+}
+
+#xnetwork li {
+    margin-left: 20px;
+}

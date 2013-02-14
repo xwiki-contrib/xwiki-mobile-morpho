@@ -23,6 +23,7 @@
 defaultConfig = "intranet";
 defaultWiki = "default";
 defaultPage = "";
+defaultSpace = "";
 
 xservices = {
     local : new XWikiService({

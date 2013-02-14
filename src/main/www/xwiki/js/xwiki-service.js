@@ -62,6 +62,20 @@ XWikiService.prototype.addRecentDocsRequest = function(wikiName, priority, cache
     nq.addRequest(this, this.id + "." + wikiName + ".recentdocs", recentDocsURL, priority, cache, null);
 }
 
+XWikiService.prototype.addSpacesRequest = function(wikiName, priority, cache) {
+    if (cache==null)
+        cache = true;
+    var spacesURL = this.getSpacesURL(wikiName);
+    nq.addRequest(this, this.id + "." + wikiName + ".spaces", spacesURL, priority, cache, null);
+}
+
+XWikiService.prototype.addSpaceDocsRequest = function(wikiName, spaceName, priority, cache) {
+    if (cache==null)
+        cache = true;
+    var spaceDocsURL = this.getSpaceDocsURL(wikiName, spaceName);
+    nq.addRequest(this, this.id + "." + wikiName + ".space." + spaceName, spaceDocsURL, priority, cache, null);
+}
+
 XWikiService.prototype.addPageRequest = function(wikiName, pageName, priority, cache) {
     if (cache==null)
         cache = true;
@@ -80,6 +94,16 @@ XWikiService.prototype.getRecentDocsURL = function(wikiName) {
     return this.getRestURL(wikiName, searchurl);
 }
 
+XWikiService.prototype.getSpacesURL = function(wikiName) {
+    return this.getRestURL(wikiName, "spaces?media=json" + ((this.protocol>=3) ? "&prettyNames=true" : "&prettynames=true"));
+}
+
+XWikiService.prototype.getSpaceDocsURL = function(wikiName, spaceName) {
+    var hql = "where doc.space='" + spaceName + "'";
+    var spacedocsurl = "query?type=hql&q=" + hql + "&media=json" + ((this.protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
+    return this.getRestURL(wikiName, spacedocsurl);
+}
+
 XWikiService.prototype.getRestURL = function(wikiName, restURL) {
     return this.resturl.replace(/__wiki__/g, wikiName) + restURL;
 }
@@ -89,6 +113,32 @@ XWikiService.prototype.getRecentDocs = function(wikiName, cache) {
     if (result==null || cache==false) {
         // we don't have a request we should add it in the queue
         this.addRecentDocsRequest(wikiName, "high", cache);
+        return result;
+    } else if (result.status==4 || result.status==3) {
+        return $.parseJSON(result.data);
+    } else {
+        return null;
+    }
+}
+
+XWikiService.prototype.getSpaces = function(wikiName, cache) {
+    var result = this.nq.getResult(this.id + "." + wikiName + ".spaces");
+    if (result==null || cache==false) {
+        // we don't have a request we should add it in the queue
+        this.addSpacesRequest(wikiName,"high", cache);
+        return result;
+    } else if (result.status==4 || result.status==3) {
+        return $.parseJSON(result.data);
+    } else {
+        return null;
+    }
+}
+
+XWikiService.prototype.getSpaceDocs = function(wikiName, spaceName, cache) {
+    var result = this.nq.getResult(this.id + "." + wikiName + ".space." + spaceName);
+    if (result==null || cache==false) {
+        // we don't have a request we should add it in the queue
+        this.addSpaceDocsRequest(wikiName, spaceName, "high", cache);
         return result;
     } else if (result.status==4 || result.status==3) {
         return $.parseJSON(result.data);
