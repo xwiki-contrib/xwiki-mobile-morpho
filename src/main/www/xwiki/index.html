@@ -6,12 +6,9 @@
 <meta name="format-detection" content="telephone=no" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-<link rel="stylesheet" type="text/css" href="../css/icons.css" />
-<link rel="stylesheet" type="text/css" href="../css/index.css" />
-<link rel="stylesheet"  type="text/css" href="../css/jq.ui.css" title="default" />
-<link rel="stylesheet"  type="text/css" href="css/xwiki.css" title="default" />
+<link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
+<link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
 <script type="text/javascript" src="../cordova-2.3.0.js"></script>
-<script type="text/javascript" src="../js/index.js"></script>
 <script type="text/javascript" charset="utf-8" src="../js/jq.ui.min.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/xwiki-network.js"></script>
     <script type="text/javascript" charset="utf-8" src="js/xwiki-service.js"></script>
@@ -67,27 +64,27 @@ $(document).ready(function(){
     
         <div id="content">
             <div title='Welcome' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
-                <h2 class='expanded' onclick='showHide(this,"main_info");'>Welcome</h2>
-                <p id='main_info' class='xheader'>Welcome to XWiki Mobile.</p>
+                <p>XWiki Mobile allows you to easily access your XWiki Cloud instances.</p>
+                <div class='xheader'>Cloud Instances</div>
                 <ul>
-                    <li class='red'><a href="#xhome" id='jqmlink' onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
-                    <li class="blue"><a href="#xhome" onclick="xmobile.setCurrentConfig('intranet');" >Sales</a></li>
-                    <li class="blue"><a href="#xhome" onclick="xmobile.setCurrentConfig('projects');" >Projects</a></li>
+                    <li><a class="x-icon x-icon-cloud" href="#xhome" id='jqmlink' onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
+                    <li><a class="x-icon x-icon-cloud" href="#xhome" onclick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
+                    <li><a class="x-icon x-icon-cloud" href="#xhome" onclick="xmobile.setCurrentConfig('projects');">Projects</a></li>
                 </ul>
-                <p id='main_info2' class='xheader'>Tools.</p>
+                <div class='xheader'>Tools</div>
                 <ul>
-                    <li class='red'><a href="#xconfig" id='jqmlink'>Config</a></li>
-                    <li class='red'><a href="#xnetwork" id='jqmlink'>Status</a></li>
+                    <li><a class="x-icon x-icon-cog" href="#xconfig" id='jqmlink'>Settings</a></li>
+                    <li><a class="x-icon x-icon-dashboard" href="#xnetwork" id='jqmlink'>Status</a></li>
                 </ul>
             </div>
             <div title="Wiki Home" id="xhome" class="panel" data-nav="menu_jqmobi" data-header="testheader" data-footer="testfooter" data-load="showWikiHome">
                 <ul>
-                    <li><a href="#xrecentdocs" >Recent Changes</a></li>
-                    <li><a href="#xsearch" >Search</a></li>
-                    <li><a href="#xspaces" >Spaces</a></li>
+                    <li><a class="x-icon x-icon-list" href="#xrecentdocs" >Recent Changes</a></li>
+                    <li><a class="x-icon x-icon-search" href="#xsearch" >Search</a></li>
+                    <li><a class="x-icon x-icon-folder-open" href="#xspaces" >Spaces</a></li>
                 </ul>
             </div>
-            <div id="xrecentdocs" title="Recent Docs" class="panel" data-defer="recentdocs.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showRecentDocs">
+            <div id="xrecentdocs" title="Recent Changes" class="panel" data-defer="recentdocs.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showRecentDocs">
             </div>
             <div id="xspaces" title="Spaces" class="panel" data-defer="spaces.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showSpaces">
             </div>
@@ -103,23 +100,22 @@ $(document).ready(function(){
 
         <!-- bottom navbar.  Add additional tabs here -->
         <div id="navbar">
-            <a href="#main" id='navbar_home' class='icon home' >Home</a>
-            <a href="javascript:void(0)" id='navbar_refresh' class='icon refresh' onclick="xmobile.reloadCurrentPage(); return false;">refresh</a>
-            <a href="javascript:void(0)" id='navbar_relogin' class='icon user' onclick="xmobile.relogin(); return false;">relogin</a>
-            <a href="javascript:void(0)" id='navbar_relogin' class='icon magnifier' onclick="squeezeFrame(); return false;">squeeze</a>
-            <a href="#xnetwork" id='navbar_network' class='icon wifi' >status</a>
+            <a href="#main" id='navbar_home' class='x-icon-big x-icon-home'>Home</a>
+            <a href="javascript:void(0)" id='navbar_refresh' class='x-icon-big x-icon-refresh' onclick="xmobile.reloadCurrentPage(); return false;">Refresh</a>
+            <a href="javascript:void(0)" id='navbar_relogin' class='x-icon-big x-icon-user' onclick="xmobile.relogin(); return false;">Relogin</a>
+            <a href="javascript:void(0)" id='xsearch' class='x-icon-big x-icon-search'>Search</a>
+            <a href="#xnetwork" id='navbar_network' class='x-icon-big x-icon-dashboard' >Status</a>
         </div>
         
         <!-- this is the default left side nav menu -->
         <nav class="off">
-            <div class='title'>Home</div>
-                <ul>
-                    <li class="icon home mini"><a href="#main">Home</a></li>
-                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
-                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
-                    <li class="icon home mini"><a href="#xhome" onClick="xmobile.setCurrentConfig('projects');">Projects</a></li>
-                    <li class="icon home mini"><a href="#xnetwork">Status</a></li>
-                </ul>
+            <ul>
+                <li><a class="x-icon-small x-icon-home" href="#main">Home</a></li>
+                <li><a class="x-icon-small x-icon-dashboard" href="#xnetwork">Status</a></li>
+                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
+                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
+                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('projects');">Projects</a></li>
+            </ul>
         </nav>
     </div>
 </body>
