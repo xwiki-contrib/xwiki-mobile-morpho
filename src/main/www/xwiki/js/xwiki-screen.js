@@ -48,7 +48,7 @@ function XWikiScreen(options) {
 };
 
 XWikiScreen.prototype.showScreen = function() {
-    return this.showCallback(this);
+    return this.showCallback();
 }
 
 /*
@@ -62,7 +62,7 @@ var xstatusScreen = new XWikiScreen(
                                   parent: "xhome",
                                   panelcontent: "<div id='networkstatus'></div>",
                                   route: "xstatus",
-                                  addMainMenus: function(screen) {
+                                  addMainMenus: function() {
                                      console.log("In screen menu setup");
                                      $("#toolsmenu").append("<li><a class='x-icon x-icon-dashboard' href='#xstatus' id='jqmlink'>Status</a></li>");
                                      $("#navbar").append("<a href='#xstatus' id='navbar_network' class='x-icon-big x-icon-dashboard' >Status</a>");
@@ -72,9 +72,9 @@ var xstatusScreen = new XWikiScreen(
                                   routeCallback: function() {
                                      console.log("In status route callback");
                                      // $.ui.loadContent("#xstatus",false,false,"up");
-                                     this.showCallback(this);
+                                     this.showCallback();
                                   },
-                                  showCallback: function(screen) {
+                                  showCallback: function(cache) {
                                      console.log("In status show callback");
                                      xmobile.updateNetworkActive();
                                      $("#xstatus").html(nq.getQueueStatus());
@@ -91,7 +91,7 @@ var xsettingsScreen = new XWikiScreen(
                                   parent: "xhome",
                                   panelcontent: "<ul id='settings'></ul>",
                                   route: "xsettings",
-                                  addMainMenus: function(screen) {
+                                  addMainMenus: function() {
                                     console.log("In screen menu setup");
                                     $("#toolsmenu").append("<li><a class='x-icon x-icon-cog' href='#xsettings' id='jqmlink'>Settings</a></li>");
                                     $("#navbar").append("<a href='#xsettings' id='navbar_network' class='x-icon-big x-icon-cog' >Settings</a>");
@@ -100,9 +100,9 @@ var xsettingsScreen = new XWikiScreen(
                                   routeCallback: function() {
                                     console.log("In settings route callback");
                                     // $.ui.loadContent("#xsettings",false,false,"up");
-                                    this.showCallback(this);
+                                    this.showCallback();
                                   },
-                                  showCallback: function(screen) {
+                                  showCallback: function(cache) {
                                     console.log("In settings show callback");
                                     $("#settings").html("");
                                     var items = "";
@@ -113,7 +113,7 @@ var xsettingsScreen = new XWikiScreen(
                                          });
                                     items += "<li><form id='xsettingsaddform'><input type='text' name='configname' value='newconfig' size='15' class='jq-ui-forms-add' /><input type='button' value='Add' onClick='this.form.screen.add(form);' class='button' /></form></li>";
                                       $("#settings").html(items);
-                                    document.forms.xsettingsaddform.screen = screen;
+                                    document.forms.xsettingsaddform.screen = this;
                                   }
                                   }
                                   );
@@ -121,7 +121,7 @@ xsettingsScreen.add = function(form) {
     console.log("call add");
     
     if (xmobile.addWikiConfig(form.configname.value)) {
-        this.showCallback(this);
+        this.showCallback(true);
     } else {
         alert("There is already a configuration with the name " + form.configname.value);
     }
@@ -138,28 +138,27 @@ var xsettingScreen = new XWikiScreen(
                                       parent: "xsettings",
                                       panelcontent: "",
                                       route: "xsetting/:wikiName",
-                                      addMainMenus: function(screen) {
+                                      addMainMenus: function() {
                                       },
                                       routeCallback: function(wiki) {
                                       console.log("In setting route callback");
                                        // make sur the config is set
                                        xmobile.setCurrentConfig(wiki);
-                                       this.showCallback(this);
+                                       this.showCallback();
                                       },
-                                      showCallback: function(screen) {
+                                      showCallback: function(cache) {
                                         console.log("In setting show callback");
                                         var sconfig = xmobile.getCurrentService().getConfig();
                                         var form = document.forms["setting_form"];
-                                        form.screen = screen;
-                                     form.setting_id.value = sconfig.id;
-                                     form.setting_name.value = sconfig.name;
+                                        form.screen = this;
+                                        form.setting_id.value = sconfig.id;
+                                        form.setting_name.value = sconfig.name;
                                         form.setting_url.value = sconfig.url;
                                         form.setting_username.value = sconfig.username;
                                         form.setting_password.value = sconfig.password;
-                                     form.setting_baseurl.value = sconfig.baseurl;
-                                     form.setting_viewurl.value = sconfig.viewurl;
-                                     form.setting_resturl.value = sconfig.resturl;
-
+                                        form.setting_baseurl.value = sconfig.baseurl;
+                                        form.setting_viewurl.value = sconfig.viewurl;
+                                        form.setting_resturl.value = sconfig.resturl;
                                       }
                                      });
 
@@ -202,7 +201,7 @@ var xwikihomeScreen = new XWikiScreen(
                                   parent: "xwikihome",
                                   panelcontent: "<ul id='xwikiactions'></ul>",
                                   route: "xwikihome/:wikiName",
-                                  addMainMenus: function(screen) {
+                                  addMainMenus: function() {
                                   },
                                   routeCallback: function(wiki) {
                                     console.log("In xwikihome route callback");
@@ -212,9 +211,9 @@ var xwikihomeScreen = new XWikiScreen(
                                     xmobile.setCurrentWiki("default");
 
                                     // $.ui.loadContent("#xwikihome/" + wiki,false,false,"up");
-                                    this.showCallback(this);
+                                    this.showCallback();
                                   },
-                                  showCallback: function(screen) {
+                                  showCallback: function(cache) {
                                     console.log("In xwikihome show callback");
                                       
                                     // force a login if it is not the case
@@ -229,7 +228,7 @@ var xwikihomeScreen = new XWikiScreen(
                                     //items += "<li><a class='x-icon x-icon-search' href='#xsearch/" + configName + "/search'>Search</a></li>"
                                     $("#xwikiactions").html(items);
                                       
-                                    xmobile.insertChildMenus(screen);
+                                    xmobile.insertChildMenus(this);
                                   }
                                   }
                                   );
@@ -244,7 +243,7 @@ var xrecentScreen = new XWikiScreen(
                                       parent: "xwikihome",
                                       panelcontent: "<ul id='xwikirecentdocslist'></ul>",
                                       route: "xrecent/:wikiName",
-                                      addMainMenus: function(screen) {
+                                      addMainMenus: function() {
                                       },
                                       addParentMenus: function() {
                                         var configName = xmobile.getCurrentConfig();
@@ -258,9 +257,9 @@ var xrecentScreen = new XWikiScreen(
                                         xmobile.setCurrentWiki("default");
                                     
                                         // $.ui.loadContent("#xrecent/" + wiki,false,false,"up");
-                                        this.showCallback(this);
+                                        this.showCallback();
                                       },
-                                      showCallback: function(screen, cache) {
+                                      showCallback: function(cache) {
                                         console.log("In xrecent show callback");
          
                                         $("#xwikirecentdocslist").html("");
@@ -316,7 +315,7 @@ var xspacesScreen = new XWikiScreen(
                                   parent: "xwikihome",
                                   panelcontent: "<ul id='xwikispaceslist'></ul>",
                                   route: "xspaces/:wikiName",
-                                  addMainMenus: function(screen) {
+                                  addMainMenus: function() {
                                   },
                                   addParentMenus: function() {
                                   console.log("Adding spaces menu");
@@ -330,9 +329,9 @@ var xspacesScreen = new XWikiScreen(
                                   xmobile.setCurrentConfig(wiki);
                                   xmobile.setCurrentWiki("default");
                                   
-                                  this.showCallback(this);
+                                  this.showCallback();
                                   },
-                                  showCallback: function(screen, cache) {
+                                  showCallback: function(cache) {
                                   console.log("In xspaces show callback");
                                   
                                     $("#xwikispaceslist").html("");
@@ -383,7 +382,7 @@ var xspaceScreen = new XWikiScreen(
                                  parent: "xspaces",
                                  panelcontent: "<ul id='xwikispacedocslist'></ul>",
                                  route: "xspace/:wikiName/:spaceName",
-                                 addMainMenus: function(screen) {
+                                 addMainMenus: function() {
                                  },
                                  addParentMenus: function() {
                                  },
@@ -395,9 +394,9 @@ var xspaceScreen = new XWikiScreen(
                                  xmobile.setCurrentWiki("default");
                                  xmobile.setCurrentSpace(spaceName);
                                  
-                                 this.showCallback(this);
+                                 this.showCallback();
                                  },
-                                 showCallback: function(screen, cache) {
+                                 showCallback: function(cache) {
                                    console.log("In xspace show callback");
                                  
                                    $("#xwikispacedocslist").html("");
@@ -456,7 +455,7 @@ var xpageScreen = new XWikiScreen(
                                    parent: "",
                                    panelcontent: "<iframe id='xpageframe' src='pageframe.html' width='98%' height='100%' style='magin: auto; border: 0;' frameborder='0'></iframe>",
                                    route: "xpage/:wikiName/:pageName",
-                                   addMainMenus: function(screen) {
+                                   addMainMenus: function() {
                                    },
                                    addParentMenus: function() {
                                    },
@@ -468,9 +467,9 @@ var xpageScreen = new XWikiScreen(
                                    xmobile.setCurrentWiki("default");
                                    xmobile.setCurrentPage(pageName);
                                    
-                                   this.showCallback(this);
+                                   this.showCallback();
                                    },
-                                   showCallback: function(screen, cache) {
+                                   showCallback: function(cache) {
                                      console.log("In xpage show callback");
                                      this.setPageContent("");
                                      var data = this.getPage(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);

@@ -151,10 +151,11 @@ XWikiMobile.prototype.updateNetworkActive = function() {
 }
 
 XWikiMobile.prototype.reloadCurrentPage = function() {
-    var screenName = location.hash.substring(2);
-    var i1 = screenName.indexOf("_");
+    var screenName = location.hash.substring(1);
+    var i1 = screenName.indexOf("/");
     if (i1!=-1)
         screenName = screenName.substring(0, i1);
+    console.log("Looking to reload screen " + screenName);
     // we are forcing a reload of the current page
     if (this.xscreens[screenName]!=null) {
         console.log("Forcing refresh of page " + screenName);

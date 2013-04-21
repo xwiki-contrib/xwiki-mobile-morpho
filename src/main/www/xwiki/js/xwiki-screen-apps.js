@@ -30,7 +30,7 @@ var xappsScreen = new XWikiScreen(
                                       parent: "xwikihome",
                                       panelcontent: "<ul id='xwikiappslist'></ul>",
                                       route: "xapps/:wikiName",
-                                      addMainMenus: function(screen) {
+                                      addMainMenus: function() {
                                       },
                                       addParentMenus: function() {
                                         console.log("Adding apps menu");
@@ -45,9 +45,9 @@ var xappsScreen = new XWikiScreen(
                                         xmobile.setCurrentWiki("default");
                                   
                                         // $.ui.loadContent("#xapps/" + wiki,false,false,"up");
-                                        this.showCallback(this);
+                                        this.showCallback();
                                       },
-                                      showCallback: function(screen, cache) {
+                                      showCallback: function(cache) {
                                         console.log("In xapps show callback");
          
                                         $("#xwikiappslist").html("");
@@ -108,7 +108,7 @@ var xappScreen = new XWikiScreen(
                                   parent: "xapps",
                                   panelcontent: "<ul id='xwikiappdocslist'></ul>",
                                   route: "xapp/:wikiName/:appName|:appPrettyName|:appClassName",
-                                  addMainMenus: function(screen) {
+                                  addMainMenus: function() {
                                   },
                                   addParentMenus: function() {
                                   },
@@ -121,9 +121,9 @@ var xappScreen = new XWikiScreen(
                                   xmobile.setCurrentApp(appName,prettyName,className);
                                  
                                   // $.ui.loadContent("#xapp/" + wiki + "/" + appName + "|" + prettyName + "|" + className ,false,false,"up");
-                                  this.showCallback(this);
+                                  this.showCallback();
                                   },
-                                  showCallback: function(screen, cache) {
+                                  showCallback: function(cache) {
                                     console.log("In xapp show callback");
                                   
                                     $("#xwikiappdocslist").html("");
