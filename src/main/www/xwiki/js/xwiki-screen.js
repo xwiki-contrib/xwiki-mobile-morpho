@@ -426,7 +426,7 @@ xspaceScreen.addSpaceDocsRequest = function(wikiName, spaceName, priority, cache
 
 
 xspaceScreen.getSpaceDocsURL = function(wikiName, spaceName) {
-    var hql = "where doc.space='" + spaceName + "'";
+    var hql = "where doc.space='" + spaceName + "' order by doc.date desc";
     var spacedocsurl = "query?type=hql&q=" + hql + "&media=json&number=20" + ((xmobile.getCurrentService()>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
     return xmobile.getCurrentService().getRestURL(wikiName, spacedocsurl);
 }

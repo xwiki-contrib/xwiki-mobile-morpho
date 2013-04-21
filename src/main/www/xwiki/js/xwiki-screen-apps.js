@@ -153,7 +153,7 @@ xappScreen.addAppDocsRequest = function(wikiName, appName, className, priority, 
 
 
 xappScreen.getAppDocsURL = function(wikiName, appName, className) {
-    var hql = ", BaseObject as obj where doc.fullName=obj.name and obj.className='" + className + "' and doc.space='" + appName + "'";
+    var hql = ", BaseObject as obj where doc.fullName=obj.name and obj.className='" + className + "' and doc.space='" + appName + "' order by doc.date desc";
     var appdocsurl = "query?type=hql&q=" + hql + "&media=json&number=20" + ((xmobile.getCurrentService()>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
     return xmobile.getCurrentService().getRestURL(wikiName, appdocsurl);
 }
