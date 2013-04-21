@@ -919,7 +919,7 @@ select[disabled]~div {
 		background:#fff;
 	}
 
-@media handheld, only screen and (min-width: 768px){
+@media handheld, only screen and (min-width: 9999px){
 	.hasMenu, .hasMenu.on  {
 		position:absolute !important;
 		left:256px !important;
