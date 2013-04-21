@@ -48,6 +48,7 @@
 .x-icon-home:before               { content: "\f015"; }
 .x-icon-refresh:before            { content: "\f021"; }
 .x-icon-user:before               { content: "\f007"; }
+.x-icon-minimize:before               { content: "\f022"; }
 
 
 /**************************** General classes */
@@ -70,25 +71,11 @@
   background: none;
 }
 
-#jQUi ul > li, #jQUi #navbar {
-  border-bottom: 1px solid #ccc;
-  background: #eee;
-  font-weight: bold;
-  color: #222;
-  text-shadow: 0 1px 0 #ffffff;
-  background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #f1f1f1)); /* Saf4+, Chrome */
-  background-image: -webkit-linear-gradient( #ffffff, #f1f1f1); /* Chrome 10+, Saf5.1+ */
-  background-image:    -moz-linear-gradient( #ffffff, #f1f1f1); /* FF3.6 */
-  background-image:     -ms-linear-gradient( #ffffff, #f1f1f1); /* IE10 */
-  background-image:      -o-linear-gradient( #ffffff, #f1f1f1); /* Opera 11.10+ */
-  background-image:         linear-gradient( #ffffff, #f1f1f1);
-}
-
 #jQUi #header {
   border: 1px solid #333;
   color: #ffffff;
   font-weight: bold;
-  text-shadow: 0 -1px 1px #000000;
+  text-shadow: 0 -1px 1px #000000; 
   background: #111111;
   background-image: -webkit-gradient(linear, left top, left bottom, from( #3c3c3c), to( #111)); /* Saf4+, Chrome */
   background-image: -webkit-linear-gradient( #3c3c3c, #111); /* Chrome 10+, Saf5.1+ */
@@ -96,6 +83,19 @@
   background-image:     -ms-linear-gradient( #3c3c3c, #111); /* IE10 */
   background-image:      -o-linear-gradient( #3c3c3c, #111); /* Opera 11.10+ */
   background-image:         linear-gradient( #3c3c3c, #111);
+}
+
+#jQUi ul > li, #jQUi #navbar {
+    border-bottom: 1px solid #ccc;
+    background: #eee;
+    font-weight: bold;
+    color: #000;
+    background-image: -webkit-gradient(linear, left top, left bottom, from( #ffffff), to( #f1f1f1)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient( #ffffff, #f1f1f1); /* Chrome 10+, Saf5.1+ */
+    background-image:    -moz-linear-gradient( #ffffff, #f1f1f1); /* FF3.6 */
+    background-image:     -ms-linear-gradient( #ffffff, #f1f1f1); /* IE10 */
+    background-image:      -o-linear-gradient( #ffffff, #f1f1f1); /* Opera 11.10+ */
+    background-image:         linear-gradient( #ffffff, #f1f1f1);
 }
 
 #jQUi #menu {
@@ -109,11 +109,18 @@
 }
 
 #jQUi #navbar a {
-  color: #333;
+  color: #555;
+  text-shadow: none;
+}
+
+#navbar a:active, #navbar a:focus, #navbar a:active:focus, #navbar .selected {
+    color: #000000 !important;
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#fff), color-stop(.0,#fff), color-stop(.0,rgba(80,80,80,1)))
 }
 
 #jQUi ul > li > a {
   border: none;
+  color: #000000;
 }
 
 #jQUi ul > li > a:after {
@@ -132,6 +139,12 @@
 #jQUi #menu ul > li a {
   border: none;
   margin: 0;
+  color: #ffffff;
+}
+
+#jQUi label {
+    color: black;
+    font-weight: bold;
 }
 
 /**************************** Custom classes */
@@ -146,7 +159,7 @@
   color: #333;
   font-weight: bold;
   padding: 0.5em;
-  text-shadow: 0 1px 0 #eee;
+  /* text-shadow: 0 1px 0 #eee; */
 }
 
 #menubadge {
@@ -158,16 +171,16 @@
   width: 23px;
 }
 
-#xnetwork {
+#xstatus {
   padding-top: 1em;
 }
 
-#xnetwork ul {
+#xstatus ul {
   display: list;
   list-style: none;
 }
 
-#xnetwork ul > li {
+#xstatus ul > li {
   border: none;
   background: none;
   display: list-item;
@@ -177,3 +190,26 @@
   margin-left: 2em;
   text-transform: none;
 }
+
+#backButton {
+    max-width: 300px;
+}
+
+#xsetting {
+    padding: 10px;
+}
+
+#xsettingsaddform {
+    padding-left: 20px; 
+}
+
+input.jq-ui-forms-add {
+	margin-top:4px; margin-bottom:12px;
+	padding:8px;
+	border:solid 1px #999;
+	outline:0;
+	color:#fff;
+	background:#595D61;
+	-webkit-border-radius:6px; border-radius:6px;
+	-webkit-box-shadow:inset 2px 2px 6px rgba(0,0,0,.5); box-shadow:inset 2px 2px 6px rgba(0,0,0,.5);
+} /* These properties combine to create the look of the input fields. */

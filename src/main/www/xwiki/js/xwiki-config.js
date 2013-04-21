@@ -25,12 +25,15 @@ defaultWiki = "default";
 defaultPage = "";
 defaultSpace = "";
 
-xservices = {
+defaultxservices = {
+    
+    /*
     local : new XWikiService({
                              id : "local",
                              name: "Local Account",
                              xem : false,
                              wikis : [""],
+                             url : "http://localhost:7080/",
                              baseurl : "http://localhost:7080/xwiki",
                              resturl : "http://localhost:7080/xwiki/rest/wikis/xwiki/",
                              viewurl : "http://localhost:7080/xwiki/bin/view/",
@@ -41,19 +44,21 @@ xservices = {
                              autoconnect : true
                              })
     ,
+     */
+    
     intranet : new XWikiService({
                                 id : "intranet",
                                 name: "XWiki Sales Intranet",
                                 xem : false,
                                 wikis : [""],
+                                url : "https://sales.xwikisas.com",
                                 baseurl : "https://sales.xwikisas.com/xwiki",
                                 resturl : "https://sales.xwikisas.com/xwiki/rest/wikis/sales/",
                                 viewurl : "https://sales.xwikisas.com/xwiki/bin/view/",
-                                apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },
                                 username : "TestTest",
-                                password : "xwtt2013",
+                                password : "xwtest2013",
                                 protocol : 2,
-                                autoconnect : false
+                                autoconnect : true
                                 })
     ,
     projects : new XWikiService({
@@ -61,18 +66,18 @@ xservices = {
                                 name: "XWiki Projects Intranet",
                                 xem : false,
                                 wikis : [""],
+                                url : "https://projects.xwikisas.com",
                                 baseurl : "https://projects.xwikisas.com/xwiki",
                                 resturl : "https://projects.xwikisas.com/xwiki/rest/wikis/projects/",
                                 viewurl : "https://projects.xwikisas.com/xwiki/bin/view/",
-                                apps : { "" : [{ name: "Projects", space: "Projects", classname : "PMCode.XProjectClasss" }] },
                                 username : "TestTest",
-                                password : "xwtt2013",
+                                password : "xwtest2013",
                                 protocol : 2,
-                                autoconnect : false
+                                autoconnect : true
                                 })
 }
 
-xmobile = new XWikiMobile(xservices);
+xmobile = new XWikiMobile(defaultxservices);
 xmobile.setCurrentConfig(defaultConfig);
 xmobile.setCurrentWiki(defaultWiki);
 xmobile.setCurrentPage(defaultPage);

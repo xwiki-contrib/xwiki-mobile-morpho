@@ -1,122 +1,86 @@
 <!DOCTYPE html><!--HTML5 doctype-->
 <html>
-<head>
-<title>XWiki Mobile</title>
-<meta http-equiv="Content-type" content="text/html; charset=utf-8"> 
-<meta name="format-detection" content="telephone=no" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
-<link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
-<link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
-<script type="text/javascript" src="../cordova-2.3.0.js"></script>
-<script type="text/javascript" charset="utf-8" src="../js/jq.ui.min.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/xwiki-network.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/xwiki-service.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/xwiki-mobile.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/xwiki-config.js"></script>
-    <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
-    <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
-<script>
-app.initialize();
-if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
-    var script=document.createElement("script");
-    script.src="../js/jq.desktopBrowsers.js";
-    var tag=$("head").append(script);
-}
+    <head>
+        <title>XWiki Mobile</title>
+        <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+            <meta name="format-detection" content="telephone=no" />
+            <meta name="apple-mobile-web-app-capable" content="yes" />
+            <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
+            <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
+            <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
+            <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
+            <script type="text/javascript" src="../cordova-2.3.0.js"></script>
+            <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
+            <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
+            <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
+    </head>
+    <body>
+        <div id="jQUi">
+            <!-- this is the header div -->
+            <div id="header">
+                <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
+            </div>
+            
+            <div id="content">
+                <div title='Welcome' id="main" class="panel" selected="true" data-tab="navbar_home">
+                    <p>XWiki Mobile allows you to easily access your XWiki Cloud instances.</p>
+                    <div class='xheader'>Cloud Instances</div>
+                    <ul id="xwikilist">
+                    </ul>
+                    <div class='xheader'>Tools</div>
+                    <ul id="toolsmenu">
+                    </ul>
+                </div>
+                <div title="Settings" id="xsetting" class="panel">
+                   <div>Settings for service <span id="setting_name"></span></div>
+                   <br />
+                    <form id="setting_form">
+                        <label for="setting_id">Name: </label>
+                        <input type='text' id='setting_id' name='id' value='' class="jq-ui-forms" />
+                        </br>
+                        <label for="setting_name">Display Name: </label>
+                        <input type='text' id='setting_name' name='name' value='' class="jq-ui-forms" />
+                        </br>
+                   <label for="setting_url">URL: </label>
+                   <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
+                   </br>
+                       <label for="setting_username">Username: </label>
+                    <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
+                    <br />
+                        <label for="setting_password">Password: </label>
+                    <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
+                    <br />
+                        <label for="setting_baseurl">Base URL: </label>
+                        <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
+                        </br>
+                        <label for="setting_viewurl">View URL: </label>
+                        <input type='text' id='setting_viewurl' name='viewurl' value='' class="jq-ui-forms" />
+                        </br>
+                        <label for="setting_resturl">REST URL: </label>
+                        <input type='text' id='setting_resturl' name='resturl' value='' class="jq-ui-forms" />
+                        </br>
 
-$(document).ready(function(){
-
-});
-
-</script>
-<script type="text/javascript">
-    /* This function runs once the page is loaded, but appMobi is not yet active */
-	var webRoot="./";
-	$.ui.autoLaunch=false;
-    $.ui.resetScrollers=false;
-    var init = function(){
-	   $.ui.backButtonText="Back";  
-	   window.setTimeout(function(){$.ui.launch();},1500);
-       //$.ui.removeFooterMenu(); This would remove the bottom nav menu
-    };
-    document.addEventListener("DOMContentLoaded",init,false);  
-	$.ui.ready(function(){console.log('ready'); /* alert('here'); */ });
-   
-    /* This code is used to run as soon as appMobi activates */
-    var onDeviceReady=function(){
-		AppMobi.device.setRotateOrientation("portrait");
-        AppMobi.device.setAutoRotate(false);
-		webRoot=AppMobi.webRoot+"/";
-	    //hide splash screen
-	    AppMobi.device.hideSplashScreen();	
-		
-    };
-    document.addEventListener("appMobi.device.ready",onDeviceReady,false);    
-	
-</script>
-</head>
-<body>
-    <div id="jQUi">
-        <!-- this is the header div -->
-        <div id="header">
-         <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
-        </div>
-    
-        <div id="content">
-            <div title='Welcome' id="main" class="panel" selected="true" data-load="loadedPanel" data-unload="unloadedPanel" data-tab="navbar_home">
-                <p>XWiki Mobile allows you to easily access your XWiki Cloud instances.</p>
-                <div class='xheader'>Cloud Instances</div>
-                <ul>
-                    <li><a class="x-icon x-icon-cloud" href="#xhome" id='jqmlink' onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
-                    <li><a class="x-icon x-icon-cloud" href="#xhome" onclick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
-                    <li><a class="x-icon x-icon-cloud" href="#xhome" onclick="xmobile.setCurrentConfig('projects');">Projects</a></li>
+                    <input type="button" name="save" value="Save" class="button" onclick="this.form.screen.save(this.form);" />
+                        <input type="button" name="test" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" class="button" />
+                        <input type="button" name="test" value="Test Connection" onclick="this.form.screen.testConnection(this.form);" class="button" />
+                        </form>
+                </div>
+            </div>
+            
+            <!-- bottom navbar.  Add additional tabs here -->
+            <div id="navbar">
+                <a href="#main" id='navbar_home' class='x-icon-big x-icon-home'>Home</a>
+                <a href="javascript:void(0)" id='navbar_refresh' class='x-icon-big x-icon-refresh' onclick="xmobile.reloadCurrentPage(); return false;">Refresh</a>
+            </div>
+            
+            <!-- this is the default left side nav menu -->
+            <nav class="off">
+                <ul id="sidemenu">
+                    <li><a class="x-icon-small x-icon-home" href="#main">Home</a></li>
+                    <li><a class='x-icon-small x-icon-user' href="javascript:void(0)" id='navbar_relogin' onclick="xmobile.relogin(); return false;">Relogin</a></li>
+                    <li><a class='x-icon-small x-icon-minimize' href="javascript:void(0)" id='xsqueeze' onclick="squeezeFrame(); return false;">Squeeze</a></li>
                 </ul>
-                <div class='xheader'>Tools</div>
-                <ul>
-                    <li><a class="x-icon x-icon-cog" href="#xconfig" id='jqmlink'>Settings</a></li>
-                    <li><a class="x-icon x-icon-dashboard" href="#xnetwork" id='jqmlink'>Status</a></li>
-                </ul>
-            </div>
-            <div title="Wiki Home" id="xhome" class="panel" data-nav="menu_jqmobi" data-header="testheader" data-footer="testfooter" data-load="showWikiHome">
-                <ul>
-                    <li><a class="x-icon x-icon-list" href="#xrecentdocs" >Recent Changes</a></li>
-                    <li><a class="x-icon x-icon-search" href="#xsearch" >Search</a></li>
-                    <li><a class="x-icon x-icon-folder-open" href="#xspaces" >Spaces</a></li>
-                </ul>
-            </div>
-            <div id="xrecentdocs" title="Recent Changes" class="panel" data-defer="recentdocs.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showRecentDocs">
-            </div>
-            <div id="xspaces" title="Spaces" class="panel" data-defer="spaces.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showSpaces">
-            </div>
-            <div id="xspace" title="Space" class="panel" data-defer="space.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showSpace">
-            </div>
-            <div id="xpage" title="Page" class="panel" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showPage">
-                <iframe id="xpageframe" src="pageframe.html" width="98%" height="100%" style="magin: auto; border: 0;" frameborder="0">
-                </iframe>
-            </div>
-            <div id="xnetwork" title="Status" class="panel" data-defer="network.html" data-header="testheader" data-footer="testfooter" data-persist-ajax="false" data-load="showNetworkStatus">
-            </div>
+            </nav>
         </div>
-
-        <!-- bottom navbar.  Add additional tabs here -->
-        <div id="navbar">
-            <a href="#main" id='navbar_home' class='x-icon-big x-icon-home'>Home</a>
-            <a href="javascript:void(0)" id='navbar_refresh' class='x-icon-big x-icon-refresh' onclick="xmobile.reloadCurrentPage(); return false;">Refresh</a>
-            <a href="javascript:void(0)" id='navbar_relogin' class='x-icon-big x-icon-user' onclick="xmobile.relogin(); return false;">Relogin</a>
-            <a href="javascript:void(0)" id='xsearch' class='x-icon-big x-icon-search'>Search</a>
-            <a href="#xnetwork" id='navbar_network' class='x-icon-big x-icon-dashboard' >Status</a>
-        </div>
-        
-        <!-- this is the default left side nav menu -->
-        <nav class="off">
-            <ul>
-                <li><a class="x-icon-small x-icon-home" href="#main">Home</a></li>
-                <li><a class="x-icon-small x-icon-dashboard" href="#xnetwork">Status</a></li>
-                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('local');">Local Wiki</a></li>
-                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('intranet');">Sales</a></li>
-                <li><a class="x-icon-small x-icon-cloud" href="#xhome" onClick="xmobile.setCurrentConfig('projects');">Projects</a></li>
-            </ul>
-        </nav>
-    </div>
-</body>
+    </body>
 </html>

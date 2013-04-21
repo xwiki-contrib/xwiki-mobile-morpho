@@ -243,8 +243,8 @@ t1287630042
 s3019
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDV.h
-c000000005116664300000000000006C5
-t1360422467
+c00000000510D3CF000000000000006C5
+t1359822064
 s1733
 i"CDVAvailability.h"
 i"CDVPlugin.h"
@@ -283,46 +283,46 @@ i"UIDevice+Extensions.h"
 i"JSONKit.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVAccelerometer.h
-c000000005116664300000000000004A4
-t1360422467
+c00000000510D3CF000000000000004A4
+t1359822064
 s1188
 i<UIKit/UIKit.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVAccelerometer.m
-c0000000051166643000000000000105A
-t1360422467
+c00000000510D3CF0000000000000105A
+t1359822064
 s4186
 i"CDVAccelerometer.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVAvailability.h
-c00000000511666430000000000000ABC
-t1360422467
+c00000000510D3CF00000000000000ABC
+t1359822064
 s2748
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVBattery.h
-c0000000051166643000000000000053A
-t1360422467
+c00000000510D3CF0000000000000053A
+t1359822064
 s1338
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVBattery.m
-c0000000051166643000000000000163B
-t1360422467
+c00000000510D3CF0000000000000163B
+t1359822064
 s5691
 i"CDVBattery.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCamera.h
-c00000000511666430000000000000C5E
-t1360422467
+c00000000510D3CF00000000000000C5E
+t1359822064
 s3166
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCamera.m
-c00000000511666430000000000005520
-t1360422467
+c00000000510D3CF00000000000005520
+t1359822064
 s21792
 i"CDVCamera.h"
 i"NSArray+Comparisons.h"
@@ -331,8 +331,8 @@ i"NSDictionary+Extensions.h"
 i<MobileCoreServices/UTCoreTypes.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCapture.h
-c0000000051166643000000000000123F
-t1360422467
+c00000000510D3CF0000000000000123F
+t1359822064
 s4671
 i<Foundation/Foundation.h>
 i<MobileCoreServices/MobileCoreServices.h>
@@ -341,8 +341,8 @@ i"CDVPlugin.h"
 i"CDVFile.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCapture.m
-c00000000511666430000000000008EAA
-t1360422467
+c00000000510D3CF00000000000008EAA
+t1359822064
 s36522
 i"CDVCapture.h"
 i"JSONKit.h"
@@ -350,22 +350,22 @@ i"CDVAvailability.h"
 i"CDVViewController.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCommandDelegate.h
-c00000000511666430000000000000862
-t1360422467
+c00000000510D3CF00000000000000862
+t1359822064
 s2146
 i"CDVAvailability.h"
 i"CDVInvokedUrlCommand.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCommandDelegateImpl.h
-c00000000511666430000000000000473
-t1360422467
+c00000000510D3CF00000000000000473
+t1359822064
 s1139
 i<UIKit/UIKit.h>
 i"CDVCommandDelegate.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCommandDelegateImpl.m
-c00000000511666430000000000001150
-t1360422467
+c00000000510D3CF00000000000001150
+t1359822064
 s4432
 i"CDVCommandDelegateImpl.h"
 i"CDVCommandQueue.h"
@@ -373,14 +373,14 @@ i"CDVPluginResult.h"
 i"CDVViewController.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCommandQueue.h
-c000000005116664300000000000005AA
-t1360422467
+c00000000510D3CF000000000000005AA
+t1359822064
 s1450
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCommandQueue.m
-c000000005116664300000000000014AD
-t1360422467
+c00000000510D3CF000000000000014AD
+t1359822064
 s5293
 i<objc/message.h>
 i"CDV.h"
@@ -389,49 +389,49 @@ i"CDVViewController.h"
 i"CDVCommandDelegateImpl.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVConfigParser.h
-c00000000511666430000000000000427
-t1360422467
+c00000000510D3CF00000000000000427
+t1359822064
 s1063
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVConfigParser.m
-c00000000511666430000000000000915
-t1360422467
+c00000000510D3CF00000000000000915
+t1359822064
 s2325
 i"CDVConfigParser.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVConnection.h
-c0000000051166643000000000000043E
-t1360422467
+c00000000510D3CF0000000000000043E
+t1359822064
 s1086
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 i"CDVReachability.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVConnection.m
-c00000000511666430000000000000FC0
-t1360422467
+c00000000510D3CF00000000000000FC0
+t1359822064
 s4032
 i"CDVConnection.h"
 i"CDVReachability.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVContact.h
-c00000000511666430000000000001640
-t1360422467
+c00000000510D3CF00000000000001640
+t1359822064
 s5696
 i<Foundation/Foundation.h>
 i<AddressBook/ABAddressBook.h>
 i<AddressBookUI/AddressBookUI.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVContact.m
-c00000000511666430000000000013428
-t1360422467
+c00000000510D3CF00000000000013428
+t1359822064
 s78888
 i"CDVContact.h"
 i"NSDictionary+Extensions.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVContacts.h
-c000000005116664300000000000014AA
-t1360422467
+c00000000510D3CF000000000000014AA
+t1359822064
 s5290
 i<Foundation/Foundation.h>
 i<AddressBook/ABAddressBook.h>
@@ -440,8 +440,8 @@ i"CDVPlugin.h"
 i"CDVContact.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVContacts.m
-c00000000511666430000000000006DEE
-t1360422467
+c00000000510D3CF00000000000006DEE
+t1359822064
 s28142
 i"CDVContacts.h"
 i<UIKit/UIKit.h>
@@ -450,74 +450,74 @@ i"NSDictionary+Extensions.h"
 i"CDVNotification.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCordovaView.h
-c0000000051166643000000000000034E
-t1360422467
+c00000000510D3CF0000000000000034E
+t1359822064
 s846
 i<UIKit/UIKit.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVCordovaView.m
-c0000000051166643000000000000045C
-t1360422467
+c00000000510D3CF0000000000000045C
+t1359822064
 s1116
 i"CDVCordovaView.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVDebug.h
-c00000000511666430000000000000401
-t1360422467
+c00000000510D3CF00000000000000401
+t1359822064
 s1025
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVDebugConsole.h
-c000000005116664300000000000003B5
-t1360422467
+c00000000510D3CF000000000000003B5
+t1359822064
 s949
 i<Foundation/Foundation.h>
 i<UIKit/UIKit.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVDebugConsole.m
-c000000005116664300000000000004B4
-t1360422467
+c00000000510D3CF000000000000004B4
+t1359822064
 s1204
 i"CDVDebugConsole.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVDevice.h
-c000000005116664300000000000003B5
-t1360422467
+c00000000510D3CF000000000000003B5
+t1359822064
 s949
 i<UIKit/UIKit.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVDevice.m
-c00000000511666430000000000000BBA
-t1360422467
+c00000000510D3CF00000000000000BBA
+t1359822064
 s3002
 i<sys/types.h>
 i<sys/sysctl.h>
 i"CDV.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVEcho.h
-c00000000511666430000000000000342
-t1360422467
+c00000000510D3CF00000000000000342
+t1359822064
 s834
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVEcho.m
-c0000000051166643000000000000064E
-t1360422467
+c00000000510D3CF0000000000000064E
+t1359822064
 s1614
 i"CDVEcho.h"
 i"CDV.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVFile.h
-c00000000511666430000000000000F3F
-t1360422467
+c00000000510D3CF00000000000000F3F
+t1359822064
 s3903
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVFile.m
-c0000000051166643000000000000B8E0
-t1360422467
+c00000000510D3CF0000000000000B8E0
+t1359822064
 s47328
 i"CDVFile.h"
 i"NSArray+Comparisons.h"
@@ -529,106 +529,106 @@ i"CDVAvailability.h"
 i"sys/xattr.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVFileTransfer.h
-c00000000511666430000000000000A64
-t1360422467
+c00000000510D3CF00000000000000A64
+t1359822064
 s2660
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVFileTransfer.m
-c000000005116664300000000000060EF
-t1360422467
+c00000000510D3CF000000000000060EF
+t1359822064
 s24815
 i"CDV.h"
 i<CFNetwork/CFNetwork.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVGlobalization.h
-c00000000511666430000000000001903
-t1360422467
+c00000000510D3CF00000000000001903
+t1359822064
 s6403
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVGlobalization.m
-c00000000511666430000000000008567
-t1360422467
+c00000000510D3CF00000000000008567
+t1359822064
 s34151
 i"CDVGlobalization.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVInAppBrowser.h
-c00000000511666430000000000000993
-t1360422467
+c00000000510D3CF00000000000000993
+t1359822064
 s2451
 i"CDVPlugin.h"
 i"CDVInvokedUrlCommand.h"
 i"CDVScreenOrientationDelegate.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVInAppBrowser.m
-c0000000051166643000000000000477D
-t1360422467
+c00000000510D3CF0000000000000477D
+t1359822064
 s18301
 i"CDVInAppBrowser.h"
 i"CDVPluginResult.h"
 i"CDVViewController.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVInvokedUrlCommand.h
-c00000000511666430000000000000907
-t1360422467
+c00000000510D3CF00000000000000907
+t1359822064
 s2311
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVInvokedUrlCommand.m
-c00000000511666430000000000000D7B
-t1360422467
+c00000000510D3CF00000000000000D7B
+t1359822064
 s3451
 i"CDVInvokedUrlCommand.h"
 i"JSONKit.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLocalStorage.h
-c000000005116664300000000000006E4
-t1360422467
+c00000000510D3CF000000000000006E4
+t1359822064
 s1764
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLocalStorage.m
-c0000000051166643000000000000517F
-t1360422467
+c00000000510D3CF0000000000000517F
+t1359822064
 s20863
 i"CDVLocalStorage.h"
 i"CDV.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLocation.h
-c00000000511666430000000000000E2C
-t1360422467
+c00000000510D3CF00000000000000E2C
+t1359822064
 s3628
 i<UIKit/UIKit.h>
 i<CoreLocation/CoreLocation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLocation.m
-c00000000511666430000000000005E82
-t1360422467
+c00000000510D3CF00000000000005E82
+t1359822064
 s24194
 i"CDVLocation.h"
 i"CDVViewController.h"
 i"NSArray+Comparisons.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLogger.h
-c00000000511666430000000000000377
-t1360422467
+c00000000510D3CF00000000000000377
+t1359822064
 s887
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVLogger.m
-c00000000511666430000000000000488
-t1360422467
+c00000000510D3CF00000000000000488
+t1359822064
 s1160
 i"CDVLogger.h"
 i"CDV.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVNotification.h
-c000000005116664300000000000004B5
-t1360422467
+c00000000510D3CF000000000000004B5
+t1359822064
 s1205
 i<Foundation/Foundation.h>
 i<UIKit/UIKit.h>
@@ -636,15 +636,15 @@ i<AudioToolbox/AudioServices.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVNotification.m
-c00000000511666430000000000000D57
-t1360422467
+c00000000510D3CF00000000000000D57
+t1359822064
 s3415
 i"CDVNotification.h"
 i"NSDictionary+Extensions.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVPlugin.h
-c00000000511666430000000000000903
-t1360422467
+c00000000510D3CF00000000000000903
+t1359822064
 s2307
 i<Foundation/Foundation.h>
 i<UIKit/UIKit.h>
@@ -653,36 +653,36 @@ i"NSMutableArray+QueueAdditions.h"
 i"CDVCommandDelegate.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVPlugin.m
-c00000000511666430000000000001531
-t1360422467
+c00000000510D3CF00000000000001531
+t1359822064
 s5425
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVPluginResult.h
-c00000000511666430000000000000989
-t1360422467
+c00000000510D3CF00000000000000989
+t1359822064
 s2441
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVPluginResult.m
-c0000000051166643000000000000125B
-t1360422467
+c00000000510D3CF0000000000000125B
+t1359822064
 s4699
 i"CDVPluginResult.h"
 i"JSONKit.h"
 i"CDVDebug.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVReachability.h
-c00000000511666430000000000000FF4
-t1360422467
+c00000000510D3CF00000000000000FF4
+t1359822064
 s4084
 i<Foundation/Foundation.h>
 i<SystemConfiguration/SystemConfiguration.h>
 i<netinet/in.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVReachability.m
-c000000005116664300000000000026CE
-t1360422467
+c00000000510D3CF000000000000026CE
+t1359822064
 s9934
 i<sys/socket.h>
 i<netinet/in.h>
@@ -694,14 +694,14 @@ i<CoreFoundation/CoreFoundation.h>
 i"CDVReachability.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVScreenOrientationDelegate.h
-c00000000511666430000000000000408
-t1360422467
+c00000000510D3CF00000000000000408
+t1359822064
 s1032
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVSound.h
-c00000000511666430000000000000C66
-t1360422467
+c00000000510D3CF00000000000000C66
+t1359822064
 s3174
 i<Foundation/Foundation.h>
 i<AudioToolbox/AudioServices.h>
@@ -709,37 +709,37 @@ i<AVFoundation/AVFoundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVSound.m
-c00000000511666430000000000005F8D
-t1360422467
+c00000000510D3CF00000000000005F8D
+t1359822064
 s24461
 i"CDVSound.h"
 i"CDVViewController.h"
 i"NSArray+Comparisons.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVSplashScreen.h
-c000000005116664300000000000003CB
-t1360422467
+c00000000510D3CF000000000000003CB
+t1359822064
 s971
 i<Foundation/Foundation.h>
 i"CDVPlugin.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVSplashScreen.m
-c0000000051166643000000000000060C
-t1360422467
+c00000000510D3CF0000000000000060C
+t1359822064
 s1548
 i"CDVSplashScreen.h"
 i"CDVViewController.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVURLProtocol.h
-c000000005116664300000000000004E3
-t1360422467
+c00000000510D3CF000000000000004E3
+t1359822064
 s1251
 i<Foundation/Foundation.h>
 i"CDVAvailability.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVURLProtocol.m
-c00000000511666430000000000001E49
-t1360422467
+c00000000510D3CF00000000000001E49
+t1359822064
 s7753
 i"CDVURLProtocol.h"
 i"CDVCommandQueue.h"
@@ -747,8 +747,8 @@ i"CDVWhitelist.h"
 i"CDVViewController.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVViewController.h
-c00000000511666430000000000000C29
-t1360422467
+c00000000510D3CF00000000000000C29
+t1359822064
 s3113
 i"CDVCordovaView.h"
 i"JSONKit.h"
@@ -759,8 +759,8 @@ i"CDVWhitelist.h"
 i"CDVScreenOrientationDelegate.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVViewController.m
-c00000000511666430000000000009829
-t1360422467
+c00000000510D3CF00000000000009829
+t1359822064
 s38953
 i<objc/message.h>
 i"CDV.h"
@@ -769,20 +769,20 @@ i"CDVCommandDelegateImpl.h"
 i"CDVConfigParser.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVWhitelist.h
-c0000000051166643000000000000052D
-t1360422467
+c00000000510D3CF0000000000000052D
+t1359822064
 s1325
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/CDVWhitelist.m
-c00000000511666430000000000001A87
-t1360422467
+c00000000510D3CF00000000000001A87
+t1359822064
 s6791
 i"CDVWhitelist.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/JSON/JSONKit.h
-c00000000511666430000000000002F65
-t1360422467
+c00000000510D3CF00000000000002F65
+t1359822064
 s12133
 i<stddef.h>
 i<stdint.h>
@@ -797,8 +797,8 @@ i<Foundation/NSObjCRuntime.h>
 i<Foundation/NSString.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/JSON/JSONKit.m
-c0000000051166643000000000002C627
-t1360422467
+c00000000510D3CF0000000000002C627
+t1359822064
 s181799
 i<stdio.h>
 i<stdlib.h>
@@ -823,70 +823,70 @@ i<Foundation/NSNull.h>
 i<Foundation/NSObjCRuntime.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSArray+Comparisons.h
-c00000000511666430000000000000392
-t1360422467
+c00000000510D3CF00000000000000392
+t1359822064
 s914
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSArray+Comparisons.m
-c000000005116664300000000000004D8
-t1360422467
+c00000000510D3CF000000000000004D8
+t1359822064
 s1240
 i"NSArray+Comparisons.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSData+Base64.h
-c0000000051166643000000000000037D
-t1360422467
+c00000000510D3CF0000000000000037D
+t1359822064
 s893
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSData+Base64.m
-c000000005116664300000000000022B4
-t1360422467
+c00000000510D3CF000000000000022B4
+t1359822064
 s8884
 i"NSData+Base64.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSDictionary+Extensions.h
-c000000005116664300000000000005DA
-t1360422467
+c00000000510D3CF000000000000005DA
+t1359822064
 s1498
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSDictionary+Extensions.m
-c00000000511666430000000000001056
-t1360422467
+c00000000510D3CF00000000000001056
+t1359822064
 s4182
 i"NSDictionary+Extensions.h"
 i<math.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSMutableArray+QueueAdditions.h
-c000000005116664300000000000003A0
-t1360422467
+c00000000510D3CF000000000000003A0
+t1359822064
 s928
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/NSMutableArray+QueueAdditions.m
-c00000000511666430000000000000584
-t1360422467
+c00000000510D3CF00000000000000584
+t1359822064
 s1412
 i"NSMutableArray+QueueAdditions.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/UIDevice+Extensions.h
-c00000000511666430000000000000476
-t1360422467
+c00000000510D3CF00000000000000476
+t1359822064
 s1142
 i<Foundation/Foundation.h>
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/Classes/UIDevice+Extensions.m
-c00000000511666430000000000000620
-t1360422467
+c00000000510D3CF00000000000000620
+t1359822064
 s1568
 i<UIKit/UIKit.h>
 i"UIDevice+Extensions.h"
 
 N/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/src/main/CordovaLib/CordovaLib_Prefix.pch
-c00000000511666430000000000000346
-t1360422467
+c00000000510D3CF00000000000000346
+t1359822064
 s838
 i<Foundation/Foundation.h>
 

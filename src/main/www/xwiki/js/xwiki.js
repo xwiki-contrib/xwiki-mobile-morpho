@@ -22,15 +22,101 @@
  XWiki communication and pages display
  */
 
-$(document).ready(function() {
-                  
-                  nq.startQueue();
-                  
-                  xmobile.initialize();
-                  xmobile.loginToServices();
-                                   
-                  // allow multitouch gestures
-                  // self.view.multipleTouchEnabled=1;
-                  // self.view.exclusiveTouch=0;
-                  });
+// load require js modules
+require.config({
+               paths: {
+               jquery: "../js/jq.mobi",
+               jqui: "../js/jq.ui",
+               underscore: "../js/underscore",
+               backbone: "../js/backbone",
+               xconfig: "js/xwiki-config",
+               xmobile: "js/xwiki-mobile",
+               xnetwork: "js/xwiki-network",
+               xservice: "js/xwiki-service",
+               xscreen: "js/xwiki-screen",
+               xscreenapps: "js/xwiki-screen-apps"
+               },
+               shim: {
+               'backbone': {
+               deps: ['underscore', 'jquery'],
+               exports: 'Backbone',
+               init: function() {
+               Backbone.$ = window.$;
+               }
+               },
+               'underscore': {
+               exports: '_'
+               },
+               'jquery' : {
+               exports:'jq'
+               },
+               'jqui' : {
+               deps: ['jquery']
+               },
+               'xnetwork' : {
+               deps: ['jquery', 'jqui'],
+               exports:'nq'
+               },
+               'xmobile' : {
+               deps: ['jquery', 'jqui', 'xservice', 'backbone']
+               },
+               'xservice' : {
+               deps: ['jquery', 'jqui', 'xnetwork']
+               },
+               'xconfig' : {
+               deps: ['xservice', 'xmobile']
+               },
+               'xscreen' : {
+               deps: ['xconfig']
+               },
+               'xscreenapps' : {
+               deps: ['xscreen']
+               }
+               }
+               });
 
+/*
+ define(function (require) {
+ var Backbone = require('backbone')
+ // do something cool...
+ });
+ */
+
+require(["jquery", "xscreen", "xscreenapps"], function($) {
+        /*
+         if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
+         var script=document.createElement("script");
+         script.src="../js/jq.desktopBrowsers.js";
+         var tag=$("head").append(script);
+         }
+         */
+        
+        // declare backbone routes
+        var Router = Backbone.Router.extend({
+                                            routes : {
+                                            }});
+        
+        // Initiate the router
+        router = new Router;
+        
+        $(document).ready(function() {
+                          nq.startQueue();
+                          
+                          xmobile.initialize();
+                          xmobile.setRouter(router);
+                          xmobile.initScreens();
+                          xmobile.loginToServices();
+                          
+                          Backbone.history.start();
+                  
+                          // force loading of initial screen
+                          $.ui.loadContent(location.hash ,false,false,"up");
+ 
+                          xmobile.showWikis();
+                          
+                          // allow multitouch gestures
+                          // self.view.multipleTouchEnabled=1;
+                          // self.view.exclusiveTouch=0;
+                          });
+        
+        });

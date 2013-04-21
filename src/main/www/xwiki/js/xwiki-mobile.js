@@ -23,16 +23,92 @@
  */
 
 function XWikiMobile(xservices) {
-    this.xservices = xservices;
+    this.xservices = null;
+    try {
+        this.readConfig()
+    } catch (e) {
+        console.log("Exception reading config " + e);
+    }
+
+    if (_.size(this.xservices) == 0) {
+      this.xservices = xservices;
+      this.saveConfig();
+    }
+
+    // list of screens
+    this.xscreens = {};
+    
+    this.router = null;
 }
 
+XWikiMobile.prototype.saveConfig = function() {
+    var config = {};
+    $.each(this.xservices, function(key, service) {
+           config[key] = service.getConfig();
+           })
+    window.localStorage.setItem("xconfig", JSON.stringify(config));
+}
+
+XWikiMobile.prototype.readConfig = function() {
+    var allconfig = JSON.parse(window.localStorage.getItem("xconfig"));
+    this.xservices = {};
+    var count = 0;
+    var that = this;
+    $.each(allconfig, function(key, config) {
+           console.log("Reading config: " + key + " " + config);
+           that.xservices[key] = new XWikiService(config);
+           count ++;
+           });
+    if (count==0)
+        this.xservices = {};
+}
+
+XWikiMobile.prototype.saveWikiConfig = function(wikiName, xconfig) {
+    if (wikiName!=xconfig.id) {
+        if (this.xservices[xconfig.id] == undefined) {
+         this.xservices[xconfig.id] = this.xservices[wikiName];
+         delete this.xservices[wikiName];
+        } else
+            xconfig.id = wikiName;
+    }
+    
+    this.xservices[xconfig.id].setConfig(xconfig);
+    this.saveConfig();
+    xmobile.showWikis();
+}
+
+XWikiMobile.prototype.addWikiConfig = function(wikiName) {
+    if (this.xservices[wikiName]==undefined) {
+        var url = "https://" + wikiName + ".cloud.xwiki.com";
+        var baseurl = url + "/xwiki";
+        var viewurl = baseurl + "/bin/view/";
+        var resturl = baseurl + "/rest/wikis/xwiki/";
+        
+        this.xservices[wikiName] = new XWikiService({ id: wikiName, name: wikiName, url: url, baseurl: baseurl, viewurl: viewurl, resturl: resturl, username: "", password: "", autoconnect: false });
+        
+        this.saveConfig();
+        xmobile.showWikis();
+        return true;
+    } else {
+        return false;
+    }
+}
+XWikiMobile.prototype.deleteWikiConfig = function(wikiName) {
+    delete this.xservices[wikiName];
+    this.saveConfig();
+    xmobile.showWikis();
+}
+
+// this list is important in order to force refreshing on the page
 XWikiMobile.prototype.initialize = function() {
-    this.xscreens = { recentdocs : showRecentDocs, page: showPage, network : showNetworkStatus, spaces : showSpaces, space: showSpace };
+}
+
+XWikiMobile.prototype.setRouter = function(router) {
+    this.router = router;
 }
 
 XWikiMobile.prototype.loginToServices = function() {
     $.each(this.xservices, function(key, xservice) {
-           xservice.setNetworkQueue(nq);
            if (xservice.autoconnect==true)
             xservice.login("default");
            });
@@ -40,10 +116,15 @@ XWikiMobile.prototype.loginToServices = function() {
 
 XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
     var screenPageName = this.getCurrentConfig() + "." + this.getCurrentWiki() + "." + screenName;
-    if (screenName=="page")
+    if (screenName=="xapps")
+        screenPageName = this.getCurrentConfig() + "." + this.getCurrentWiki() + ".login";
+    if (screenName=="xpage")
         screenPageName += "." + this.getCurrentPage();
-    if (screenName=="space")
+    if (screenName=="xapp")
+        screenPageName += "." + this.getCurrentAppName();
+    if (screenName=="xspace")
         screenPageName += "." + this.getCurrentSpace();
+    console.log("Screen Page Name: " + screenPageName);
     return screenPageName;
 }
 
@@ -59,10 +140,13 @@ XWikiMobile.prototype.showNetworkInactive = function() {
 
 XWikiMobile.prototype.updateNetworkActive = function() {
     // network is not active anymore
-    if (nq.lowPriorityQueue.length + nq.highPriorityQueue.length==0) {
-        this.showNetworkInactive();
+    var nbactive = nq.lowPriorityQueue.length + nq.highPriorityQueue.length + nq.runningQueue.length;
+    if (nbactive==0) {
+        this.showNetworkActive();
+        $.ui.removeBadge("#navbar_network")
     } else {
         this.showNetworkInactive();
+        $.ui.updateBadge("#navbar_network", "" + nbactive, "tr")
     }
 }
 
@@ -74,7 +158,7 @@ XWikiMobile.prototype.reloadCurrentPage = function() {
     // we are forcing a reload of the current page
     if (this.xscreens[screenName]!=null) {
         console.log("Forcing refresh of page " + screenName);
-        this.xscreens[screenName](false);
+        this.xscreens[screenName].showCallback(false);
     }
 }
 
@@ -91,23 +175,75 @@ XWikiMobile.prototype.relogin = function() {
 }
 
 XWikiMobile.prototype.xwikiCallback = function(request) {
+    try {
     // network is not active anymore
     this.updateNetworkActive();
     
-    var screenName = location.hash.substring(2);
-    var i1 = screenName.indexOf("_");
+    var screenName = location.hash.substring(1);
+        
+        
+    var i1 = screenName.indexOf("/");
     if (i1!=-1)
         screenName = screenName.substring(0, i1);
-    var reqname = request.name;
+        console.log("ScreenName: " + screenName);
+   
+        var reqname = request.name;
+        console.log("Request name: " + reqname);
+        
     if (reqname == this.getCurrentScreenPageName(screenName)) {
-        console.log("Correct screen: " + reqname);
-        this.xscreens[screenName]();
+        console.log("Correct screen: " + reqname + " " + screenName);
+        if (this.xscreens[screenName] != undefined) {
+            this.xscreens[screenName].showCallback(screen)
+        }
+    }        
+    } catch (e) {
+        console.log("Exception in screen callback: " + e);
     }
 }
 
-XWikiMobile.prototype.showNetworkStatus = function(div) {
-    this.updateNetworkActive();
-    $("#xnetwork").html(nq.getQueueStatus());
+
+XWikiMobile.prototype.addScreen = function(screen) {
+    this.xscreens[screen.name] = screen;
+}
+
+XWikiMobile.prototype.initScreens = function() {
+    console.log("Initializing screens");
+    $.each(this.xscreens, function(key, screen) {
+        console.log("Initializing screen: " + screen.name);
+        
+        // adding route
+        this.router.route(screen.route, screen.name);
+        this.router.on('route:' + screen.name , function(p1,p2,p3,p4,p5) {
+                  console.log("In router callback");
+                  screen.routeCallback(p1,p2,p3,p4,p5);
+                  });
+        
+        // adding panel to UI
+        if (screen.panelcontent!="")
+         $.ui.addContentDiv(screen.name,screen.panelcontent,screen.title);
+           
+        // adding menus
+        screen.addMainMenus(screen);
+    });
+}
+
+XWikiMobile.prototype.insertChildMenus = function(parentscreen) {
+    $.each(this.xscreens, function(key, screen) {
+           if (screen.parent==parentscreen.name && screen.addParentMenus != undefined) {
+           screen.addParentMenus();
+           }
+           });
+}
+
+XWikiMobile.prototype.showWikis = function() {
+    $("#xwikilist").html("");
+    var items = "";
+    var that = this;
+    $.each(this.xservices, function(key, val) {
+           var wikiConfig = val.getConfig();
+           items += "<li><a class='x-icon x-icon-cloud' href='#xwikihome/" + wikiConfig.id + "' id='jqmlink' onClick='return false;'>" + wikiConfig.name + "</a></li>";
+           });
+    $("#xwikilist").html(items);
 }
 
 XWikiMobile.prototype.getCurrentService = function() {
@@ -138,6 +274,23 @@ XWikiMobile.prototype.setCurrentSpace = function(space) {
     sessionStorage.currentSpace = space;
 }
 
+XWikiMobile.prototype.getCurrentAppName = function() {
+    return sessionStorage.currentApp;
+}
+
+XWikiMobile.prototype.getCurrentAppPrettyName = function() {
+    return sessionStorage.currentAppPrettyName;
+}
+
+XWikiMobile.prototype.getCurrentAppClassName = function() {
+    return sessionStorage.currentAppClassName;
+}
+
+XWikiMobile.prototype.setCurrentApp = function(appName, prettyName, className) {
+    sessionStorage.currentApp = appName;
+    sessionStorage.currentAppClassName = className;
+    sessionStorage.currentPrettyName = prettyName;
+}
 
 XWikiMobile.prototype.getCurrentPage = function() {
     return sessionStorage.currentPage;
@@ -147,73 +300,6 @@ XWikiMobile.prototype.setCurrentPage = function(page) {
     sessionStorage.currentPage = page;
 }
 
-XWikiMobile.prototype.showWikiHome = function(cache) {
-    var xservice = this.getCurrentService();
-    if (!xservice.isLoggedIn())
-        xservice.login("default");
-    
-}
-
-XWikiMobile.prototype.showRecentDocs = function(cache) {
-    this.updateNetworkActive();
-    $("#xwikirecentdocslist").html("");       
-    var data = this.getCurrentService().getRecentDocs(this.getCurrentWiki(), cache);
-    if (data!=null) {
-        var items = "";
-        var that = this;
-        $.each(data.searchResults, function(key, val) {
-               items += '<li>' + that.getPageHTML(val) + '</li>';
-               }); 
-        $("#xwikirecentdocslist").html(items);
-    }
-}
-
-XWikiMobile.prototype.showSpaces = function(cache) {
-    this.updateNetworkActive();
-    $("#xwikispaceslist").html("");
-    var data = this.getCurrentService().getSpaces(this.getCurrentWiki(), cache);
-    if (data!=null) {
-        var items = "";
-        var that = this;
-        $.each(data.spaces, function(key, val) {
-               var link = "<a href='#xspace' onclick='xmobile.setCurrentSpace(\"" + val.name + "\");'>" + val.name + "</a>"
-               items += '<li>' + link + '</li>';
-               });
-        $("#xwikispaceslist").html(items);
-    }
-}
-
-XWikiMobile.prototype.showSpace = function(cache) {
-    this.updateNetworkActive();
-    $("#xwikispacedocslist").html("");
-    var data = this.getCurrentService().getSpaceDocs(this.getCurrentWiki(), this.getCurrentSpace(), cache);
-    if (data!=null) {
-        var items = "";
-        var that = this;
-        $.each(data.searchResults, function(key, val) {
-               items += '<li>' + that.getPageHTML(val) + '</li>';
-               });
-        $("#xwikispacedocslist").html(items);
-    }
-}
-
-XWikiMobile.prototype.setPageContent = function(html) {
-    document.getElementById('xpageframe').contentDocument.getElementById('xwikipagecontent').innerHTML = html;
-    if (html!="")
-     squeezeFrame();
-}
-
-XWikiMobile.prototype.showPage = function(cache) {
-    this.updateNetworkActive();
-    console.log("page frame: " + $("#xpageframe"));
-    this.setPageContent("");
-    var data = this.getCurrentService().getPage(this.getCurrentWiki(), this.getCurrentPage(), cache);
-    if (data!=null) {
-    this.setPageContent(data);
-    }
-}
-
-
 XWikiMobile.prototype.getDate = function(gregorianDate) {
     var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
     var d = new Date(parseInt(time));
@@ -221,9 +307,9 @@ XWikiMobile.prototype.getDate = function(gregorianDate) {
     return d.getDay() + "/" + d.getMonth() + "/" + d.getYear();
 }
 
-XWikiMobile.prototype.getPageHTML = function(val) {
+XWikiMobile.prototype.getPageHTML = function(wikiName, val) {
     var fullName = val.pageFullName;
-    return "<a href='#xpage' onclick='xmobile.setCurrentPage(\"" + fullName + "\");'>" + fullName + "</a>";
+    return "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>" + fullName + "</a>";
     /*
      var str = "<div class='pageitem'>"
      + "<div class='pageitem-title'>" + val.title + "</div>";
@@ -246,10 +332,8 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
         if (i2!=-1) {
             var page = url.substring(i2+1);
             page = page.replace('/', '.');
-            this.setCurrentPage(page);
-            this.showPage();
-            // this is complicated for now as we are loading in the same div
-            // $.ui.pushHistory("xpage", "xpage", "", "");
+            
+            router.navigate("#xpage/" + this.getCurrentConfig() + "/" + page, {trigger: true, replace: false});
         }
         return false;
     } else {
@@ -258,35 +342,6 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
     }
     return false;
 }
-
-function showRecentDocs(cache) {
-    return xmobile.showRecentDocs(cache);
-}
-
-function showSpaces(cache) {
-    return xmobile.showSpaces(cache);
-}
-
-function showSpace(cache) {
-    return xmobile.showSpace(cache);
-}
-
-function showPage(cache) {
-    return xmobile.showPage(cache);
-}
-
-function showNetworkStatus(cache) {
-    return xmobile.showNetworkStatus(cache);
-}
-
-function showWikiHome(cache) {
-    return xmobile.showWikiHome(cache);
-}
-
-function loadedPanel() {
-    return xmobile.updateNetworkActive();
-}
-
 
 /*
 function getPageHTMLFromObject(val) {

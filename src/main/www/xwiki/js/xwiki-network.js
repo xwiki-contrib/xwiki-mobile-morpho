@@ -64,9 +64,6 @@ NetworkQueue.prototype.addRequest = function(service, name, url, priority, cache
         return 2;
     }
     
-    // show activity on the network
-    xmobile.showNetworkActive();
-    
     var request = { url : url, name : name, priority: priority, cache: cache, status : 1, data : "", resultCode : 0, startDate : new Date(), duration : -1};
     this.requestsByName[name] = request;
     
@@ -75,6 +72,9 @@ NetworkQueue.prototype.addRequest = function(service, name, url, priority, cache
     } else {
         this.highPriorityQueue.push(name);
     }
+
+    // show activity on the network
+    xmobile.updateNetworkActive();
 };
 
 /**
@@ -137,27 +137,40 @@ NetworkQueue.prototype.nextRequest = function() {
             console.log("start ajax " + nextReqName + ": " + nextReq.url);
             $.ajax({
                    type:"GET",
+                   dataType : "text",
                    url: nextReq.url ,
+                   timeout: 3000,
                    success: function(data, text, xhr) {
+                   try {
+                   console.log("AJAX done entry " + nextReqName + " code: " + xhr.status);
                    // TODO do not assume it's the first request launched
                    that.runningQueue.shift();
                    that.lastResults.push(nextReqName);
                    nextReq.data = data;
                    nextReq.resultCode = xhr.status;
                    nextReq.status = 4;
-                   console.log("done ajax " + nextReqName + " code: " + nextReq.resultCode);
+                   console.log("AJAX done exit " + nextReqName + " code: " + nextReq.resultCode);
                    // on success let's do a callback to the UI to refresh the screen if new data arrived
                    xmobile.xwikiCallback(nextReq);
+                   } catch (e) {
+                   console.log("AJAX exception in success " + nextReqName + " code: " + nextReq.resultCode + " " + e);
+                   }
                    },
                    error: function(xhr, text, error) {
+                   try {
+                   console.log("AJAX done entry " + nextReqName + " code: " + xhr.status);
                    // TODO manage retries and relogins
                    that.runningQueue.shift();
                    that.lastResults.push(nextReqName);
                    nextReq.status = 5;
                    nextReq.resultCode = xhr.status;
+                                    
                    // on error let's do a callback to the UI to show an error
                    xmobile.xwikiCallback(nextReq);
-                   console.log("done ajax with error" + nextReqName + " code: " + nextReq.resultCode);
+                   console.log("AJAX done exit " + nextReqName + " code: " + nextReq.resultCode);
+                   } catch (e) {
+                   console.log("AJAX exception in error " + nextReqName + " code: " + nextReq.resultCode + " " + e);
+                   }
                    }
                    });
         }
