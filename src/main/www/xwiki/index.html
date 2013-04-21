@@ -3,9 +3,8 @@
     <head>
         <title>XWiki Mobile</title>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
-            <meta name="format-detection" content="telephone=no" />
+            <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
             <meta name="apple-mobile-web-app-capable" content="yes" />
-            <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width, height=device-height, target-densitydpi=device-dpi" />
             <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
             <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
             <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
@@ -19,6 +18,7 @@
             <!-- this is the header div -->
             <div id="header">
                 <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
+                <input id="open" type="button" class="button" value="Open" style="display: none; float: right;" onclick="xmobile.open();"/>
             </div>
             
             <div id="content">

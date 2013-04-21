@@ -75,6 +75,7 @@ var xstatusScreen = new XWikiScreen(
                                      this.showCallback();
                                   },
                                   showCallback: function(cache) {
+                                     $.ui.setBackButtonText("Back");
                                      console.log("In status show callback");
                                      xmobile.updateNetworkActive();
                                      $("#xstatus").html(nq.getQueueStatus());
@@ -103,6 +104,7 @@ var xsettingsScreen = new XWikiScreen(
                                     this.showCallback();
                                   },
                                   showCallback: function(cache) {
+                                    $.ui.setBackButtonText("Back");
                                     console.log("In settings show callback");
                                     $("#settings").html("");
                                     var items = "";
@@ -147,6 +149,7 @@ var xsettingScreen = new XWikiScreen(
                                        this.showCallback();
                                       },
                                       showCallback: function(cache) {
+                                        $.ui.setBackButtonText("Back");
                                         console.log("In setting show callback");
                                         var sconfig = xmobile.getCurrentService().getConfig();
                                         var form = document.forms["setting_form"];
@@ -214,6 +217,7 @@ var xwikihomeScreen = new XWikiScreen(
                                     this.showCallback();
                                   },
                                   showCallback: function(cache) {
+                                    $.ui.setBackButtonText("Back");
                                     console.log("In xwikihome show callback");
                                       
                                     // force a login if it is not the case
@@ -260,6 +264,7 @@ var xrecentScreen = new XWikiScreen(
                                         this.showCallback();
                                       },
                                       showCallback: function(cache) {
+                                        $.ui.setBackButtonText("Back");
                                         console.log("In xrecent show callback");
          
                                         $("#xwikirecentdocslist").html("");
@@ -286,7 +291,7 @@ xrecentScreen.addRecentDocsRequest = function(wikiName, priority, cache) {
 
 xrecentScreen.getRecentDocsURL = function(wikiName) {
     var query = "hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-    var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService()>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
+    var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
     return xmobile.getCurrentService().getRestURL(wikiName, searchurl);
 }
 
@@ -332,7 +337,8 @@ var xspacesScreen = new XWikiScreen(
                                   this.showCallback();
                                   },
                                   showCallback: function(cache) {
-                                  console.log("In xspaces show callback");
+                                    $.ui.setBackButtonText("Back");
+                                    console.log("In xspaces show callback");
                                   
                                     $("#xwikispaceslist").html("");
                                     var data = this.getSpaces(xmobile.getCurrentWiki(), cache);
@@ -397,6 +403,7 @@ var xspaceScreen = new XWikiScreen(
                                  this.showCallback();
                                  },
                                  showCallback: function(cache) {
+                                   $.ui.setBackButtonText("Back");
                                    console.log("In xspace show callback");
                                  
                                    $("#xwikispacedocslist").html("");
@@ -426,7 +433,7 @@ xspaceScreen.addSpaceDocsRequest = function(wikiName, spaceName, priority, cache
 
 xspaceScreen.getSpaceDocsURL = function(wikiName, spaceName) {
     var hql = "where doc.space='" + spaceName + "' order by doc.date desc";
-    var spacedocsurl = "query?type=hql&q=" + hql + "&media=json&number=20" + ((xmobile.getCurrentService()>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
+    var spacedocsurl = "query?type=hql&q=" + hql + "&media=json&number=20" + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
     return xmobile.getCurrentService().getRestURL(wikiName, spacedocsurl);
 }
 
@@ -444,6 +451,103 @@ xspaceScreen.getSpaceDocs = function(wikiName, spaceName, cache) {
 }
 
 xmobile.addScreen(xspaceScreen);
+
+// space page
+var xsearchScreen = new XWikiScreen(
+                                   {
+                                   name: "xsearch",
+                                   title: "Search",
+                                   parent: "xwikihome",
+                                    panelcontent: "<ul><form id='searchform' name='searchform' onsubmit='return this.screen.search(this);'>Search Term: <input type='text' name='search' size='20'><input class='button' type='submit' value='Search' /></form></ul><ul id='xwikisearchlist'></ul>",
+                                   route: "xsearch/:wikiName/(:keyword)",
+                                   addMainMenus: function() {
+                                   },
+                                   addParentMenus: function() {
+                                    console.log("Adding search menu");
+                                    var configName = xmobile.getCurrentConfig();
+                                    $("#xwikiactions").append("<li><a class='x-icon x-icon-list x-icon-search' href='#xsearch/" + configName + "/'>Search</a></li>");
+                                   },
+                                   routeCallback: function(wiki, keyword) {
+                                   console.log("In xsearch route callback " + location.hash);
+                                   
+                                   // make sur the config is set
+                                   xmobile.setCurrentConfig(wiki);
+                                   xmobile.setCurrentWiki("default");
+                                   if (keyword == undefined || keyword == null)
+                                    xmobile.setCurrentKeyword("");
+                                   else
+                                    xmobile.setCurrentKeyword(keyword);
+                                   
+                                   this.showCallback();
+                                   },
+                                   showCallback: function(cache) {
+                                    $.ui.setBackButtonText("Back");
+                                    console.log("In xsearch show callback");
+                                    console.log("Screen: " + this);
+                                    document.forms.searchform.screen = this;
+
+                                    if (xmobile.getCurrentKeyword()!="") {
+                                      var data = this.getSearch(xmobile.getCurrentWiki(), xmobile.getCurrentKeyword(), cache);
+                                      if (data!=null) {
+                                        $("#xwikisearchlist").html("");
+                                        var items = "";
+                                        $.each(data.searchResults, function(key, val) {
+                                           items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig(), val) + '</li>';
+                                           });
+                                        $("#xwikisearchlist").html(items);
+                                      }
+                                    }
+                                   }
+                                   }
+                                   );
+
+xsearchScreen.search = function(form) {
+    try {
+        var keyword = form.search.value;
+    if (keyword!=null && keyword!="") {
+        xmobile.router.navigate("#xsearch/" + xmobile.getCurrentConfig() + "/" + keyword, true);
+    }
+    } catch (e) {
+        console.log("Search exception: " + e);
+    }
+    return false;
+}
+
+// adding network functions
+xsearchScreen.addSearchRequest = function(wikiName, keyword, priority, cache) {
+    if (cache==null)
+        cache = true;
+    
+    var searchURL = this.getSearchURL(wikiName, keyword);
+    console.log("requesting search data");
+    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xsearch." + keyword, searchURL, priority, cache, null);
+}
+
+
+xsearchScreen.getSearchURL = function(wikiName, keyword) {
+    var query = keyword + " AND hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
+    var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().prototcol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
+    return xmobile.getCurrentService().getRestURL(wikiName, searchurl);
+}
+
+xsearchScreen.getSearch = function(wikiName, keyword, cache) {
+    var result = nq.getResult(xmobile.getCurrentConfig() + "." + wikiName + ".xsearch." + keyword);
+    if (result==null || cache==false) {
+        if (cache==false)
+            console.log("Forcing getting data cache is false");
+        // we don't have a request we should add it in the queue
+        this.addSearchRequest(wikiName, keyword, "high", cache);
+        return result;
+    } else if (result.status==4 || result.status==3) {
+        return $.parseJSON(result.data);
+    } else {
+        return null;
+    }
+}
+
+xmobile.addScreen(xsearchScreen);
+
+
 
 
 
@@ -470,6 +574,8 @@ var xpageScreen = new XWikiScreen(
                                    this.showCallback();
                                    },
                                    showCallback: function(cache) {
+                                     $.ui.setBackButtonText("Back");
+                                     $("#open").show();
                                      console.log("In xpage show callback");
                                      this.setPageContent("");
                                      var data = this.getPage(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
@@ -511,12 +617,19 @@ xpageScreen.getPage = function(wikiName, pageName, cache) {
 
 xpageScreen.setPageContent = function(html) {
     var frame = document.getElementById('xpageframe');
+    // force content in frame in case it was replayed
     if (frame!=undefined && (frame.contentDocument!=undefined)) {
         var pageContentEl = frame.contentDocument.getElementById('xwikipagecontent');
         if (pageContentEl != undefined) {
             pageContentEl.innerHTML = (html == null) ? "" : html;
             if (html!="")
                 squeezeFrame();
+        } else {
+            var that = this;
+            frame.contentDocument.addEventListener( "DOMContentLoaded", function() {
+                                                   that.setPageContent(html);                                                   
+                                                   }, false);
+            frame.src = "pageframe.html";
         }
     }
 }
@@ -545,4 +658,6 @@ xpageScreen.fixHTMLOnline = function(html, wikiName, pageName) {
 
 xmobile.addScreen(xpageScreen);
 
+                                                                                                
+                                                                                                
 

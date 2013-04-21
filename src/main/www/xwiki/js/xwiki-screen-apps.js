@@ -48,6 +48,7 @@ var xappsScreen = new XWikiScreen(
                                         this.showCallback();
                                       },
                                       showCallback: function(cache) {
+                                        $.ui.setBackButtonText("Back");
                                         console.log("In xapps show callback");
          
                                         $("#xwikiappslist").html("");
@@ -124,6 +125,7 @@ var xappScreen = new XWikiScreen(
                                   this.showCallback();
                                   },
                                   showCallback: function(cache) {
+                                    $.ui.setBackButtonText("Back");
                                     console.log("In xapp show callback");
                                   
                                     $("#xwikiappdocslist").html("");

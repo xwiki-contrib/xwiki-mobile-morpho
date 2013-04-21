@@ -124,6 +124,8 @@ XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
         screenPageName += "." + this.getCurrentAppName();
     if (screenName=="xspace")
         screenPageName += "." + this.getCurrentSpace();
+    if (screenName=="xsearch")
+        screenPageName += "." + this.getCurrentKeyword();
     console.log("Screen Page Name: " + screenPageName);
     return screenPageName;
 }
@@ -194,7 +196,7 @@ XWikiMobile.prototype.xwikiCallback = function(request) {
     if (reqname == this.getCurrentScreenPageName(screenName)) {
         console.log("Correct screen: " + reqname + " " + screenName);
         if (this.xscreens[screenName] != undefined) {
-            this.xscreens[screenName].showCallback(screen)
+            this.xscreens[screenName].showCallback(true)
         }
     }        
     } catch (e) {
@@ -214,8 +216,10 @@ XWikiMobile.prototype.initScreens = function() {
         
         // adding route
         this.router.route(screen.route, screen.name);
+           var sname = screen.name;
         this.router.on('route:' + screen.name , function(p1,p2,p3,p4,p5) {
-                  console.log("In router callback");
+                  console.log("In router callback " + sname);
+                  $("#open").hide();
                   screen.routeCallback(p1,p2,p3,p4,p5);
                   });
         
@@ -237,6 +241,7 @@ XWikiMobile.prototype.insertChildMenus = function(parentscreen) {
 }
 
 XWikiMobile.prototype.showWikis = function() {
+    $.ui.setBackButtonText("Back");
     $("#xwikilist").html("");
     var items = "";
     var that = this;
@@ -301,6 +306,14 @@ XWikiMobile.prototype.setCurrentPage = function(page) {
     sessionStorage.currentPage = page;
 }
 
+XWikiMobile.prototype.getCurrentKeyword = function() {
+    return sessionStorage.currentKeyword;
+}
+
+XWikiMobile.prototype.setCurrentKeyword = function(keyword) {
+    sessionStorage.currentKeyword = keyword;
+}
+
 XWikiMobile.prototype.getDate = function(gregorianDate) {
     var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
     var d = new Date(parseInt(time));
@@ -338,10 +351,23 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
         }
         return false;
     } else {
-        alert("Cannot yet display this url: " + url);
+        if (confirm("This is an external URL. Would you like to open it ?")) {
+            var frame = document.getElementById('xpageframe');
+            if (frame!=undefined)
+                frame.src = url;
+        }
         return false;
     }
     return false;
+}
+
+/*
+ API to open the current page in a separate browser
+ */
+XWikiMobile.prototype.open = function() {
+    var xs = this.getCurrentService();
+    var url = xs.getViewURL(this.getCurrentWiki(), this.getCurrentPage());
+    window.open(url, "_system");
 }
 
 /*
