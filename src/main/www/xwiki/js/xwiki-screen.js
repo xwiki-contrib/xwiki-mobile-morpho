@@ -45,6 +45,9 @@ function XWikiScreen(options) {
     
     // show call back. this is the JS called when there is new data
     this.showCallback = options.showCallback;
+    
+    // set initiliazed to false
+    this.initialized = false;
 };
 
 XWikiScreen.prototype.showScreen = function() {

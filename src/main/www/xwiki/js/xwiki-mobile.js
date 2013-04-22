@@ -179,6 +179,14 @@ XWikiMobile.prototype.relogin = function() {
 
 XWikiMobile.prototype.xwikiCallback = function(request) {
     try {
+        if (request.callback) {
+            request.callback(request);
+        }
+    } catch (e) {
+        console.log("Exception in request callback: " + e);       
+    }
+    
+    try {
     // network is not active anymore
     this.updateNetworkActive();
     
@@ -212,24 +220,27 @@ XWikiMobile.prototype.addScreen = function(screen) {
 XWikiMobile.prototype.initScreens = function() {
     console.log("Initializing screens");
     $.each(this.xscreens, function(key, screen) {
-        console.log("Initializing screen: " + screen.name);
-        
-        // adding route
-        this.router.route(screen.route, screen.name);
-           var sname = screen.name;
-        this.router.on('route:' + screen.name , function(p1,p2,p3,p4,p5) {
-                  console.log("In router callback " + sname);
-                  $("#open").hide();
-                  screen.routeCallback(p1,p2,p3,p4,p5);
-                  });
-        
-        // adding panel to UI
-        if (screen.panelcontent!="")
-         $.ui.addContentDiv(screen.name,screen.panelcontent,screen.title);
+           if (screen.initialized==false) {
+           console.log("Initializing screen: " + screen.name);
            
-        // adding menus
-        screen.addMainMenus(screen);
-    });
+           // adding route
+           this.router.route(screen.route, screen.name);
+           var sname = screen.name;
+           this.router.on('route:' + screen.name , function(p1,p2,p3,p4,p5) {
+                          console.log("In router callback " + sname);
+                          $("#open").hide();
+                          screen.routeCallback(p1,p2,p3,p4,p5);
+                          });
+           
+           // adding panel to UI
+           if (screen.panelcontent!="")
+           $.ui.addContentDiv(screen.name,screen.panelcontent,screen.title);
+           
+           // adding menus
+           screen.addMainMenus(screen);
+           screen.initialized = true;
+           }
+           });
 }
 
 XWikiMobile.prototype.insertChildMenus = function(parentscreen) {

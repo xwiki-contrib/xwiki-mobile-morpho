@@ -97,8 +97,24 @@ XWikiService.prototype.login = function(wikiName, cache) {
     if (cache==null)
         cache = false;
     var loginURL = this.getLoginURL(wikiName);
-    nq.addRequest(this, this.id + "." + wikiName + ".login", loginURL, "high", cache, null);
-    // this.addRecentDocsRequest(wikiName, "high");
+    nq.addRequest(this, this.id + "." + wikiName + ".login", loginURL, "high", cache, function(req) {
+                  console.log("In login callback " + req);
+                  try {
+                  if (req.data) {
+                  var config = $.parseJSON(req.data);
+                  // if we
+                  if (config.js!="") {
+                  eval(config.js);
+                  // force refresh
+                  xmobile.initScreens();
+                  xmobile.reloadCurrentPage();
+                  }
+                  }
+                  } catch(e) {
+                  console.log("Exception while parsing js data " + e);
+                  }
+                  });
+    // does not work anymore as it is in the xrecent screen: this.addRecentDocsRequest(wikiName, "high");
     this.loggedin = true;
 };
 

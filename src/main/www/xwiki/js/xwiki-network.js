@@ -64,7 +64,7 @@ NetworkQueue.prototype.addRequest = function(service, name, url, priority, cache
         return 2;
     }
     
-    var request = { url : url, name : name, priority: priority, cache: cache, status : 1, data : "", resultCode : 0, startDate : new Date(), duration : -1};
+    var request = { url : url, name : name, priority: priority, cache: cache, status : 1, data : "", resultCode : 0, startDate : new Date(), duration : -1, callback: callback};
     this.requestsByName[name] = request;
     
     if (priority=="low") {

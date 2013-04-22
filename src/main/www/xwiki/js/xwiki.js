@@ -82,7 +82,7 @@ require.config({
  });
  */
 
-require(["jquery", "xscreen", "xscreenapps"], function($) {
+require(["jquery", "xscreen" , "xscreenapps" ], function($) {
         /*
          if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
          var script=document.createElement("script");

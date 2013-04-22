@@ -56,7 +56,7 @@ var xappsScreen = new XWikiScreen(
                                         if (data!=null) {
                                             var items = "";
                                             var that = this;
-                                            $.each(data, function(key, val) {
+                                            $.each(data.apps, function(key, val) {
                                                     var path = val.name + "|" + val.space + "|" + val.classname;
                                                     items += "<li><a href='#xapp/" + xmobile.getCurrentConfig() + "/" + path + "' onclick='xmobile.setCurrentApp(\"" + val.space + "\", \"" + val.classname + "\", \"" + val.name + "\");'>"
                                                                + val.name + "</a></li>"
