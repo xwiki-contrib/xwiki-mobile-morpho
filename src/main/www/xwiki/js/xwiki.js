@@ -25,8 +25,6 @@
 // load require js modules
 require.config({
                paths: {
-               jquery: "../js/jq.mobi",
-               jqui: "../js/jq.ui",
                underscore: "../js/underscore",
                backbone: "../js/backbone",
                xconfig: "js/xwiki-config",
@@ -38,7 +36,7 @@ require.config({
                },
                shim: {
                'backbone': {
-               deps: ['underscore', 'jquery'],
+               deps: ['underscore'],
                exports: 'Backbone',
                init: function() {
                Backbone.$ = window.$;
@@ -47,21 +45,14 @@ require.config({
                'underscore': {
                exports: '_'
                },
-               'jquery' : {
-               exports:'jq'
-               },
-               'jqui' : {
-               deps: ['jquery']
-               },
                'xnetwork' : {
-               deps: ['jquery', 'jqui'],
                exports:'nq'
                },
                'xmobile' : {
-               deps: ['jquery', 'jqui', 'xservice', 'backbone']
+               deps: ['xservice', 'backbone']
                },
                'xservice' : {
-               deps: ['jquery', 'jqui', 'xnetwork']
+               deps: ['xnetwork']
                },
                'xconfig' : {
                deps: ['xservice', 'xmobile']
@@ -82,7 +73,7 @@ require.config({
  });
  */
 
-require(["jquery", "xscreen" , "xscreenapps" ], function($) {
+require(["xscreen" , "xscreenapps" ], function() {
         /*
          if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
          var script=document.createElement("script");
@@ -99,8 +90,8 @@ require(["jquery", "xscreen" , "xscreenapps" ], function($) {
         // Initiate the router
         router = new Router;
         
-        $(document).ready(function() {
-                          nq.startQueue();
+        $.ui.ready(function() {
+                   nq.startQueue();
                           
                           xmobile.initialize();
                           xmobile.setRouter(router);

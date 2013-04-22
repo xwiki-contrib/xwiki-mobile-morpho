@@ -20,12 +20,40 @@
 
 /* Configuration module */
 
-defaultConfig = "";
+defaultConfig = "intranet";
 defaultWiki = "default";
 defaultPage = "";
 defaultSpace = "";
 
 defaultxservices = {
+    devxwikiorg : new XWikiService({
+                                   id : "devxwikiorg",
+                                   name: "Dev XWiki.org",
+                                   xem : false,
+                                   wikis : [""],
+                                   url : "http://dev.xwiki.org",
+                                   baseurl : "http://dev.xwiki.org/xwiki",
+                                   resturl : "http://dev.xwiki.org/xwiki/rest/wikis/dev/",
+                                   viewurl : "http://dev.xwiki.org/xwiki/bin/view/",
+                                   username : "MobileUser",
+                                   password : "mu2013",
+                                   protocol : 3,
+                                   autoconnect : true
+                                   }),
+    plxwikiorg : new XWikiService({
+                                  id : "plxwikiorg",
+                                  name: "Platform XWiki.org",
+                                  xem : false,
+                                  wikis : [""],
+                                  url : "http://platform.xwiki.org",
+                                  baseurl : "http://platform.xwiki.org/xwiki",
+                                  resturl : "http://platform.xwiki.org/xwiki/rest/wikis/dev/",
+                                  viewurl : "http://platform.xwiki.org/xwiki/bin/view/",
+                                  username : "MobileUser",
+                                  password : "mu2013",
+                                  protocol : 3,
+                                  autoconnect : true
+                                  })
 }
 
 xmobile = new XWikiMobile(defaultxservices);
