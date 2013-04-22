@@ -20,61 +20,12 @@
 
 /* Configuration module */
 
-defaultConfig = "intranet";
+defaultConfig = "";
 defaultWiki = "default";
 defaultPage = "";
 defaultSpace = "";
 
 defaultxservices = {
-    
-    /*
-    local : new XWikiService({
-                             id : "local",
-                             name: "Local Account",
-                             xem : false,
-                             wikis : [""],
-                             url : "http://localhost:7080/",
-                             baseurl : "http://localhost:7080/xwiki",
-                             resturl : "http://localhost:7080/xwiki/rest/wikis/xwiki/",
-                             viewurl : "http://localhost:7080/xwiki/bin/view/",
-                             apps : { "" : [{ name: "Bikes", space: "Bikes", classname : "BikesCode.BikesClass" }] },
-                             username : "Admin",
-                             password : "admin1",
-                             protocol : 3,
-                             autoconnect : true
-                             })
-    ,
-     */
-    
-    intranet : new XWikiService({
-                                id : "intranet",
-                                name: "XWiki Sales Intranet",
-                                xem : false,
-                                wikis : [""],
-                                url : "https://sales.xwikisas.com",
-                                baseurl : "https://sales.xwikisas.com/xwiki",
-                                resturl : "https://sales.xwikisas.com/xwiki/rest/wikis/sales/",
-                                viewurl : "https://sales.xwikisas.com/xwiki/bin/view/",
-                                username : "TestTest",
-                                password : "xwtest2013",
-                                protocol : 2,
-                                autoconnect : true
-                                })
-    ,
-    projects : new XWikiService({
-                                id : "projects",
-                                name: "XWiki Projects Intranet",
-                                xem : false,
-                                wikis : [""],
-                                url : "https://projects.xwikisas.com",
-                                baseurl : "https://projects.xwikisas.com/xwiki",
-                                resturl : "https://projects.xwikisas.com/xwiki/rest/wikis/projects/",
-                                viewurl : "https://projects.xwikisas.com/xwiki/bin/view/",
-                                username : "TestTest",
-                                password : "xwtest2013",
-                                protocol : 2,
-                                autoconnect : true
-                                })
 }
 
 xmobile = new XWikiMobile(defaultxservices);
