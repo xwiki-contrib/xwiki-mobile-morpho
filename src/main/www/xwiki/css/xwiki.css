@@ -186,6 +186,7 @@
   display: list-item;
   font-weight: 400;
   height: auto;
+  min-height: 0;
   list-style: disc outside none;
   margin-left: 2em;
   text-transform: none;
@@ -200,10 +201,11 @@
 }
 
 #xsettingsaddform {
-    padding-left: 20px; 
+    padding-left: 20px;
+    padding-top: 10px;
 }
 
-input.jq-ui-forms-add {
+input.jq-ui-forms-add, input.jq-ui-forms-search {
 	margin-top:4px; margin-bottom:12px;
 	padding:8px;
 	border:solid 1px #999;
@@ -215,6 +217,67 @@ input.jq-ui-forms-add {
 } /* These properties combine to create the look of the input fields. */
 
 #settings .jq-badge {
-    margin-right: 30px;
-    margin-bottom: 10px;
+    margin-right: 10px;
+    margin-bottom: 0px;
+}
+
+#settings li {
+    min-height: 60px;
+}
+
+
+
+.page-content {
+}
+
+.xwiki-iframe {
+    padding: 0px;
+    height: 100%;
+    width: 100%;
+    overflow: scroll;
+    -webkit-overflow-scrolling: touch;
+}
+
+.pageitem {
+    padding-left: 10px;
+    padding-top: 5px;
+}
+
+.pageitem a {
+    color: #000;
+}
+
+.pageitem-title {
+    
+}
+
+.pageitem-name {
+    padding-top: 4px;
+    font-size: 70%;
+    font-weight: normal;
+    color: #555;
+}
+
+.pageitem-modified {
+    font-size: 70%;
+    font-weight: normal;
+    color: #555;
+}
+
+ul > li {
+    height: auto;
+    min-height: 48px;
+}
+
+#searchform {
+    padding-left: 10px;
+}
+
+#menu ul > li {
+    min-height: 28px;
+}
+
+#open {
+    margin-top: 15px;
+    margin-right: 5px;
 }

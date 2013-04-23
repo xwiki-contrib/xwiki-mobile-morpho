@@ -116,7 +116,7 @@ var xsettingsScreen = new XWikiScreen(
                                          var wikiConfig = val.getConfig();
                                          items += "<li id='setting_" + val.id + "'><a class='x-icon x-icon-cloud' href='#xsetting/" + wikiConfig.id + "' id='jqmlink'>" + wikiConfig.name + "</a></li>";
                                          });
-                                    items += "<li><form id='xsettingsaddform'><input type='text' name='configname' value='newconfig' size='15' class='jq-ui-forms-add' /><input type='button' value='Add' onClick='this.form.screen.add(form);' class='button' /></form></li>";
+                                    items += "<li><form id='xsettingsaddform'><input type='text' name='configname' value='newconfig' size='15' class='jq-ui-forms-add' />&nbsp;&nbsp;<input type='button' value='Add' onClick='this.form.screen.add(form);' /></form></li>";
                                       $("#settings").html(items);
                                       
                                     $.each(xmobile.xservices, function(key, val) {
@@ -469,7 +469,7 @@ var xsearchScreen = new XWikiScreen(
                                    name: "xsearch",
                                    title: "Search",
                                    parent: "xwikihome",
-                                    panelcontent: "<ul><form id='searchform' name='searchform' onsubmit='return this.screen.search(this);'>Search Term: <input type='text' name='search' size='20'><input class='button' type='submit' value='Search' /></form></ul><ul id='xwikisearchlist'></ul>",
+                                    panelcontent: "<ul><li><form id='searchform' name='searchform' onsubmit='return this.screen.search(this);'>Search Term: <input type='text' name='search' size='15' class='jq-ui-forms-search'>&nbsp;&nbsp;<input type='submit' value='Search' /></form></li></ul><ul id='xwikisearchlist'></ul>",
                                    route: "xsearch/:wikiName/(:keyword)",
                                    addMainMenus: function() {
                                    },

@@ -27,6 +27,7 @@ require.config({
                paths: {
                underscore: "../js/underscore",
                backbone: "../js/backbone",
+               moment: "../js/moment.min",
                xconfig: "js/xwiki-config",
                xmobile: "js/xwiki-mobile",
                xnetwork: "js/xwiki-network",
@@ -49,7 +50,7 @@ require.config({
                exports:'nq'
                },
                'xmobile' : {
-               deps: ['xservice', 'backbone']
+               deps: ['xservice', 'backbone', 'moment']
                },
                'xservice' : {
                deps: ['xnetwork']

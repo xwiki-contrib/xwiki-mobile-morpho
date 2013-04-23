@@ -144,7 +144,7 @@ XWikiMobile.prototype.updateNetworkActive = function() {
     // network is not active anymore
     var nbactive = nq.lowPriorityQueue.length + nq.highPriorityQueue.length + nq.runningQueue.length;
     if (nbactive==0) {
-        if (this.getCurrentService().nbFailures>0) {
+        if (this.getCurrentService()!=null && this.getCurrentService().nbFailures>0) {
          this.showNetworkInactive();
          $.ui.updateBadge("#navbar_network", "x", "tr")            
         } else {
@@ -344,25 +344,29 @@ XWikiMobile.prototype.getNetworkStatus = function() {
 XWikiMobile.prototype.getDate = function(gregorianDate) {
     var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
     var d = new Date(parseInt(time));
-    //return dateFormat(d, "dd/mm/yyyy HH:MM");
-    return d.getDay() + "/" + d.getMonth() + "/" + d.getYear();
+    return moment(d).format('DD/MM/YYYY HH:MM')
 }
 
 XWikiMobile.prototype.getPageHTML = function(wikiName, val) {
-    var fullName = val.pageFullName;
-    return "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>" + fullName + "</a>";
-    /*
-     var str = "<div class='pageitem'>"
-     + "<div class='pageitem-title'>" + val.title + "</div>";
-     if (val.pageFullName)
-     str += "<div class='pageitem-name'>Page: " + val.pageFullName + "</div>";
-     else
-     str += "<div class='pageitem-name'>Page: " + val.fullName + "</div>";
-     if (val.version)
-     str +=  "<div class='pageitem-modified'>Version: " + val.version + " modified by: " + val.authorName + " on " + getDate(val.modified) + "</div>"
-     str += "</div>";
-     return str;
-     */
+    // var fullName = val.pageFullName;
+    // return "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>" + fullName + "</a>";
+    
+    var str = "<div class='pageitem'>"
+    + "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>"
+    + "<div class='pageitem-title'>" + val.title + "</div></a>";
+    if (val.pageFullName)
+        str += "<div class='pageitem-name'>Page: " + val.pageFullName + "</div>";
+    else
+        str += "<div class='pageitem-name'>Page: " + val.fullName + "</div>";
+    var author = val.authorName;
+    if (author == undefined) {
+        author = (val.author==undefined) ? "" : val.author.replace("XWiki.", "");
+    }
+    
+    if (val.version)
+        str +=  "<div class='pageitem-modified'>Version: " + val.version + " modified by " + author + " on " + this.getDate(val.modified) + "</div>"
+        str += "</div>";
+    return str;
 }
 
 XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
