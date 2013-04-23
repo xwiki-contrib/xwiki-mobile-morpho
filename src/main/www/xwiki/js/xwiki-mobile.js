@@ -144,10 +144,15 @@ XWikiMobile.prototype.updateNetworkActive = function() {
     // network is not active anymore
     var nbactive = nq.lowPriorityQueue.length + nq.highPriorityQueue.length + nq.runningQueue.length;
     if (nbactive==0) {
-        this.showNetworkActive();
-        $.ui.removeBadge("#navbar_network")
+        if (this.getCurrentService().nbFailures>0) {
+         this.showNetworkInactive();
+         $.ui.updateBadge("#navbar_network", "x", "tr")            
+        } else {
+         this.showNetworkInactive();
+         $.ui.removeBadge("#navbar_network")
+        }
     } else {
-        this.showNetworkInactive();
+        this.showNetworkActive();
         $.ui.updateBadge("#navbar_network", "" + nbactive, "tr")
     }
 }
@@ -324,6 +329,17 @@ XWikiMobile.prototype.getCurrentKeyword = function() {
 XWikiMobile.prototype.setCurrentKeyword = function(keyword) {
     sessionStorage.currentKeyword = keyword;
 }
+
+XWikiMobile.prototype.getNetworkStatus = function() {
+   var str = "";
+   $.each(this.xservices, function(key, xservice) {
+          str += xservice.getNetworkStatus();
+          });
+    
+    str += nq.getQueueStatus();
+    return str;
+}
+
 
 XWikiMobile.prototype.getDate = function(gregorianDate) {
     var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");

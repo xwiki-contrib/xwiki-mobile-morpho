@@ -34,6 +34,8 @@ function NetworkQueue() {
     
     this.maxSimultaneousRequest = 1;
     this.maxRetries = 3;
+    
+    this.networklog = [];
 };
 
 /**
@@ -64,7 +66,7 @@ NetworkQueue.prototype.addRequest = function(service, name, url, priority, cache
         return 2;
     }
     
-    var request = { url : url, name : name, priority: priority, cache: cache, status : 1, data : "", resultCode : 0, startDate : new Date(), duration : -1, callback: callback};
+    var request = { url : url, name : name, priority: priority, cache: cache, status : 1, data : "", resultCode : 0, startDate : new Date(), duration : -1, service: service, callback: callback};
     this.requestsByName[name] = request;
     
     if (priority=="low") {
@@ -139,7 +141,7 @@ NetworkQueue.prototype.nextRequest = function() {
                    type:"GET",
                    dataType : "text",
                    url: nextReq.url ,
-                   timeout: 3000,
+                   timeout: 10000,
                    success: function(data, text, xhr) {
                    try {
                    console.log("AJAX done entry " + nextReqName + " code: " + xhr.status);
@@ -149,6 +151,21 @@ NetworkQueue.prototype.nextRequest = function() {
                    nextReq.data = data;
                    nextReq.resultCode = xhr.status;
                    nextReq.status = 4;
+                   
+                   nextReq.service.nbFailures = 0;
+                   nextReq.service.nbSuccesses++;
+                   nextReq.service.lastSuccess = new Date();
+                   
+                   // if we are running 5.1+ we'll have a response header in the rest API
+                   // which allows to detect if we are correctly logged in.
+                   var xuser = xhr.getResponseHeader("XWiki-User");
+                   if (xuser!=undefined && xuser!="XWiki." + nextReq.service.username) {
+                     // we have been logged
+                   console.log("User has been logged out (detected using XWiki-User header) " + xuser + " XWiki." + nextReq.service.username);
+                   nextReq.service.setLoginStatus("failed");
+                   alert("You are current not logged in on service " + nextReq.service.name);
+                   }
+                   
                    console.log("AJAX done exit " + nextReqName + " code: " + nextReq.resultCode);
                    // on success let's do a callback to the UI to refresh the screen if new data arrived
                    xmobile.xwikiCallback(nextReq);
@@ -164,7 +181,24 @@ NetworkQueue.prototype.nextRequest = function() {
                    that.lastResults.push(nextReqName);
                    nextReq.status = 5;
                    nextReq.resultCode = xhr.status;
-                                    
+                   
+                   if (nextReq.resultCode==401 || nextReq.resultCode==403) {
+                   // we have been logged
+                   console.log("User has been logged out (detected using 401 error code");
+                   if (nextReq.name.indexOf(".login")!=-1) {
+                    nextReq.service.setLoginStatus("wrongCredentials");
+                    alert("Login has failed on service " + nextReq.service.name + " please check your credentials");
+                   } else {
+                    nextReq.service.setLoginStatus("failed");
+                    alert("You are currently not authorized on service " + nextReq.service.name);
+                   }
+                   }
+                   
+                   // let's log the error
+                   that.networklog.push("Request error on service " + nextReq.service.name + " with code " + xhr.status);
+                   nextReq.service.nbFailures++;
+                   nextReq.service.nbSuccesses = 0;
+                   
                    // on error let's do a callback to the UI to show an error
                    xmobile.xwikiCallback(nextReq);
                    console.log("AJAX done exit " + nextReqName + " code: " + nextReq.resultCode);
@@ -203,9 +237,9 @@ NetworkQueue.prototype.getQueueStatus = function() {
     $.each(this.highPriorityQueue, function(key, val) {
            var req = that.requestsByName[val];
            status += "<li>" + req.name + " " + req.priority + "</li>"
-           + "<li>" + req.startDate + "</li>"
+           + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li>";
+           + "<li>" + req.url + "</li></ul></li>";
            });
     status += "</ul></li>"
     + "<li>LP Queue: "
@@ -213,9 +247,9 @@ NetworkQueue.prototype.getQueueStatus = function() {
     $.each(this.lowPriorityQueue, function(key, val) {
            var req = that.requestsByName[val];
            status += "<li>" + req.name + " " + req.priority + "</li>"
-           + "<li>" + req.startDate + "</li>"
+           + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li>";
+           + "<li>" + req.url + "</li></ul></li>";
            });
     status += "</ul></li>"
     + "<li>Running Queue: "
@@ -223,9 +257,9 @@ NetworkQueue.prototype.getQueueStatus = function() {
     $.each(this.runningQueue, function(key, val) {
            var req = that.requestsByName[val];
            status += "<li>" + req.name + " " + req.priority + "</li>"
-           + "<li>" + req.startDate + "</li>"
+           + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li>";
+           + "<li>" + req.url + "</li></ul></li>";
            });
     status += "</ul></li>"
     status += "<li>Last results: " + this.lastResults.length
@@ -236,10 +270,9 @@ NetworkQueue.prototype.getQueueStatus = function() {
            if (counter<5 && req.status!=1) {
            counter++;
            status += "<li>" + req.name + " " + req.priority + "</li>"
-           + "<li>status " + req.status + " " + req.resultCode + "</li>"
+           + "<li><ul><li>status " + req.status + " " + req.resultCode + "</li>"
            + "<li>" + req.startDate + "</li>"
-           + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li>";
+           + "<li>" + req.url + "</li></ul></li>";
            }
            });
     status += "</ul></li>"

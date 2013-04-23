@@ -213,3 +213,8 @@ input.jq-ui-forms-add {
 	-webkit-border-radius:6px; border-radius:6px;
 	-webkit-box-shadow:inset 2px 2px 6px rgba(0,0,0,.5); box-shadow:inset 2px 2px 6px rgba(0,0,0,.5);
 } /* These properties combine to create the look of the input fields. */
+
+#settings .jq-badge {
+    margin-right: 30px;
+    margin-bottom: 10px;
+}

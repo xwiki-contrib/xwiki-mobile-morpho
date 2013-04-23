@@ -77,7 +77,7 @@ var xappsScreen = new XWikiScreen(
  if (cache==null)
  cache = true;
  var spacesURL = this.getSpacesURL(wikiName);
- nq.addRequest(this, this.id + "." + wikiName + ".spaces", spacesURL, priority, cache, null);
+ nq.addRequest(xmobile.getCurrentService(), this.id + "." + wikiName + ".spaces", spacesURL, priority, cache, null);
  }
  
  XWikiService.prototype.getAppsURL = function(wikiName) {
@@ -150,7 +150,7 @@ xappScreen.addAppDocsRequest = function(wikiName, appName, className, priority, 
  
     var appDocsURL = this.getAppDocsURL(wikiName, appName, className);
     console.log("requesting app data");
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xapp." + appName, appDocsURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xapp." + appName, appDocsURL, priority, cache, null);
 }
 
 

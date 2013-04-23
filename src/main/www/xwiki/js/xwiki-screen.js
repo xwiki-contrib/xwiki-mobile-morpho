@@ -81,7 +81,7 @@ var xstatusScreen = new XWikiScreen(
                                      $.ui.setBackButtonText("Back");
                                      console.log("In status show callback");
                                      xmobile.updateNetworkActive();
-                                     $("#xstatus").html(nq.getQueueStatus());
+                                     $("#xstatus").html(xmobile.getNetworkStatus());
                                   }
                                   }
                                   );
@@ -114,12 +114,20 @@ var xsettingsScreen = new XWikiScreen(
                                     var that = this;
                                     $.each(xmobile.xservices, function(key, val) {
                                          var wikiConfig = val.getConfig();
-                                         items += "<li><a class='x-icon x-icon-cloud' href='#xsetting/" + wikiConfig.id + "' id='jqmlink'>" + wikiConfig.name + "</a></li>";
+                                         items += "<li id='setting_" + val.id + "'><a class='x-icon x-icon-cloud' href='#xsetting/" + wikiConfig.id + "' id='jqmlink'>" + wikiConfig.name + "</a></li>";
                                          });
                                     items += "<li><form id='xsettingsaddform'><input type='text' name='configname' value='newconfig' size='15' class='jq-ui-forms-add' /><input type='button' value='Add' onClick='this.form.screen.add(form);' class='button' /></form></li>";
                                       $("#settings").html(items);
+                                      
+                                    $.each(xmobile.xservices, function(key, val) {
+                                           $.ui.updateBadge("#setting_" + val.id, "Login status: " + val.loginStatus + "   ", "br");
+                                           });
+                                      
                                     document.forms.xsettingsaddform.screen = this;
-                                  }
+                                      }
+                                      
+                                      
+                                      
                                   }
                                   );
 xsettingsScreen.add = function(form) {
@@ -225,7 +233,7 @@ var xwikihomeScreen = new XWikiScreen(
                                       
                                     // force a login if it is not the case
                                     var xservice = xmobile.getCurrentService();
-                                    if (!xservice.isLoggedIn())
+                                    if (xservice.isNotLoggedIn())
                                       xservice.login("default");
                                       
                                     var configName = xmobile.getCurrentConfig();
@@ -288,7 +296,7 @@ xrecentScreen.addRecentDocsRequest = function(wikiName, priority, cache) {
     if (cache==null)
         cache = true;
     var recentDocsURL = this.getRecentDocsURL(wikiName);
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xrecent", recentDocsURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xrecent", recentDocsURL, priority, cache, null);
 }
 
 
@@ -361,7 +369,7 @@ xspacesScreen.addSpacesRequest = function(wikiName, priority, cache) {
     if (cache==null)
         cache = true;
     var spacesURL = this.getSpacesURL(wikiName);
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xspaces", spacesURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xspaces", spacesURL, priority, cache, null);
 }
 
 xspacesScreen.getSpacesURL = function(wikiName) {
@@ -430,7 +438,7 @@ xspaceScreen.addSpaceDocsRequest = function(wikiName, spaceName, priority, cache
     
     var spaceDocsURL = this.getSpaceDocsURL(wikiName, spaceName);
     console.log("requesting space data");
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xspace." + spaceName, spaceDocsURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xspace." + spaceName, spaceDocsURL, priority, cache, null);
 }
 
 
@@ -523,7 +531,7 @@ xsearchScreen.addSearchRequest = function(wikiName, keyword, priority, cache) {
     
     var searchURL = this.getSearchURL(wikiName, keyword);
     console.log("requesting search data");
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xsearch." + keyword, searchURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xsearch." + keyword, searchURL, priority, cache, null);
 }
 
 
@@ -595,7 +603,7 @@ xpageScreen.addPageRequest = function(wikiName, pageName, priority, cache) {
     if (cache==null)
         cache = true;
     var pageURL = this.getPageURL(wikiName, pageName);
-    nq.addRequest(this, xmobile.getCurrentConfig() + "." + wikiName + ".xpage." + pageName, pageURL, priority, cache, null);
+    nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xpage." + pageName, pageURL, priority, cache, null);
 }
 
 

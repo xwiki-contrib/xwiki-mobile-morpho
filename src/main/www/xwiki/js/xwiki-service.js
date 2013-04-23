@@ -34,8 +34,18 @@ function XWikiService(options) {
     this.username = options.username;
     this.password = options.password;
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
-    this.loggedin = false;
     this.protocol = (options.protocol) ? options.protocol : 3;
+
+    this.loginStatus = "none";
+
+    // network statistics on this service
+    // nb of successes since the last failure
+    this.nbSuccesses = 0;
+    // nb of failures since the last success
+    this.nbFailures = 0;
+    // last success date
+    this.lastSuccess;
+    
 };
 
 XWikiService.prototype.getConfig = function() {
@@ -67,7 +77,6 @@ XWikiService.prototype.setConfig = function(options) {
     this.username = options.username;
     this.password = options.password;
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
-    this.loggedin = false;
     this.protocol = (options.protocol) ? options.protocol : 3;
 }
 
@@ -75,7 +84,28 @@ XWikiService.prototype.setConfig = function(options) {
  Login
  */
 XWikiService.prototype.isLoggedIn = function() {
-    return this.loggedin;
+    return this.loginStatus="success";
+}
+
+XWikiService.prototype.isNotLoggedIn = function() {
+    return this.loginStatus="none" || this.loginStatus=="failed" || this.loginStatus=="wrongCredentials";
+}
+
+XWikiService.prototype.setLoginStatus = function(status) {
+    this.loginStatus = status;
+}
+
+XWikiService.prototype.getNetworkStatus = function() {
+    var str = "<ul><li>Service <strong>" + this.name + "</strong> network status</li><ul>";
+    if (this.loginStatus=="failed")
+        str += "<li>Login status: <font color='red'><strong>" + this.loginStatus + "</strong></font></li>";
+    else
+        str += "<li>Login status: <strong>" + this.loginStatus + "</strong></li>";
+    str += "<li>Nb successes: " + this.nbSuccesses + "</li>";
+    str += "<li>Nb failures: " + this.nbFailures + "</li>";
+    str += "<li>Last success: " + this.lastSuccess + "</li>";
+    str += "</ul></ul>"
+    return str;
 }
 
 XWikiService.prototype.getWikiConfig = function(wikiName, cache) {
@@ -97,8 +127,15 @@ XWikiService.prototype.login = function(wikiName, cache) {
     if (cache==null)
         cache = false;
     var loginURL = this.getLoginURL(wikiName);
+    var that = this;
     nq.addRequest(this, this.id + "." + wikiName + ".login", loginURL, "high", cache, function(req) {
                   console.log("In login callback " + req);
+
+                  // login was a success
+                  if (req.status==4) {
+                    that.setLoginStatus("success");
+                  }
+                
                   try {
                   if (req.data) {
                   var config = $.parseJSON(req.data);
@@ -115,7 +152,7 @@ XWikiService.prototype.login = function(wikiName, cache) {
                   }
                   });
     // does not work anymore as it is in the xrecent screen: this.addRecentDocsRequest(wikiName, "high");
-    this.loggedin = true;
+    this.loginStarted = true;
 };
 
 XWikiService.prototype.getLoginURL = function(wikiName) {
