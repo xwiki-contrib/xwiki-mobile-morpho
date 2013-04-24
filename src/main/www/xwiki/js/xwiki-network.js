@@ -163,7 +163,7 @@ NetworkQueue.prototype.nextRequest = function() {
                      // we have been logged
                    console.log("User has been logged out (detected using XWiki-User header) " + xuser + " XWiki." + nextReq.service.username);
                    nextReq.service.setLoginStatus("failed");
-                   alert("You are current not logged in on service " + nextReq.service.name);
+                   alert($.i18n.map["login.disconnected"] + " " + nextReq.service.name);
                    }
                    
                    console.log("AJAX done exit " + nextReqName + " code: " + nextReq.resultCode);
@@ -187,10 +187,10 @@ NetworkQueue.prototype.nextRequest = function() {
                    console.log("User has been logged out (detected using 401 error code");
                    if (nextReq.name.indexOf(".login")!=-1) {
                     nextReq.service.setLoginStatus("wrongCredentials");
-                    alert("Login has failed on service " + nextReq.service.name + " please check your credentials");
+                    alert($.i18n.prop("login.failed",nextReq.service.name))
                    } else {
                     nextReq.service.setLoginStatus("failed");
-                    alert("You are currently not authorized on service " + nextReq.service.name);
+                    alert($.i18n.map["login.disconnected"] + " " + nextReq.service.name);
                    }
                    }
                    
@@ -281,5 +281,4 @@ NetworkQueue.prototype.getQueueStatus = function() {
 };
 
 
-var nq = new NetworkQueue();
 

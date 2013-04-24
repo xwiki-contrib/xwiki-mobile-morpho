@@ -74,7 +74,64 @@ require.config({
  });
  */
 
+function initXMobile() {
+    // start network queue
+    nq = new NetworkQueue();
+    nq.startQueue();
+
+    xmobile = new XWikiMobile(defaultxservices);
+    xmobile.setCurrentConfig(defaultConfig);
+    xmobile.setCurrentWiki(defaultWiki);
+    xmobile.setCurrentPage(defaultPage);
+    xmobile.initialize();
+    xmobile.setRouter(router);
+
+    
+    
+    // initialize screens
+    xmobile.addDefaultScreens();
+    xmobile.addAppsScreens();
+    xmobile.initScreens();
+    
+    // launch login
+    xmobile.loginToServices();
+
+    Backbone.history.start();
+    // force loading of initial screen
+    var hash = ((location.hash=="") ? "main" : location.hash);
+    $.ui.loadContent(hash ,false,false,"up");
+    xmobile.router.navigate(hash, true);
+}
+
+function initi18n(locale) {
+    $.i18n.properties({
+                      name: 'Messages',
+                      path:'i18n/',
+                      mode:'map',
+                      language: locale,
+                      callback: function(){
+                      // replacing div with ids
+                      $.each($.i18n.map, function(key, value) {
+                             var keyname = "#i18n_" + key.replace(".","_")
+                             var el = $(keyname);
+                             // alert(keyname + " " + el.html());
+                             if (el != undefined) {
+                             if (el[0] !=undefined && el[0].nodeName=="INPUT")
+                             el[0].value = value;
+                             else {
+                             console.log("Replacing element " + keyname + " with " + value);
+                             el.html(value);
+                             }
+                             }
+                             });
+                             initXMobile();
+                      }
+                      });
+        
+}
+
 require(["xscreen" , "xscreenapps" ], function() {
+        
         /*
          if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
          var script=document.createElement("script");
@@ -92,23 +149,38 @@ require(["xscreen" , "xscreenapps" ], function() {
         router = new Router;
         
         $.ui.ready(function() {
-                   nq.startQueue();
-                          
-                          xmobile.initialize();
-                          xmobile.setRouter(router);
-                          xmobile.initScreens();
-                          xmobile.loginToServices();
-                          
-                          Backbone.history.start();
-                  
-                          // force loading of initial screen
-                          $.ui.loadContent(location.hash ,false,false,"up");
- 
-                          xmobile.showWikis();
-                          
-                          // allow multitouch gestures
-                          // self.view.multipleTouchEnabled=1;
-                          // self.view.exclusiveTouch=0;
-                          });
+                   // initializes i18n UI
+                   if (1) {
+                     initi18n("");
+                   } else if (navigator.globalization) {
+                     navigator.globalization.getLocaleName(
+                                                           function (locale) {
+                                                           console.log("Locale provided by phonegap: " + locale.value);
+                                                           if (locale.value.indexOf("fr")==0) {
+                                                           initi18n("fr");
+                                                           }
+                                                           else {
+                                                           initi18n("en_US");
+                                                           }},
+                                                           function () {
+                                                           initi18n("en_US");
+                                                           }
+                                                         );
+                   } else if (navigator.language) {
+                   console.log("Locale provided by navigator: " + navigator.language);
+                   if (navigator.language.indexOf("fr")==0) {
+                   initi18n("fr");                   
+                   } else {
+                   initi18n("en_US");
+                   }
+                   } else {
+                   console.log("Locale not provided. Using b.")
+                   initi18n("en_US");
+                   }
+
+                   // allow multitouch gestures
+                   // self.view.multipleTouchEnabled=1;
+                   // self.view.exclusiveTouch=0;
+                   });
         
         });

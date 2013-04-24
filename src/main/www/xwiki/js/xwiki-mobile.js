@@ -74,7 +74,6 @@ XWikiMobile.prototype.saveWikiConfig = function(wikiName, xconfig) {
     
     this.xservices[xconfig.id].setConfig(xconfig);
     this.saveConfig();
-    xmobile.showWikis();
 }
 
 XWikiMobile.prototype.addWikiConfig = function(wikiName) {
@@ -87,7 +86,7 @@ XWikiMobile.prototype.addWikiConfig = function(wikiName) {
         this.xservices[wikiName] = new XWikiService({ id: wikiName, name: wikiName, url: url, baseurl: baseurl, viewurl: viewurl, resturl: resturl, username: "", password: "", autoconnect: false });
         
         this.saveConfig();
-        xmobile.showWikis();
+        this.reloadCurrentPage();
         return true;
     } else {
         return false;
@@ -96,7 +95,6 @@ XWikiMobile.prototype.addWikiConfig = function(wikiName) {
 XWikiMobile.prototype.deleteWikiConfig = function(wikiName) {
     delete this.xservices[wikiName];
     this.saveConfig();
-    xmobile.showWikis();
 }
 
 // this list is important in order to force refreshing on the page
@@ -238,9 +236,15 @@ XWikiMobile.prototype.initScreens = function() {
                           });
            
            // adding panel to UI
-           if (screen.panelcontent!="")
-           $.ui.addContentDiv(screen.name,screen.panelcontent,screen.title);
-           
+           if (screen.panelcontent!="") {
+           var mytitle =  $.i18n.map[screen.name + ".title"];
+           if (mytitle==undefined)
+           mytitle = screen.title;
+           if (mytitle==undefined)
+           mytitle = screen.name;
+           console.log("Adding panel " + screen.name + " with title " + mytitle);
+           $.ui.addContentDiv(screen.name,screen.panelcontent,mytitle);
+           }
            // adding menus
            screen.addMainMenus(screen);
            screen.initialized = true;
@@ -254,18 +258,6 @@ XWikiMobile.prototype.insertChildMenus = function(parentscreen) {
            screen.addParentMenus();
            }
            });
-}
-
-XWikiMobile.prototype.showWikis = function() {
-    $.ui.setBackButtonText("Back");
-    $("#xwikilist").html("");
-    var items = "";
-    var that = this;
-    $.each(this.xservices, function(key, val) {
-           var wikiConfig = val.getConfig();
-           items += "<li><a class='x-icon x-icon-cloud' href='#xwikihome/" + wikiConfig.id + "' id='jqmlink' onClick='return false;'>" + wikiConfig.name + "</a></li>";
-           });
-    $("#xwikilist").html(items);
 }
 
 XWikiMobile.prototype.getCurrentService = function() {
@@ -344,7 +336,7 @@ XWikiMobile.prototype.getNetworkStatus = function() {
 XWikiMobile.prototype.getDate = function(gregorianDate) {
     var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
     var d = new Date(parseInt(time));
-    return moment(d).format('DD/MM/YYYY HH:MM')
+    return moment(d).format($.i18n.map["dateformat"]);
 }
 
 XWikiMobile.prototype.getPageHTML = function(wikiName, val) {
@@ -355,16 +347,16 @@ XWikiMobile.prototype.getPageHTML = function(wikiName, val) {
     + "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>"
     + "<div class='pageitem-title'>" + val.title + "</div></a>";
     if (val.pageFullName)
-        str += "<div class='pageitem-name'>Page: " + val.pageFullName + "</div>";
+        str += "<div class='pageitem-name'>" + $.i18n.map["xpage.page"] + " " + val.pageFullName + "</div>";
     else
-        str += "<div class='pageitem-name'>Page: " + val.fullName + "</div>";
+        str += "<div class='pageitem-name'>" + $.i18n.map["xpage.page"] + " " + val.fullName + "</div>";
     var author = val.authorName;
     if (author == undefined) {
         author = (val.author==undefined) ? "" : val.author.replace("XWiki.", "");
     }
     
     if (val.version)
-        str +=  "<div class='pageitem-modified'>Version: " + val.version + " modified by " + author + " on " + this.getDate(val.modified) + "</div>"
+        str +=  "<div class='pageitem-modified'>" + $.i18n.map["xpage.version"] + " " + val.version + " " + $.i18n.map["xpage.modifiedby"] + " " + author + " " +  $.i18n.map["xpage.on"] + " " + this.getDate(val.modified) + "</div>"
         str += "</div>";
     return str;
 }
@@ -432,6 +424,13 @@ function showStatusMessage(msg) {
         $('.ui-title').html("&copy; 2012 XWiki SAS: " + msg);
 }
  */
+
+/*
+ Override jqui back button implementation.
+ */
+$.ui.setBackButtonText = function(text) {
+        jq("#header #backButton").html($.i18n.map["main.back"]);
+}
 
 
 

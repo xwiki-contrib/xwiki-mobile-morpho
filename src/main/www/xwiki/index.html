@@ -1,7 +1,7 @@
 <!DOCTYPE html><!--HTML5 doctype-->
 <html>
     <head>
-        <title>XWiki Mobile</title>
+        <title id="i18n_main_title">XWiki Mobile</title>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
             <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -12,6 +12,7 @@
             <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/jq.mobi.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/jq.ui.js"></script>
+            <script type="text/javascript" charset="utf-8" src="../js/jquery.i18n.properties.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
             <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
     </head>
@@ -20,67 +21,64 @@
             <!-- this is the header div -->
             <div id="header">
                 <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
-                <input id="open" type="button" class="button" value="Open" style="display: none; float: right;" onclick="xmobile.open();"/>
+                <input id="open" type="button" value="Open" style="display: none; float: right;" onclick="xmobile.open();"/>
             </div>
             
             <div id="content">
                 <div title='Welcome' id="main" class="panel" selected="true" data-tab="navbar_home">
-                    <p>XWiki Mobile allows you to easily access your XWiki Cloud instances.</p>
-                    <div class='xheader'>Cloud Instances</div>
+                    <div id="i18n_main_wikis" class='xheader'>wikis</div>
                     <ul id="xwikilist">
                     </ul>
-                    <div class='xheader'>Tools</div>
+                    <div id="i18n_main_tools" class='xheader'>tools</div>
                     <ul id="toolsmenu">
                     </ul>
                 </div>
                 <div title="Settings" id="xsetting" class="panel">
-                   <div>Settings for service <span id="setting_name"></span></div>
+                   <div><span id="i18n_settings_title">Settings for service</span> <span id="setting_name"></span></div>
                    <br />
                     <form id="setting_form">
-                        <label for="setting_id">Name: </label>
+                        <label for="setting_id" id="i18n_settings_name">name: </label>
                         <input type='text' id='setting_id' name='id' value='' class="jq-ui-forms" />
                         </br>
-                        <label for="setting_name">Display Name: </label>
+                        <label for="setting_name" id="i18n_settings_displayname">display name: </label>
                         <input type='text' id='setting_name' name='name' value='' class="jq-ui-forms" />
                         </br>
-                   <label for="setting_url">URL: </label>
+                   <label for="setting_url" id="i18n_settings_url">url: </label>
                    <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
                    </br>
-                       <label for="setting_username">Username: </label>
+                       <label for="setting_username" id="i18n_settings_username">username: </label>
                     <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
                     <br />
-                        <label for="setting_password">Password: </label>
+                        <label for="setting_password" id="i18n_settings_password">password: </label>
                     <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
                     <br />
-                        <label for="setting_baseurl">Base URL: </label>
+                        <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
                         <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
                         </br>
-                        <label for="setting_viewurl">View URL: </label>
+                        <label for="setting_viewurl" id="i18n_settings_viewurl">view url: </label>
                         <input type='text' id='setting_viewurl' name='viewurl' value='' class="jq-ui-forms" />
                         </br>
-                        <label for="setting_resturl">REST URL: </label>
+                        <label for="setting_resturl" id="i18n_settings_resturl">rest url: </label>
                         <input type='text' id='setting_resturl' name='resturl' value='' class="jq-ui-forms" />
                         </br>
+                        <label for="setting_protocol" id="i18n_settings_protocol">protocol version: </label>
+                        <input type='text' id='setting_protocol' name='protocol' value='' class="jq-ui-forms" />
+                        </br>
 
-                    <input type="button" name="save" value="Save" class="button" onclick="this.form.screen.save(this.form);" />
-                        <input type="button" name="test" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" class="button" />
-                        <input type="button" name="test" value="Test Connection" onclick="this.form.screen.testConnection(this.form);" class="button" />
+                    <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
+                        <input id="i18n_settings_delete" type="button" name="delete" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" />
+                        <input id="i18n_settings_test" type="button" name="test" value="Test Connection" onclick="this.form.screen.testConnection(this.form);" />
                         </form>
                 </div>
             </div>
             
             <!-- bottom navbar.  Add additional tabs here -->
             <div id="navbar">
-                <a href="#main" id='navbar_home' class='x-icon-big x-icon-home'>Home</a>
-                <a href="javascript:void(0)" id='navbar_refresh' class='x-icon-big x-icon-refresh' onclick="xmobile.reloadCurrentPage(); return false;">Refresh</a>
             </div>
             
             <!-- this is the default left side nav menu -->
             <nav class="off">
                 <ul id="sidemenu">
-                    <li><a class="x-icon-small x-icon-home" href="#main">Home</a></li>
-                    <li><a class='x-icon-small x-icon-user' href="javascript:void(0)" id='navbar_relogin' onclick="xmobile.relogin(); return false;">Relogin</a></li>
-                    <li><a class='x-icon-small x-icon-minimize' href="javascript:void(0)" id='xsqueeze' onclick="squeezeFrame(); return false;">Squeeze</a></li>
                 </ul>
             </nav>
         </div>

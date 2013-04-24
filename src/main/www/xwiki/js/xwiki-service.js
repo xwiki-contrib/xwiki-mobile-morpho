@@ -110,14 +110,17 @@ XWikiService.prototype.getNetworkStatus = function() {
 
 XWikiService.prototype.getWikiConfig = function(wikiName, cache) {
     var result = nq.getResult(this.id + "." + wikiName + ".login");
-    if (result==null || cache==false) {
+    if ((result==null || cache==false) && !this.isLoggedIn()) {
         // we don't have a request we should add it in the queue
         this.login(wikiName, cache);
         return result;
     } else if (result == undefined) {
         return null;
     } else if (result.status==4 || result.status==3) {
-        return $.parseJSON(result.data);
+        if (result.data=="")
+            return {};
+        else
+            return $.parseJSON(result.data);
     } else {
         return null;
     }
@@ -151,8 +154,6 @@ XWikiService.prototype.login = function(wikiName, cache) {
                   console.log("Exception while parsing js data " + e);
                   }
                   });
-    // does not work anymore as it is in the xrecent screen: this.addRecentDocsRequest(wikiName, "high");
-    this.loginStarted = true;
 };
 
 XWikiService.prototype.getLoginURL = function(wikiName) {

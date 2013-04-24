@@ -23,6 +23,7 @@
  */
 
 // apps screen
+XWikiMobile.prototype.addAppsScreens = function() {
 var xappsScreen = new XWikiScreen(
                                       {
                                       name: "xapps",
@@ -45,10 +46,9 @@ var xappsScreen = new XWikiScreen(
                                         xmobile.setCurrentWiki("default");
                                   
                                         // $.ui.loadContent("#xapps/" + wiki,false,false,"up");
-                                        this.showCallback();
+                                        this.showScreen();
                                       },
                                       showCallback: function(cache) {
-                                        $.ui.setBackButtonText("Back");
                                         console.log("In xapps show callback");
          
                                         $("#xwikiappslist").html("");
@@ -98,7 +98,8 @@ var xappsScreen = new XWikiScreen(
  }
  */
 
-xmobile.addScreen(xappsScreen);
+
+this.addScreen(xappsScreen);
 
 
 // app page
@@ -122,10 +123,9 @@ var xappScreen = new XWikiScreen(
                                   xmobile.setCurrentApp(appName,prettyName,className);
                                  
                                   // $.ui.loadContent("#xapp/" + wiki + "/" + appName + "|" + prettyName + "|" + className ,false,false,"up");
-                                  this.showCallback();
+                                  this.showScreen();
                                   },
                                   showCallback: function(cache) {
-                                    $.ui.setBackButtonText("Back");
                                     console.log("In xapp show callback");
                                   
                                     $("#xwikiappdocslist").html("");
@@ -174,4 +174,5 @@ xappScreen.getAppDocs = function(wikiName, appName, className, cache) {
         return null;
     }
 }
-xmobile.addScreen(xappScreen);
+this.addScreen(xappScreen);
+}

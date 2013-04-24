@@ -39,24 +39,6 @@ defaultxservices = {
                                    password : "mu2013",
                                    protocol : 3,
                                    autoconnect : true
-                                   }),
-    plxwikiorg : new XWikiService({
-                                  id : "plxwikiorg",
-                                  name: "Platform XWiki.org",
-                                  xem : false,
-                                  wikis : [""],
-                                  url : "http://platform.xwiki.org",
-                                  baseurl : "http://platform.xwiki.org/xwiki",
-                                  resturl : "http://platform.xwiki.org/xwiki/rest/wikis/dev/",
-                                  viewurl : "http://platform.xwiki.org/xwiki/bin/view/",
-                                  username : "MobileUser",
-                                  password : "mu2013",
-                                  protocol : 3,
-                                  autoconnect : true
-                                  })
+                                   })
 }
 
-xmobile = new XWikiMobile(defaultxservices);
-xmobile.setCurrentConfig(defaultConfig);
-xmobile.setCurrentWiki(defaultWiki);
-xmobile.setCurrentPage(defaultPage);
