@@ -46,12 +46,19 @@
                    <label for="setting_url" id="i18n_settings_url">url: </label>
                    <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
                    </br>
-                        <input type='radio' id='setting_xe' name='xem' value='0' class="jq-ui-forms"  checked />
+                        <input type='radio' id='setting_xe' name='type' value='xe' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
                         <label for="setting_xe" id="i18n_settings_xe">xe</label>
-                        <input type='radio' id='setting_xem' name='xem' value='1' class="jq-ui-forms"  />
-                        <label for="setting_xem" id="i18n_settings_xem">xem</label>
+                        <input type='radio' id='setting_xefromxem' name='type' value='xefromxem' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
+                        <label for="setting_xefromxem" id="i18n_settings_xefromxem">xefromxem</label>
+                        <input type='radio' id='setting_dnsxem' name='type' value='dnsxem' class="jq-ui-forms"  onclick="$('#setting_form_wikis').show();"  />
+                        <label for="setting_dnsxem" id="i18n_settings_dnsxem">dnsxem</label>
+                        <input type='radio' id='setting_urlxem' name='type' value='urlxem' class="jq-ui-forms"  onclick="$('#setting_form_wikis').show();"  />
+                        <label for="setting_urlxem" id="i18n_settings_urlxem">urlxem</label>
                         </br>
-                        
+                    <div id="setting_form_wikis" style="display: none;">
+                        <label for="setting_wikis" id="i18n_settings_wikis">wikis: </label>
+                        <input type='text' id='setting_wikis' name='wikis' value='' class="jq-ui-forms" /></br>
+                    </div>
                        <label for="setting_username" id="i18n_settings_username">username: </label>
                     <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
                     <br />
@@ -62,6 +69,11 @@
                         <br />
                         <div id="setting_form_advanced" style="display: none;">
                             <br />
+                            <input type='radio' id='setting_manual' name='automatic' value='0' class="jq-ui-forms" checked />
+                            <label for="setting_manual" id="i18n_settings_manual">manual</label>
+                            <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms"  />
+                            <label for="setting_automatic" id="i18n_settings_automatic">automatic</label>
+                            </br>
                         <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
                         <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
                         </br>
@@ -80,7 +92,6 @@
                         
                     <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
                         <input id="i18n_settings_delete" type="button" name="delete" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" />
-                        <input id="i18n_settings_test" type="button" name="test" value="Test Connection" onclick="this.form.screen.testConnection(this.form);" />
                         </form>
                 </div>
             </div>

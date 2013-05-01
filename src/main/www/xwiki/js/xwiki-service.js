@@ -25,7 +25,7 @@
 function XWikiService(options) {
     this.id = options.id;
     this.name = options.name;
-    this.xem = options.xem;
+    this.type = options.type;
     this.wikis = options.wikis;
     this.url = options.url;
     this.baseurl = options.baseurl;
@@ -33,6 +33,7 @@ function XWikiService(options) {
     this.viewurl = options.viewurl;
     this.username = options.username;
     this.password = options.password;
+    this.automatic = "1";
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
     this.protocol = (options.protocol) ? options.protocol : 3;
 
@@ -52,7 +53,7 @@ XWikiService.prototype.getConfig = function() {
     return {
         id : this.id,
         name: this.name,
-        xem: this.xem,
+        type: this.type,
         wikis: this.wikis,
         url: this.url,
         baseurl: this.baseurl,
@@ -60,6 +61,7 @@ XWikiService.prototype.getConfig = function() {
         viewurl: this.viewurl,
         username: this.username,
         password: this.password,
+        automatic: this.automatic,
         authconnect: this.autoconnect,
         protocol: this.protocol
     }
@@ -68,7 +70,7 @@ XWikiService.prototype.getConfig = function() {
 XWikiService.prototype.setConfig = function(options) {
     this.id = options.id;
     this.name = options.name;
-    this.xem = options.xem;
+    this.type = options.type;
     this.wikis = options.wikis;
     this.url = options.url;
     this.baseurl = options.baseurl;
@@ -76,6 +78,7 @@ XWikiService.prototype.setConfig = function(options) {
     this.viewurl = options.viewurl;
     this.username = options.username;
     this.password = options.password;
+    this.automatic = options.automatic;
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
     this.protocol = (options.protocol) ? options.protocol : 3;
 }
