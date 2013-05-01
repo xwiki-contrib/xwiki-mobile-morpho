@@ -75,12 +75,14 @@ var mainScreen = new XWikiScreen(
                                  addMainMenus: function() {
                                  console.log("In screen menu setup");
                                  
-                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon x-icon-user' href='#main'>" + $.i18n.map["sidebar.home"] + "</a></li>");
-                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon x-icon-user' href='javascript:void(0)' onclick='xmobile.relogin(); return false;'>" + $.i18n.map["sidebar.relogin"] + "</a></li>");
-                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon x-icon-user' href='javascript:void(0)' onclick='squeezeFrame(); return false;'>" + $.i18n.map["sidebar.squeeze"] + "</a></li>");
-                                 
-                                 $("#navbar").append("<a href='#main' id='navbar_home' class='x-icon-big x-icon-home' >" + $.i18n.map["main.home"] + "</a>");
-                                 $("#navbar").append("<a href='javascript:void(0)' id='navbar_refresh' class='x-icon-big x-icon-refresh' onclick='xmobile.reloadCurrentPage(); return false;'>" + $.i18n.map["main.refresh"] + "</a>");
+                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='#main'>" + $.i18n.map["sidebar.home"] + "</a></li>");
+                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='javascript:void(0)' onclick='xmobile.relogin(); return false;'>" + $.i18n.map["sidebar.relogin"] + "</a></li>");
+                                 $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='javascript:void(0)' onclick='squeezeFrame(); return false;'>" + $.i18n.map["sidebar.squeeze"] + "</a></li>");
+                                 $("#menu_scroller #sidemenu").append("<li><a href='javascript:void(0)' id='navbar_refresh' class='x-icon-small x-icon-refresh' onclick='xmobile.reloadCurrentPage(); return false;'>" +
+                                 $.i18n.map["main.refresh"] + "</a></li>");
+                                                     
+                                   //$("#navbar").append("<a href='#main' id='navbar_home' class='x-icon-big x-icon-home' >" + $.i18n.map["main.home"] + "</a>");
+
                                  },
                                  routeCallback: function() {
                                  console.log("In main route callback");
@@ -115,7 +117,7 @@ var xstatusScreen = new XWikiScreen(
                                   addMainMenus: function() {
                                      console.log("In screen menu setup");
                                      $("#toolsmenu").append("<li><a class='x-icon x-icon-dashboard' href='#xstatus' id='jqmlink'>" + $.i18n.map["xstatus.title"] + "</a></li>");
-                                     $("#navbar").append("<a href='#xstatus' id='navbar_network' class='x-icon-big x-icon-dashboard' >" + $.i18n.map["xstatus.title"] + "</a>");
+                                     // $("#navbar").append("<a href='#xstatus' id='navbar_network' class='x-icon-big x-icon-dashboard' >" + $.i18n.map["xstatus.title"] + "</a>");
                                      $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-dashboard' href='#xstatus'>" + $.i18n.map["xstatus.title"]+ "</a></li>");
                                      
                                   },
@@ -144,7 +146,7 @@ var xsettingsScreen = new XWikiScreen(
                                   addMainMenus: function() {
                                     console.log("In screen menu setup");
                                     $("#toolsmenu").append("<li><a class='x-icon x-icon-cog' href='#xsettings' id='jqmlink'>" + $.i18n.map["xsettings.title"] + "</a></li>");
-                                    $("#navbar").append("<a href='#xsettings' id='navbar_network' class='x-icon-big x-icon-cog' >" + $.i18n.map["xsettings.title"] + "</a>");
+                                    // $("#navbar").append("<a href='#xsettings' id='navbar_network' class='x-icon-big x-icon-cog' >" + $.i18n.map["xsettings.title"] + "</a>");
                                     $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-cog' href='#xsettings'>" + $.i18n.map["xsettings.title"] + "</a></li>");
                                   },
                                   routeCallback: function() {
@@ -265,7 +267,7 @@ var xwikihomeScreen = new XWikiScreen(
                                   {
                                   name: "xwikihome",
                                   title: "Wiki",
-                                  parent: "xwikihome",
+                                  parent: "main",
                                   panelcontent: "<ul id='xwikiactions'></ul>",
                                   route: "xwikihome/:wikiName",
                                   addMainMenus: function() {
@@ -676,8 +678,9 @@ xpageScreen.setPageContent = function(html) {
         var pageContentEl = frame.contentDocument.getElementById('xwikipagecontent');
         if (pageContentEl != undefined) {
             pageContentEl.innerHTML = (html == null) ? "" : html;
-            if (html!="")
+            if (html!="") {
                 squeezeFrame();
+            }
         } else {
             var that = this;
             frame.contentDocument.addEventListener( "DOMContentLoaded", function() {

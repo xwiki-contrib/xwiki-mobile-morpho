@@ -8,7 +8,7 @@
             <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
             <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
             <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
-            <script type="text/javascript" src="../cordova-2.3.0.js"></script>
+            <script type="text/javascript" src="../cordova-2.6.0.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/jq.mobi.js"></script>
             <script type="text/javascript" charset="utf-8" src="../js/jq.ui.js"></script>
@@ -46,12 +46,22 @@
                    <label for="setting_url" id="i18n_settings_url">url: </label>
                    <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
                    </br>
+                        <input type='radio' id='setting_xe' name='xem' value='0' class="jq-ui-forms"  checked />
+                        <label for="setting_xe" id="i18n_settings_xe">xe</label>
+                        <input type='radio' id='setting_xem' name='xem' value='1' class="jq-ui-forms"  />
+                        <label for="setting_xem" id="i18n_settings_xem">xem</label>
+                        </br>
+                        
                        <label for="setting_username" id="i18n_settings_username">username: </label>
                     <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
                     <br />
                         <label for="setting_password" id="i18n_settings_password">password: </label>
                     <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
                     <br />
+                        <a id="i18n_settings_advanced" href="javascript:void()" onclick="$('#setting_form_advanced').toggle(); return false;">advanced</a>
+                        <br />
+                        <div id="setting_form_advanced" style="display: none;">
+                            <br />
                         <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
                         <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
                         </br>
@@ -64,16 +74,15 @@
                         <label for="setting_protocol" id="i18n_settings_protocol">protocol version: </label>
                         <input type='text' id='setting_protocol' name='protocol' value='' class="jq-ui-forms" />
                         </br>
-
+                        </div>
+                        <br />
+                        <br />
+                        
                     <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
                         <input id="i18n_settings_delete" type="button" name="delete" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" />
                         <input id="i18n_settings_test" type="button" name="test" value="Test Connection" onclick="this.form.screen.testConnection(this.form);" />
                         </form>
                 </div>
-            </div>
-            
-            <!-- bottom navbar.  Add additional tabs here -->
-            <div id="navbar">
             </div>
             
             <!-- this is the default left side nav menu -->

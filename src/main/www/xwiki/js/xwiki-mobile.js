@@ -129,13 +129,13 @@ XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
 }
 
 XWikiMobile.prototype.showNetworkActive = function() {
-    $("#navbar_network").removeClass("wifi");
-    $("#navbar_network").addClass("loading");
+    //$("#navbar_network").removeClass("wifi");
+    //$("#navbar_network").addClass("loading");
 }
 
 XWikiMobile.prototype.showNetworkInactive = function() {
-    $("#navbar_network").removeClass("loading");
-    $("#navbar_network").addClass("wifi");
+    //$("#navbar_network").removeClass("loading");
+    //$("#navbar_network").addClass("wifi");
 }
 
 XWikiMobile.prototype.updateNetworkActive = function() {
@@ -144,14 +144,14 @@ XWikiMobile.prototype.updateNetworkActive = function() {
     if (nbactive==0) {
         if (this.getCurrentService()!=null && this.getCurrentService().nbFailures>0) {
          this.showNetworkInactive();
-         $.ui.updateBadge("#navbar_network", "x", "tr")            
+         $.ui.updateBadge("#menubadge", "x", "tr")
         } else {
          this.showNetworkInactive();
-         $.ui.removeBadge("#navbar_network")
+         $.ui.removeBadge("#menubadge")
         }
     } else {
         this.showNetworkActive();
-        $.ui.updateBadge("#navbar_network", "" + nbactive, "tr")
+        $.ui.updateBadge("#menubadge", "" + nbactive, "tr")
     }
 }
 
@@ -390,7 +390,12 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
 XWikiMobile.prototype.open = function() {
     var xs = this.getCurrentService();
     var url = xs.getViewURL(this.getCurrentWiki(), this.getCurrentPage());
-    window.open(url, "_system");
+    if (device && device.platform == "iOS") {
+     window.open(url, "_system");
+    } else {
+     console.log(navigator.app);
+     navigator.app.loadUrl(url, { openExternal:true });
+    }
 }
 
 /*

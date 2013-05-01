@@ -24,6 +24,8 @@
 
 // load require js modules
 require.config({
+               // force cache reload
+               urlArgs : "bust="+new Date().getTime(),
                paths: {
                underscore: "../js/underscore",
                backbone: "../js/backbone",
@@ -100,6 +102,8 @@ function initXMobile() {
     // force loading of initial screen
     var hash = ((location.hash=="") ? "main" : location.hash);
     $.ui.loadContent(hash ,false,false,"up");
+    $.ui.toggleNavMenu(false);
+    $.ui.showNavMenu = false;
     xmobile.router.navigate(hash, true);
 }
 
@@ -150,7 +154,7 @@ require(["xscreen" , "xscreenapps" ], function() {
         
         $.ui.ready(function() {
                    // initializes i18n UI
-                   if (1) {
+                   if (1==0) {
                      initi18n("");
                    } else if (navigator.globalization) {
                      navigator.globalization.getLocaleName(

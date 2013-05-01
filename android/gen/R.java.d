@@ -1,0 +1,23 @@
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/gen/org/xwiki/mobile/XWikiMobile/R.java \
+ : /Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-hdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-hdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-ldpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-ldpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-mdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-mdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-xhdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/drawable-xhdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/layout/main.xml \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/values/strings.xml \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/res/xml/config.xml \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-hdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-hdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-ldpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-ldpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-mdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-mdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-xhdpi/ic_launcher.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/res/drawable-xhdpi/icon.png \
+/Users/ludovic/dev/technologies/mobile/mobile-standardxwikiclient-v2/android/bin/AndroidManifest.xml \

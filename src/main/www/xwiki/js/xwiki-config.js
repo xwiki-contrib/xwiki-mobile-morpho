@@ -35,8 +35,8 @@ defaultxservices = {
                                    baseurl : "http://dev.xwiki.org/xwiki",
                                    resturl : "http://dev.xwiki.org/xwiki/rest/wikis/dev/",
                                    viewurl : "http://dev.xwiki.org/xwiki/bin/view/",
-                                   username : "MobileUser",
-                                   password : "mu2013",
+                                   username : "",
+                                   password : "",
                                    protocol : 3,
                                    autoconnect : true
                                    })
