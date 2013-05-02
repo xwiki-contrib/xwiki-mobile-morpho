@@ -307,8 +307,19 @@ XWikiMobile.prototype.addDefaultScreens = function() {
         console.log("View URL: " + sconfig.viewurl);
         console.log("Rest URL: " + sconfig.resturl);
         
-        var getwikiurl = sconfig.url + "/xwiki/bin/preview/Sandbox/WebHome?content={{velocity}}$context.database{{/velocity}}&xpage=plain&outputSyntax=plain";
-        var authurl = sconfig.url + "/xwiki/bin/loginsubmit/XWiki/XWikiLogin?j_username=" + sconfig.username + "&j_password=" + sconfig.password + "&xredirect=" + encodeURIComponent(getwikiurl);
+        var getwikiurl;
+        var authurl;
+        
+        if (sconfig.username=="") {
+          if (sconfig.type="xefromxem" && sconfig.automatic=="1")
+           authurl = sconfig.url + "/xwiki/bin/preview/Sandbox/WebHome?content={{velocity}}$context.database{{/velocity}}&xpage=plain&outputSyntax=plain";
+          else
+           authurl = sconfig.url + "/xwiki/bin/view/Sandbox/WebHome?xpage=plain&outputSyntax=plain";
+        } else {
+          getwikiurl = sconfig.url + "/xwiki/bin/preview/Sandbox/WebHome?content={{velocity}}$context.database{{/velocity}}&xpage=plain&outputSyntax=plain";
+          authurl = sconfig.url + "/xwiki/bin/loginsubmit/XWiki/XWikiLogin?j_username=" + sconfig.username + "&j_password=" + sconfig.password + "&xredirect=" + encodeURIComponent(getwikiurl);
+        }
+        
         var that = this;
         var sconfig2 = sconfig;
         console.log("Test connection to " + authurl);
@@ -998,7 +1009,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xxemrecentScreen.getRecentDocsURL = function(wikiName) {
         var query = "hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
         var wikis = xmobile.getCurrentService().wikis;
         if (wikis!=undefined && wikis!="")
             searchurl += encodeURIComponent(wikis);
@@ -1097,7 +1108,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xxemsearchScreen.getSearchURL = function(wikiName, keyword) {
         var query = keyword + " AND hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().prototcol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().prototcol>=3) ? "&orderField=date&order=desc&prettyNames=true&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
         var wikis = xmobile.getCurrentService().wikis;
         if (wikis!=undefined && wikis!="")
             searchurl += encodeURIComponent(wikis);

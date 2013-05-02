@@ -83,7 +83,7 @@ XWikiMobile.prototype.addWikiConfig = function(wikiName) {
         var viewurl = baseurl + "/bin/view/";
         var resturl = baseurl + "/rest/wikis/xwiki/";
         
-        this.xservices[wikiName] = new XWikiService({ id: wikiName, name: wikiName, url: url, baseurl: baseurl, viewurl: viewurl, resturl: resturl, username: "", password: "", autoconnect: false });
+        this.xservices[wikiName] = new XWikiService({ id: wikiName, name: wikiName, url: url, baseurl: baseurl, viewurl: viewurl, resturl: resturl, username: "", password: "", autoconnect: false, wikis: "", xembaseurl: "", xemresturl: "" , type: "xefromxem"});
         
         this.saveConfig();
         this.reloadCurrentPage();

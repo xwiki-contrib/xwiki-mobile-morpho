@@ -25,17 +25,17 @@
 function XWikiService(options) {
     this.id = options.id;
     this.name = options.name;
-    this.type = options.type;
-    this.wikis = options.wikis;
+    this.type = (options.type==undefined) ? "xefromxem" : options.type;
+    this.wikis = (options.wikis==undefined) ? "" : options.wikis;
     this.url = options.url;
     this.baseurl = options.baseurl;
     this.resturl = options.resturl;
     this.viewurl = options.viewurl;
-    this.xembaseurl = options.xembaseurl;
-    this.xemresturl = options.xemresturl;
+    this.xembaseurl = (options.xembaseurl==undefined) ? "" : options.xembaseurl;
+    this.xemresturl = (options.xemresturl==undefined) ? "" : options.xemresturl;
     this.username = options.username;
     this.password = options.password;
-    this.automatic = "1";
+    this.automatic = (options.automatic==undefined) ? "0" : options.automatic;
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
     this.protocol = (options.protocol) ? options.protocol : 3;
     
@@ -198,12 +198,19 @@ XWikiService.prototype.login = function(wikiName, cache) {
 };
 
 XWikiService.prototype.getLoginURL = function(wikiName) {
+    if (this.username=="") {
+        if (this.type=="dnsxem")
+            return this.xembaseurl + "/bin/view/XWiki/MobileConfig?xpage=plain&json=1&outputSyntax=plain";
+        else
+            return this.baseurl.replace(/__wiki__/g, wikiName) + "/bin/view/XWiki/MobileConfig?xpage=plain&json=1&outputSyntax=plain";
+    } else {
     if (this.type=="dnsxem")
         return this.xembaseurl + "/bin/loginsubmit/XWiki/XWikiLogin?"
         + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
     else
         return this.baseurl.replace(/__wiki__/g, wikiName) + "/bin/loginsubmit/XWiki/XWikiLogin?"
         + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
+    }
 }
 
 /**

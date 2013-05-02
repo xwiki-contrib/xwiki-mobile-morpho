@@ -29,8 +29,8 @@ defaultxservices = {
     devxwikiorg : new XWikiService({
                                    id : "devxwikiorg",
                                    name: "Dev XWiki.org",
-                                   xem : false,
-                                   wikis : [""],
+                                   type : "xefromxem",
+                                   wikis : "",
                                    url : "http://dev.xwiki.org",
                                    baseurl : "http://dev.xwiki.org/xwiki",
                                    resturl : "http://dev.xwiki.org/xwiki/rest/wikis/dev/",
@@ -38,6 +38,7 @@ defaultxservices = {
                                    username : "",
                                    password : "",
                                    protocol : 3,
+                                   automatic : "0",
                                    autoconnect : true
                                    })
 }
