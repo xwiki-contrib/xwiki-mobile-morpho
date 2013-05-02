@@ -35,15 +35,14 @@ var xappsScreen = new XWikiScreen(
                                       },
                                       addParentMenus: function() {
                                         console.log("Adding apps menu");
-                                        var configName = xmobile.getCurrentConfig();
+                                        var configName = xmobile.getCurrentFullConfig();
                                         $("#xwikiactions").append("<li><a class='x-icon x-icon-list' href='#xapps/" + configName + "'>Applications</a></li>");
                                       },
                                       routeCallback: function(wiki) {
                                         console.log("In xapps route callback");
   
                                         // make sur the config is set
-                                        xmobile.setCurrentConfig(wiki);
-                                        xmobile.setCurrentWiki("default");
+                                        xmobile.setCurrentFullConfig(wiki);
                                   
                                         // $.ui.loadContent("#xapps/" + wiki,false,false,"up");
                                         this.showScreen();
@@ -58,7 +57,7 @@ var xappsScreen = new XWikiScreen(
                                             var that = this;
                                             $.each(data.apps, function(key, val) {
                                                     var path = val.name + "|" + val.space + "|" + val.classname;
-                                                    items += "<li><a href='#xapp/" + xmobile.getCurrentConfig() + "/" + path + "' onclick='xmobile.setCurrentApp(\"" + val.space + "\", \"" + val.classname + "\", \"" + val.name + "\");'>"
+                                                    items += "<li><a href='#xapp/" + xmobile.getCurrentFullConfig() + "/" + path + "' onclick='xmobile.setCurrentApp(\"" + val.space + "\", \"" + val.classname + "\", \"" + val.name + "\");'>"
                                                                + val.name + "</a></li>"
                                                    });
                                             $("#xwikiappslist").html(items);
@@ -118,8 +117,7 @@ var xappScreen = new XWikiScreen(
                                   console.log("In xapp route callback " + location.hash);
                                   
                                   // make sur the config is set
-                                  xmobile.setCurrentConfig(wiki);
-                                  xmobile.setCurrentWiki("default");
+                                  xmobile.setCurrentFullConfig(wiki);
                                   xmobile.setCurrentApp(appName,prettyName,className);
                                  
                                   // $.ui.loadContent("#xapp/" + wiki + "/" + appName + "|" + prettyName + "|" + className ,false,false,"up");
@@ -134,7 +132,7 @@ var xappScreen = new XWikiScreen(
                                         console.log("In xapp show callback showing data");
                                         var items = "";
                                         $.each(data.searchResults, function(key, val) {
-                                               items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig(), val) + '</li>';
+                                               items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentFullConfig(), val) + '</li>';
                                         });
                                     $("#xwikiappdocslist").html(items);
                                    }

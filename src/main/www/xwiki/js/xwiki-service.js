@@ -31,14 +31,16 @@ function XWikiService(options) {
     this.baseurl = options.baseurl;
     this.resturl = options.resturl;
     this.viewurl = options.viewurl;
+    this.xembaseurl = options.xembaseurl;
+    this.xemresturl = options.xemresturl;
     this.username = options.username;
     this.password = options.password;
     this.automatic = "1";
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
     this.protocol = (options.protocol) ? options.protocol : 3;
-
+    
     this.loginStatus = "none";
-
+    
     // network statistics on this service
     // nb of successes since the last failure
     this.nbSuccesses = 0;
@@ -52,18 +54,20 @@ function XWikiService(options) {
 XWikiService.prototype.getConfig = function() {
     return {
         id : this.id,
-        name: this.name,
-        type: this.type,
-        wikis: this.wikis,
-        url: this.url,
-        baseurl: this.baseurl,
-        resturl: this.resturl,
-        viewurl: this.viewurl,
-        username: this.username,
-        password: this.password,
-        automatic: this.automatic,
-        authconnect: this.autoconnect,
-        protocol: this.protocol
+    name: this.name,
+    type: this.type,
+    wikis: this.wikis,
+    url: this.url,
+    baseurl: this.baseurl,
+    resturl: this.resturl,
+    viewurl: this.viewurl,
+    xembaseurl: this.xembaseurl,
+    xemresturl: this.xemresturl,
+    username: this.username,
+    password: this.password,
+    automatic: this.automatic,
+    authconnect: this.autoconnect,
+    protocol: this.protocol
     }
 }
 
@@ -76,6 +80,8 @@ XWikiService.prototype.setConfig = function(options) {
     this.baseurl = options.baseurl;
     this.resturl = options.resturl;
     this.viewurl = options.viewurl;
+    this.xembaseurl = options.xembaseurl;
+    this.xemresturl = options.xemresturl;
     this.username = options.username;
     this.password = options.password;
     this.automatic = options.automatic;
@@ -112,20 +118,52 @@ XWikiService.prototype.getNetworkStatus = function() {
 }
 
 XWikiService.prototype.getWikiConfig = function(wikiName, cache) {
-    var result = nq.getResult(this.id + "." + wikiName + ".login");
-    if ((result==null || cache==false) && !this.isLoggedIn()) {
-        // we don't have a request we should add it in the queue
-        this.login(wikiName, cache);
-        return result;
-    } else if (result == undefined) {
-        return null;
-    } else if (result.status==4 || result.status==3) {
-        if (result.data=="")
-            return {};
-        else
-            return $.parseJSON(result.data);
+    if (this.type=="dnsxem" || this.type=="urlxem") {
+        console.log("getting wikiconfig of xem subwiki");
+        var result = nq.getResult(this.id + "." + wikiName + ".wikiconfig");
+        console.log("Result of " + this.id + "." + wikiName + ".wikiconfig" + " is " + result);
+        if ((result==null || cache==false)) {
+            // we don't have a request we should add it in the queue
+            var url = this.baseurl.replace("__wiki__", wikiName) + "/bin/view/XWiki/MobileConfig?xpage=plain&json=1&outputSyntax=plain";
+            nq.addRequest(xmobile.getCurrentService(), this.id + "." + wikiName + ".wikiconfig", url, "high", cache, function(xhr) {
+                           // parse result
+                           var config = $.parseJSON(xhr.data);
+                           // if we
+                          
+                           if (config.js!="") {
+                            eval(config.js);
+                            // force refresh
+                            xmobile.initScreens();
+                            xmobile.reloadCurrentPage();
+                           }
+                          });
+            return null;
+        } else if (result == undefined) {
+            return null;
+        } else if (result.status==4 || result.status==3) {
+            if (result.data=="")
+                return {};
+            else
+                return $.parseJSON(result.data);
+        } else {
+            return null;
+        }
     } else {
-        return null;
+        var result = nq.getResult(this.id + "." + wikiName + ".login");
+        if ((result==null || cache==false) && !this.isLoggedIn()) {
+            // we don't have a request we should add it in the queue
+            this.login(wikiName, cache);
+            return result;
+        } else if (result == undefined) {
+            return null;
+        } else if (result.status==4 || result.status==3) {
+            if (result.data=="")
+                return {};
+            else
+                return $.parseJSON(result.data);
+        } else {
+            return null;
+        }
     }
 }
 
@@ -136,12 +174,12 @@ XWikiService.prototype.login = function(wikiName, cache) {
     var that = this;
     nq.addRequest(this, this.id + "." + wikiName + ".login", loginURL, "high", cache, function(req) {
                   console.log("In login callback " + req);
-
+                  
                   // login was a success
                   if (req.status==4) {
-                    that.setLoginStatus("success");
+                  that.setLoginStatus("success");
                   }
-                
+                  
                   try {
                   if (req.data) {
                   var config = $.parseJSON(req.data);
@@ -160,16 +198,24 @@ XWikiService.prototype.login = function(wikiName, cache) {
 };
 
 XWikiService.prototype.getLoginURL = function(wikiName) {
-    return this.baseurl.replace(/__wiki__/g, wikiName) + "/bin/loginsubmit/XWiki/XWikiLogin?"
-    + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
+    if (this.type=="dnsxem")
+        return this.xembaseurl + "/bin/loginsubmit/XWiki/XWikiLogin?"
+        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
+    else
+        return this.baseurl.replace(/__wiki__/g, wikiName) + "/bin/loginsubmit/XWiki/XWikiLogin?"
+        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
 }
 
 /**
-  REST Helpers
+ REST Helpers
  */
 
 XWikiService.prototype.getRestURL = function(wikiName, restURL) {
     return this.resturl.replace(/__wiki__/g, wikiName) + restURL;
+}
+
+XWikiService.prototype.getXEMRestURL = function(wikiName, restURL) {
+    return this.xemresturl + restURL;
 }
 
 XWikiService.prototype.getViewURL = function(wikiName, pageName) {

@@ -20,8 +20,8 @@
 
 /* Configuration module */
 
-defaultConfig = "intranet";
-defaultWiki = "default";
+defaultConfig = "";
+defaultWiki = "";
 defaultPage = "";
 defaultSpace = "";
 

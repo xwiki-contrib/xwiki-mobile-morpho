@@ -82,9 +82,9 @@ function initXMobile() {
     nq.startQueue();
 
     xmobile = new XWikiMobile(defaultxservices);
-    xmobile.setCurrentConfig(defaultConfig);
-    xmobile.setCurrentWiki(defaultWiki);
-    xmobile.setCurrentPage(defaultPage);
+    xmobile.setCurrentConfig("");
+    xmobile.setCurrentWiki("");
+    xmobile.setCurrentPage("");
     xmobile.initialize();
     xmobile.setRouter(router);
 

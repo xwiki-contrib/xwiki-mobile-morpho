@@ -124,6 +124,8 @@ XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
         screenPageName += "." + this.getCurrentSpace();
     if (screenName=="xsearch")
         screenPageName += "." + this.getCurrentKeyword();
+    if (screenName=="xxemsearch")
+        screenPageName += "." + this.getCurrentKeyword();
     console.log("Screen Page Name: " + screenPageName);
     return screenPageName;
 }
@@ -167,6 +169,7 @@ XWikiMobile.prototype.reloadCurrentPage = function() {
         this.xscreens[screenName].showCallback(false);
     }
 }
+
 
 XWikiMobile.prototype.relogin = function() {
     var screenName = location.hash.substring(2);
@@ -264,10 +267,28 @@ XWikiMobile.prototype.getCurrentService = function() {
     return this.xservices[this.getCurrentConfig()];
 }
 
+XWikiMobile.prototype.getCurrentFullConfig = function() {
+    if (sessionStorage.currentWiki=="" || sessionStorage.currentWiki=="default")
+        return sessionStorage.currentConfig;
+    else
+        return sessionStorage.currentConfig + ":" + sessionStorage.currentWiki;
+}
+
+XWikiMobile.prototype.setCurrentFullConfig = function(config) {
+    var i = config.indexOf(":");
+    if (i==-1) {
+        sessionStorage.currentConfig = config;
+        sessionStorage.currentWiki = "default";
+    } else {
+        sessionStorage.currentConfig = config.substring(0, i);
+        sessionStorage.currentWiki = config.substring(i+1);
+    }
+}
+
 XWikiMobile.prototype.getCurrentConfig = function() {
     return sessionStorage.currentConfig
 }
-    
+
 XWikiMobile.prototype.setCurrentConfig = function(config) {
     sessionStorage.currentConfig = config;
 }
@@ -339,13 +360,20 @@ XWikiMobile.prototype.getDate = function(gregorianDate) {
     return moment(d).format($.i18n.map["dateformat"]);
 }
 
-XWikiMobile.prototype.getPageHTML = function(wikiName, val) {
+XWikiMobile.prototype.getPageHTML = function(fullConfigName, val, withxem) {
     // var fullName = val.pageFullName;
     // return "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>" + fullName + "</a>";
     
     var str = "<div class='pageitem'>"
-    + "<a href='#xpage/" + wikiName + "/" + val.pageFullName + "'>"
-    + "<div class='pageitem-title'>" + val.title + "</div></a>";
+    
+    str += "<a href='#xpage/" + fullConfigName + "/" + val.pageFullName + "'>"
+
+    if (withxem) {
+        str += "<span class='pageitem-workspacename'>" + val.wiki.substring(0,1).toUpperCase() + val.wiki.substring(1) + " &gt; </span> ";
+    }
+
+    str += "<span class='pageitem-title'>" + val.title + "</span></a>";
+    
     if (val.pageFullName)
         str += "<div class='pageitem-name'>" + $.i18n.map["xpage.page"] + " " + val.pageFullName + "</div>";
     else
@@ -370,7 +398,7 @@ XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
             var page = url.substring(i2+1);
             page = page.replace('/', '.');
             
-            router.navigate("#xpage/" + this.getCurrentConfig() + "/" + page, {trigger: true, replace: false});
+            router.navigate("#xpage/" + this.getCurrentFullConfig() + "/" + page, {trigger: true, replace: false});
         }
         return false;
     } else {

@@ -4,18 +4,18 @@
         <title id="i18n_main_title">XWiki Mobile</title>
         <meta http-equiv="Content-type" content="text/html; charset=utf-8">
             <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-            <meta name="apple-mobile-web-app-capable" content="yes" />
-            <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
-            <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
-            <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
-            <script type="text/javascript" src="../cordova-2.6.0.js"></script>
-            <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
-            <script type="text/javascript" charset="utf-8" src="../js/jq.mobi.js"></script>
-            <script type="text/javascript" charset="utf-8" src="../js/jq.ui.js"></script>
-            <script type="text/javascript" charset="utf-8" src="../js/jquery.i18n.properties.js"></script>
-            <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
-            <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
-    </head>
+                <meta name="apple-mobile-web-app-capable" content="yes" />
+                <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
+                <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
+                <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
+                <script type="text/javascript" src="../cordova-2.6.0.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../js/jq.mobi.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../js/jq.ui.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../js/jquery.i18n.properties.js"></script>
+                <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
+                <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
+                </head>
     <body>
         <div id="jQUi">
             <!-- this is the header div -->
@@ -34,8 +34,8 @@
                     </ul>
                 </div>
                 <div title="Settings" id="xsetting" class="panel">
-                   <div><span id="i18n_settings_title">Settings for service</span> <span id="setting_name"></span></div>
-                   <br />
+                    <div><span id="i18n_settings_title">Settings for service</span> <span id="setting_name"></span></div>
+                    <br />
                     <form id="setting_form">
                         <label for="setting_id" id="i18n_settings_name">name: </label>
                         <input type='text' id='setting_id' name='id' value='' class="jq-ui-forms" />
@@ -43,9 +43,9 @@
                         <label for="setting_name" id="i18n_settings_displayname">display name: </label>
                         <input type='text' id='setting_name' name='name' value='' class="jq-ui-forms" />
                         </br>
-                   <label for="setting_url" id="i18n_settings_url">url: </label>
-                   <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
-                   </br>
+                        <label for="setting_url" id="i18n_settings_url">url: </label>
+                        <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
+                        </br>
                         <input type='radio' id='setting_xe' name='type' value='xe' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
                         <label for="setting_xe" id="i18n_settings_xe">xe</label>
                         <input type='radio' id='setting_xefromxem' name='type' value='xefromxem' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
@@ -55,16 +55,16 @@
                         <input type='radio' id='setting_urlxem' name='type' value='urlxem' class="jq-ui-forms"  onclick="$('#setting_form_wikis').show();"  />
                         <label for="setting_urlxem" id="i18n_settings_urlxem">urlxem</label>
                         </br>
-                    <div id="setting_form_wikis" style="display: none;">
-                        <label for="setting_wikis" id="i18n_settings_wikis">wikis: </label>
-                        <input type='text' id='setting_wikis' name='wikis' value='' class="jq-ui-forms" /></br>
-                    </div>
-                       <label for="setting_username" id="i18n_settings_username">username: </label>
-                    <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
-                    <br />
+                        <div id="setting_form_wikis" style="display: none;">
+                            <label for="setting_wikis" id="i18n_settings_wikis">wikis: </label>
+                            <input type='text' id='setting_wikis' name='wikis' value='' class="jq-ui-forms" /></br>
+                        </div>
+                        <label for="setting_username" id="i18n_settings_username">username: </label>
+                        <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
+                        <br />
                         <label for="setting_password" id="i18n_settings_password">password: </label>
-                    <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
-                    <br />
+                        <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
+                        <br />
                         <a id="i18n_settings_advanced" href="javascript:void()" onclick="$('#setting_form_advanced').toggle(); return false;">advanced</a>
                         <br />
                         <div id="setting_form_advanced" style="display: none;">
@@ -74,25 +74,33 @@
                             <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms"  />
                             <label for="setting_automatic" id="i18n_settings_automatic">automatic</label>
                             </br>
-                        <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
-                        <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
-                        </br>
-                        <label for="setting_viewurl" id="i18n_settings_viewurl">view url: </label>
-                        <input type='text' id='setting_viewurl' name='viewurl' value='' class="jq-ui-forms" />
-                        </br>
-                        <label for="setting_resturl" id="i18n_settings_resturl">rest url: </label>
-                        <input type='text' id='setting_resturl' name='resturl' value='' class="jq-ui-forms" />
-                        </br>
-                        <label for="setting_protocol" id="i18n_settings_protocol">protocol version: </label>
-                        <input type='text' id='setting_protocol' name='protocol' value='' class="jq-ui-forms" />
-                        </br>
+                            <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
+                            <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
+                            </br>
+                            <label for="setting_viewurl" id="i18n_settings_viewurl">view url: </label>
+                            <input type='text' id='setting_viewurl' name='viewurl' value='' class="jq-ui-forms" />
+                            </br>
+                            <label for="setting_resturl" id="i18n_settings_resturl">rest url: </label>
+                            <input type='text' id='setting_resturl' name='resturl' value='' class="jq-ui-forms" />
+                            </br>
+                            <div id="setting_form_xemurls" style="display: none;">
+                                <label for="setting_xembaseurl" id="i18n_settings_xembaseurl">xem base url: </label>
+                                <input type='text' id='setting_xembaseurl' name='xembaseurl' value='' class="jq-ui-forms" />
+                                </br>
+                                <label for="setting_xemresturl" id="i18n_settings_xemresturl">xem rest url: </label>
+                                <input type='text' id='setting_xemresturl' name='xemresturl' value='' class="jq-ui-forms" />
+                                </br>
+                            </div>
+                            <label for="setting_protocol" id="i18n_settings_protocol">protocol version: </label>
+                            <input type='text' id='setting_protocol' name='protocol' value='' class="jq-ui-forms" />
+                            </br>
                         </div>
                         <br />
                         <br />
                         
-                    <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
+                        <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
                         <input id="i18n_settings_delete" type="button" name="delete" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" />
-                        </form>
+                    </form>
                 </div>
             </div>
             
