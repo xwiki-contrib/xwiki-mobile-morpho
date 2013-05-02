@@ -366,7 +366,7 @@ XWikiMobile.prototype.getPageHTML = function(fullConfigName, val, withxem) {
     
     var str = "<div class='pageitem'>"
     
-    str += "<a href='#xpage/" + fullConfigName + "/" + val.pageFullName + "'>"
+    str += "<a href=\"#xpage/" + fullConfigName + "/" + encodeURIComponent(val.pageFullName) + "\">"
 
     if (withxem) {
         str += "<span class='pageitem-workspacename'>" + val.wiki.substring(0,1).toUpperCase() + val.wiki.substring(1) + " &gt; </span> ";

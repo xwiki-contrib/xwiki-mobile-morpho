@@ -226,7 +226,11 @@ XWikiService.prototype.getXEMRestURL = function(wikiName, restURL) {
 }
 
 XWikiService.prototype.getViewURL = function(wikiName, pageName) {
-    return this.viewurl.replace(/__wiki__/g, wikiName) + pageName.replace(".", "/");
+    var i = pageName.indexOf(".");
+    var space = pageName.substring(0,i);
+    var page = pageName.substring(i+1);
+    
+    return this.viewurl.replace(/__wiki__/g, wikiName) + encodeURIComponent(space) + "/" + encodeURIComponent(page);
 }
 
 /*

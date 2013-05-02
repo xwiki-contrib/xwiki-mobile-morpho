@@ -560,7 +560,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         if (data!=null) {
                                         var items = "";
                                         $.each(data.spaces, function(key, val) {
-                                               items += "<li><a href='#xspace/" + xmobile.getCurrentFullConfig() + "/" + val.name + "'>" + val.name + "</a></li>"
+                                               items += "<li><a href=\"#xspace/" + xmobile.getCurrentFullConfig() + "/" + encodeURIComponent(val.name) + "\">" + val.name + "</a></li>"
                                                });
                                         $("#xwikispaceslist").html(items);
                                         }
@@ -645,8 +645,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     
     xspaceScreen.getSpaceDocsURL = function(wikiName, spaceName) {
-        var hql = "where doc.space='" + spaceName + "' order by doc.date desc";
-        var spacedocsurl = "query?type=hql&q=" + hql + "&media=json&number=20" + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
+        var hql = "where doc.space = '" + spaceName.replace("'","''").replace("&","%26") + "' order by doc.date desc";
+        var spacedocsurl = "query?type=hql&q=" + encodeURIComponent(hql) + "&media=json&number=20" + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true");
         return xmobile.getCurrentService().getRestURL(wikiName, spacedocsurl);
     }
     
@@ -992,7 +992,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            console.log("go data" + data);
                                            var items = "";
                                            $.each(data.searchResults, function(key, val) {
-                                                  items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig(), val, true) + '</li>';
+                                                  items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig() + ":" + val.wiki, val, true) + '</li>';
                                                   });
                                             $("#xemrecentdocslist").html(items);
                                            }
@@ -1058,6 +1058,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            // make sur the config is set
                                            xmobile.setCurrentConfig(wiki);
                                            xmobile.setCurrentWiki("default");
+                                           
                                            if (keyword == undefined || keyword == null)
                                            xmobile.setCurrentKeyword("");
                                            else
@@ -1077,7 +1078,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            var items = "";
                                            if (data.searchResults) {
                                            $.each(data.searchResults, function(key, val) {
-                                                  items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig(), val, true) + '</li>';
+                                                  items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig() + ":" + val.wiki, val, true) + '</li>';
                                                   });
                                            $("#xemsearchlist").html(items);
                                            }
