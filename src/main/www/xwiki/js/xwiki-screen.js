@@ -671,7 +671,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         name: "xsearch",
                                         title: "Search",
                                         parent: "xwikihome",
-                                        panelcontent: "<ul><li><form id='searchform' name='searchform' onsubmit='return this.screen.search(this);'>" + $.i18n.map["xsearch.term"] + " <input type='text' name='search' size='15' class='jq-ui-forms-search'>&nbsp;&nbsp;<input type='submit' value='" + $.i18n.map["xsearch.search"] + "' /></form></li></ul><ul id='xwikisearchlist'></ul>",
+                                        panelcontent: "<ul><li><form id='searchform' name='searchform' onsubmit='return this.screen.search(this); return false;'>" + $.i18n.map["xsearch.term"] + " <input type='text' name='search' size='15' class='jq-ui-forms-search'>&nbsp;&nbsp;<input type='submit' value='" + $.i18n.map["xsearch.search"] + "' /></form></li></ul><ul id='xwikisearchlist'></ul>",
                                         route: "xsearch/:wikiName/(:keyword)",
                                         addMainMenus: function() {
                                         },
@@ -681,6 +681,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         $("#xwikiactions").append("<li><a class='x-icon x-icon-list x-icon-search' href='#xsearch/" + configName + "/'>" + $.i18n.map["xsearch.title"] + "</a></li>");
                                         },
                                         routeCallback: function(wiki, keyword) {
+                                        document.forms.searchform.screen = this;
+                                        document.forms.searchform.search.value = keyword;
                                         console.log("In xsearch route callback " + location.hash);
                                         
                                         // make sur the config is set
@@ -716,7 +718,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
         try {
             var keyword = form.search.value;
             if (keyword!=null && keyword!="") {
-                xmobile.router.navigate("#xsearch/" + xmobile.getCurrentConfig() + "/" + keyword, true);
+                xmobile.router.navigate("#xsearch/" + xmobile.getCurrentFullConfig() + "/" + keyword, true);
             }
         } catch (e) {
             console.log("Search exception: " + e);
@@ -1039,7 +1041,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            name: "xxemsearch",
                                            title: "Search",
                                            parent: "xemhome",
-                                           panelcontent: "<ul><li><form id='xemsearchform' name='searchform' onsubmit='return this.screen.search(this);'>" + $.i18n.map["xsearch.term"] + " <input type='text' name='search' size='15' class='jq-ui-forms-search'>&nbsp;&nbsp;<input type='submit' value='" + $.i18n.map["xsearch.search"] + "' /></form></li></ul><ul id='xemsearchlist'></ul>",
+                                           panelcontent: "<ul><li><form id='xemsearchform' name='xemsearchform' onsubmit='return this.screen.search(this);'>" + $.i18n.map["xsearch.term"] + " <input type='text' name='search' size='15' class='jq-ui-forms-search'>&nbsp;&nbsp;<input type='submit' value='" + $.i18n.map["xsearch.search"] + "' /></form></li></ul><ul id='xemsearchlist'></ul>",
                                            route: "xxemsearch/:wikiName/(:keyword)",
                                            addMainMenus: function() {
                                            },
@@ -1049,6 +1051,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            $("#xemactions").append("<li><a class='x-icon x-icon-list x-icon-search' href='#xxemsearch/" + configName + "/'>" + $.i18n.map["xsearch.title"] + "</a></li>");
                                            },
                                            routeCallback: function(wiki, keyword) {
+                                           document.forms.xemsearchform.screen = this;
+                                           document.forms.xemsearchform.search.value = keyword;
                                            console.log("In xsearch route callback " + location.hash);
                                            
                                            // make sur the config is set
