@@ -860,7 +860,11 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                    }
                                    });
         newhtml = newhtml.replace(pattern2,function(match) {
+                                  if ( arguments[2][0]=='#') {
+                                  return arguments[0];
+                                  } else {
                                   return arguments[1] + "javascript:void(0)" + arguments[3] + " onclick=\"return parent.xmobile.showlinkOnline(\'" + arguments[2] + "','" + domainurl + "\');\"";
+                                  }
                                   });
         return newhtml;
     }
