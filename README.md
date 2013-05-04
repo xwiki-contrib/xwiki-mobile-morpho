@@ -1,14 +1,10 @@
-# XWiki Standard Mobile Client
+# XWiki Morpho Project: iOS and Android Cordova/HTML5 Mobile Client
 
 ## Description
 
-This is a Mobile Application using Cordova/HTML5/JQuery Mobile allowing to access XWiki instances and search, browse, view XWiki data.
+This is a Mobile Application using Cordova/HTML5/Javascript allowing to access XWiki instances and search, browse, view XWiki data.
 
-It is currently at prototype level.
-
-It also includes experimental offline and local editing capabilities, only for iOS.
-
-This application has been mostly tested on iPhone and iPad, but the basic features should also work on other devices.
+It is reaching alpha level.
 
 ## Legal Notices
 
