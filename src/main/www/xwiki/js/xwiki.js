@@ -22,6 +22,8 @@
  XWiki communication and pages display
  */
 
+var withPush = false;
+
 // load require js modules
 require.config({
                // force cache reload
@@ -69,12 +71,39 @@ require.config({
                }
                });
 
-/*
- define(function (require) {
- var Backbone = require('backbone')
- // do something cool...
- });
- */
+
+// result contains any message sent from the plugin call
+function successHandler (result) {
+    alert('result = '+result)
+}
+
+// result contains any error description text returned from the plugin call
+function errorHandler (error) {
+    alert('error = '+error)
+}
+
+function tokenHandler (result) {
+    // Your iOS push server needs to know the token before it can push to this device
+    // here is where you might want to send it the token for later use.
+    console.log('device token = '+result)
+}
+
+// iOS
+function onNotificationAPN(event) {
+    if (event.alert) {
+        navigator.notification.alert(event.alert);
+    }
+    
+    if (event.sound) {
+        var snd = new Media(event.sound);
+        snd.play();
+    }
+    
+    if (event.badge) {
+        pushNotification.setApplicationIconBadgeNumber(successHandler, event.badge);
+    }
+}
+ 
 
 function initXMobile() {
     // start network queue
@@ -105,6 +134,17 @@ function initXMobile() {
     $.ui.toggleNavMenu(false);
     $.ui.showNavMenu = false;
     xmobile.router.navigate(hash, true);
+    
+    document.addEventListener("deviceready", function() {
+                              console.log("Device is ready");
+                              
+                              // After device ready, activate push
+                              if (withPush) {
+                              pushNotification = (window.plugins) ? window.plugins.pushNotification : null;
+                              pushNotification.register(tokenHandler, errorHandler ,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
+                              }
+                              
+                              }, false);
 }
 
 function initi18n(locale) {

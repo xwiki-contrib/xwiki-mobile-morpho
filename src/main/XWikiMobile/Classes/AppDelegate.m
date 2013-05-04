@@ -28,6 +28,7 @@
 #import "AppDelegate.h"
 #import "MainViewController.h"
 
+
 #import <Cordova/CDVPlugin.h>
 
 @implementation AppDelegate
@@ -60,7 +61,6 @@
     self.window.autoresizesSubviews = YES;
 
     self.viewController = [[[MainViewController alloc] init] autorelease];
-    self.viewController.useSplashScreen = YES;
     self.viewController.wwwFolderName = @"www";
     self.viewController.startPage = @"index.html";
 

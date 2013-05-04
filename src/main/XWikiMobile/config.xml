@@ -36,23 +36,27 @@
     <plugins>
         <plugin name="Device" value="CDVDevice" />
         <plugin name="Logger" value="CDVLogger" />
-        <plugin name="Compass" value="CDVLocation" />
+        <plugin name="NetworkStatus" value="CDVConnection" />
+        <plugin name="Debug Console" value="CDVDebugConsole" />
+        <plugin name="Notification" value="CDVNotification" />
+        <plugin name="SplashScreen" value="CDVSplashScreen" />
+        <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+        <plugin name="Globalization" value="CDVGlobalization" />
+        <plugin name="PushPlugin" value="PushPlugin" />
+        <!--
+         <plugin name="PushPlugin" value="PushPlugin" />
+         <plugin name="Compass" value="CDVLocation" />
         <plugin name="Accelerometer" value="CDVAccelerometer" />
         <plugin name="Camera" value="CDVCamera" />
-        <plugin name="NetworkStatus" value="CDVConnection" />
         <plugin name="Contacts" value="CDVContacts" />
-        <plugin name="Debug Console" value="CDVDebugConsole" />
         <plugin name="Echo" value="CDVEcho" />
         <plugin name="File" value="CDVFile" />
         <plugin name="FileTransfer" value="CDVFileTransfer" />
         <plugin name="Geolocation" value="CDVLocation" />
-        <plugin name="Notification" value="CDVNotification" />
         <plugin name="Media" value="CDVSound" />
         <plugin name="Capture" value="CDVCapture" />
-        <plugin name="SplashScreen" value="CDVSplashScreen" />
         <plugin name="Battery" value="CDVBattery" />
-        <plugin name="Globalization" value="CDVGlobalization" />
-        <plugin name="InAppBrowser" value="CDVInAppBrowser" />
+         -->
     </plugins>
 
     <access origin="*" />
