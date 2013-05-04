@@ -60,10 +60,6 @@
   font-size: 87.5%;
 }
 
-#jQUi #backButton {
-  margin-left: 2.8em;
-}
-
 #jQUi .panel {
   background: #fff;
 }
@@ -172,6 +168,14 @@
   width: 23px;
 }
 
+#networkstatus {
+    height: 23px;
+    float: left;
+    margin-top: 13px;
+    margin-left: 1px;
+    width: 23px;
+}
+
 #xstatus {
   padding-top: 1em;
 }
@@ -193,8 +197,13 @@
   text-transform: none;
 }
 
-#backButton {
+#backButton.button {
     max-width: 300px;
+    height: auto;
+    line-height: 30px;
+    padding: 0 2px;
+    font-size: 12px;
+    margin-left: 4em;
 }
 
 #xsetting {

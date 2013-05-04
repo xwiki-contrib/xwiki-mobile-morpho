@@ -131,13 +131,11 @@ XWikiMobile.prototype.getCurrentScreenPageName = function(screenName) {
 }
 
 XWikiMobile.prototype.showNetworkActive = function() {
-    //$("#navbar_network").removeClass("wifi");
-    //$("#navbar_network").addClass("loading");
+    $("#networkstatus").show();
 }
 
 XWikiMobile.prototype.showNetworkInactive = function() {
-    //$("#navbar_network").removeClass("loading");
-    //$("#navbar_network").addClass("wifi");
+    $("#networkstatus").hide();
 }
 
 XWikiMobile.prototype.updateNetworkActive = function() {
@@ -146,14 +144,14 @@ XWikiMobile.prototype.updateNetworkActive = function() {
     if (nbactive==0) {
         if (this.getCurrentService()!=null && this.getCurrentService().nbFailures>0) {
          this.showNetworkInactive();
-         $.ui.updateBadge("#menubadge", "x", "tr")
+         // $.ui.updateBadge("#menubadge", "x", "tr")
         } else {
          this.showNetworkInactive();
-         $.ui.removeBadge("#menubadge")
+         // $.ui.removeBadge("#menubadge")
         }
     } else {
         this.showNetworkActive();
-        $.ui.updateBadge("#menubadge", "" + nbactive, "tr")
+        // $.ui.updateBadge("#menubadge", "" + nbactive, "tr")
     }
 }
 
