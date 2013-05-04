@@ -141,7 +141,7 @@ NetworkQueue.prototype.nextRequest = function() {
                    type:"GET",
                    dataType : "text",
                    url: nextReq.url ,
-                   timeout: 10000,
+                   timeout: 30000,
                    success: function(data, text, xhr) {
                    try {
                    console.log("AJAX done entry " + nextReqName + " code: " + xhr.status);
