@@ -67,15 +67,14 @@
                         <label for="setting_password" id="i18n_settings_password">password: </label>
                         <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
                         <br />
-                        <a id="i18n_settings_advanced" href="javascript:void()" onclick="$('#setting_form_advanced').toggle(); return false;">advanced</a>
-                        <br />
+                         <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms" onclick="$('#setting_form_advanced').hide();"/>
+                            <label for="setting_automatic" id="i18n_settings_automatic">automatic</label>
+                            <br />
+                            <input type='radio' id='setting_manual' name='automatic' value='0' class="jq-ui-forms" onclick="$('#setting_form_advanced').show();"/>
+                            <label for="setting_manual" id="i18n_settings_manual">manual</label>
+                            </br>
                         <div id="setting_form_advanced" style="display: none;">
                             <br />
-                            <input type='radio' id='setting_manual' name='automatic' value='0' class="jq-ui-forms" checked />
-                            <label for="setting_manual" id="i18n_settings_manual">manual</label>
-                            <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms"  />
-                            <label for="setting_automatic" id="i18n_settings_automatic">automatic</label>
-                            </br>
                             <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
                             <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
                             </br>

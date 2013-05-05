@@ -228,8 +228,10 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                          form.setting_protocol.value = "" + sconfig.protocol;
                                          if (sconfig.automatic=="1")
                                          document.getElementById("setting_automatic").checked  = true;
-                                         else
+                                         else{
                                          document.getElementById("setting_manual").checked  = true;
+                                         $("#setting_form_advanced").show();
+                                         }
                                          
                                          if (sconfig.type=="xe") {
                                          document.getElementById("setting_xe").checked  = true;
