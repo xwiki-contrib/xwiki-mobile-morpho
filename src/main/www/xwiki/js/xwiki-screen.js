@@ -823,6 +823,21 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     }
     
     xpageScreen.setPageContent = function(html) {
+        try {
+            if (childBrowserLoaded == false) {
+                console.log("PAGE: In first loading");
+             childBrowser.showHTML("<html><body>" + html + "</body></html>");
+             childBrowserLoaded = true;
+            } else {
+                console.log("PAGE: In second loading");
+                childBrowser.setHTML("<html><body>" + html + "</body></html>");
+            }
+        }
+        catch (err)
+        {
+            console.log(err);
+        }
+        /*
         var frame = document.getElementById('xpageframe');
         // force content in frame in case it was replayed
         if (frame!=undefined && (frame.contentDocument!=undefined)) {
@@ -840,6 +855,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                 frame.src = "pageframe.html";
             }
         }
+        */
     }
     
     xpageScreen.fixHTMLOnline = function(html, wikiName, pageName) {
@@ -859,6 +875,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                    return arguments[0];
                                    }
                                    });
+        /*
+        With the child browser we don't use this anymore
         newhtml = newhtml.replace(pattern2,function(match) {
                                   if ( arguments[2][0]=='#') {
                                   return arguments[0];
@@ -866,6 +884,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                   return arguments[1] + "javascript:void(0)" + arguments[3] + " onclick=\"return parent.xmobile.showlinkOnline(\'" + arguments[2] + "','" + domainurl + "\');\"";
                                   }
                                   });
+        */
         return newhtml;
     }
     

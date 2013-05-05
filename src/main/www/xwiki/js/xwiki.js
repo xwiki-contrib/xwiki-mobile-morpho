@@ -103,7 +103,6 @@ function onNotificationAPN(event) {
         pushNotification.setApplicationIconBadgeNumber(successHandler, event.badge);
     }
 }
- 
 
 function initXMobile() {
     // start network queue
@@ -142,6 +141,57 @@ function initXMobile() {
                               if (withPush) {
                               pushNotification = (window.plugins) ? window.plugins.pushNotification : null;
                               pushNotification.register(tokenHandler, errorHandler ,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
+                              }
+                              
+                              childBrowser = window.plugins.childBrowser;
+                              
+                              if(childBrowser != null) {
+                               childBrowserLoaded = false;
+                               childBrowser.onLocationChange = function(loc){
+                                 console.log("loc change: " + loc);
+                                 return true;
+                               };
+                              childBrowser.onBeforeLocationChange = function(loc){
+                              console.log("before loc change: " + loc);
+                              return true;
+                              };
+                              childBrowser.onShouldLocationChange = function(url){
+                              try {
+                              console.log("should loc change: " + url);
+                              var baseurl = xmobile.getCurrentService().getViewURL(xmobile.getCurrentWiki(), xmobile.getCurrentPage());
+                              var domainurl = baseurl;
+                              var pos = baseurl.indexOf('/',9);
+                              if (pos!=-1)
+                              domainurl = baseurl.substring(0,pos);
+                              url = url.substring(7);
+                              console.log("URL is : " + url);
+                              
+                              // local url
+                              if (url[0]=='/' && url.indexOf("/view/")!=-1) {
+                              var i1 = url.lastIndexOf("/");
+                              var i2 = url.lastIndexOf("/", i1-1);
+                              if (i2!=-1) {
+                              var page = url.substring(i2+1);
+                              page = page.replace('/', '.');
+                              console.log("Found page: " + page);
+                              
+                              xmobile.router.navigate("#xpage/" + xmobile.getCurrentFullConfig() + "/" + page, {trigger: true, replace: false});
+                              return false;
+                              }
+                              }
+                              
+                              return true;
+                              } catch(e) {
+                              console.log("Error in navigate: " + e);
+                              }
+                              };
+                               childBrowser.onClose = function(){
+                                 childBrowserLoaded = false;
+                                 $.ui.goBack();
+                               };
+                               childBrowser.onOpenExternal = function(){
+                                 console.log("open external");
+                               };
                               }
                               
                               }, false);

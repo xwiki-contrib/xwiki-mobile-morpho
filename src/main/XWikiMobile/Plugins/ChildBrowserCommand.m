@@ -42,6 +42,47 @@
     [self.childBrowser loadURL:url];
 }
 
+- (void)showHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
+{
+    /* setting audio session category to "Playback" (since iOS 6) */
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    BOOL ok = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!ok) {
+        NSLog(@"Error setting AVAudioSessionCategoryPlayback: %@", setCategoryError);
+    };
+    
+    if (self.childBrowser == nil) {
+#if __has_feature(objc_arc)
+        self.childBrowser = [[ChildBrowserViewController alloc] initWithScale:NO];
+#else
+        self.childBrowser = [[[ChildBrowserViewController alloc] initWithScale:NO] autorelease];
+#endif
+        self.childBrowser.delegate = self;
+        self.childBrowser.orientationDelegate = self.viewController;
+    }
+    
+    /* // TODO: Work in progress
+     NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
+     NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
+     */
+    
+    [self.viewController presentModalViewController:childBrowser animated:YES];
+    
+    NSString* html = (NSString*)[arguments objectAtIndex:0];
+    
+    [self.childBrowser loadHTML:html];
+}
+
+
+- (void)setHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
+{
+    NSString* html = (NSString*)[arguments objectAtIndex:0];
+    // NSLog(@"Opening HTML : %@", html);
+    [self.childBrowser loadHTML:html];
+}
+
+
 - (void)getPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
 {
     NSString* url = (NSString*)[arguments objectAtIndex:0];
@@ -74,6 +115,25 @@
     [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
 }
 
+- (void)onChildBeforeLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
+    NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onBeforeLocationChange('%@');", encUrl];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+}
+
+- (void)onChildShouldLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
+    NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.childBrowser.onShouldLocationChange('%@');", encUrl];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+}
 
 #if !__has_feature(objc_arc)
 - (void)dealloc

@@ -10,6 +10,10 @@
 @property (nonatomic, strong) ChildBrowserViewController* childBrowser;
 
 - (void)showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)showHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)setHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)onChildLocationChange:(NSString*)newLoc;
+- (void)onChildBeforeLocationChange:(NSString*)newLoc;
+- (void)onChildShouldLocationChange:(NSString*)newLoc;
 
 @end

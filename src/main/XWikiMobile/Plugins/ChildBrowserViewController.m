@@ -142,7 +142,7 @@
         self.imageURL = nil;
         self.imageURL = url;
         self.isImage = YES;
-        NSString* htmlText = @"<html><body style='background-color:#333;margin:0px;padding:0px;'><img style='min-height:200px;margin:0px;padding:0px;width:100%;height:auto;' alt='' src='IMGSRC'/></body></html>";
+        NSString* htmlText = @"<html><body style='background-color:#333;margin:0px;padding:0px;'>Here<img style='min-height:200px;margin:0px;padding:0px;width:100%;height:auto;' alt='' src='IMGSRC'/></body></html>";
         htmlText = [htmlText stringByReplacingOccurrencesOfString:@"IMGSRC" withString:url];
 
         [self.webView loadHTMLString:htmlText baseURL:[NSURL URLWithString:@""]];
@@ -155,8 +155,34 @@
     self.webView.hidden = NO;
 }
 
+- (void)loadHTML:(NSString*)html
+{
+    // NSLog(@"Opening HTML2 : %@", html);
+    
+    [self.webView loadHTMLString:html baseURL:[NSURL URLWithString:@""]];
+    self.webView.hidden = NO;
+}
+
+- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
+{
+    NSLog(@"should load");
+   
+    if (self.delegate != NULL) {
+        [self.delegate onChildShouldLocationChange:request.URL.absoluteString];
+    }
+
+   return YES;
+}
+
 - (void)webViewDidStartLoad:(UIWebView*)sender
 {
+    NSURLRequest* request = self.webView.request;
+    NSLog(@"Start load");
+    
+    if (self.delegate != NULL) {
+        [self.delegate onChildBeforeLocationChange:request.URL.absoluteString];
+    }
+
     self.addressLabel.text = @"Loading...";
     self.backBtn.enabled = self.webView.canGoBack;
     self.fwdBtn.enabled = self.webView.canGoForward;
@@ -167,6 +193,7 @@
 - (void)webViewDidFinishLoad:(UIWebView*)sender
 {
     NSURLRequest* request = self.webView.request;
+    NSLog(@"Finish load");
 
     NSLog(@"New Address is : %@", request.URL.absoluteString);
     self.addressLabel.text = request.URL.absoluteString;

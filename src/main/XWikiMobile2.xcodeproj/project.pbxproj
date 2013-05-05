@@ -42,6 +42,10 @@
 		30A0434914DC770100060A13 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 30A0434614DC770100060A13 /* Localizable.strings */; };
 		30E5649213A7FCAF007403D8 /* CoreMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 30E5649113A7FCAF007403D8 /* CoreMedia.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 		43083ACC172A86CC000762CF /* AssetsLibrary.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 43083ACB172A86CC000762CF /* AssetsLibrary.framework */; };
+		436CC0851735321800979524 /* ChildBrowserCommand.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CC0811735321800979524 /* ChildBrowserCommand.m */; };
+		436CC0861735321800979524 /* ChildBrowserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 436CC0831735321800979524 /* ChildBrowserViewController.m */; };
+		436CC0871735321800979524 /* ChildBrowserViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 436CC0841735321800979524 /* ChildBrowserViewController.xib */; };
+		436CC0891735326A00979524 /* ChildBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 436CC0881735326A00979524 /* ChildBrowser.bundle */; };
 		438775A61734143F003EFBD8 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 438775A31734143F003EFBD8 /* AppDelegate+notification.m */; };
 		438775A71734143F003EFBD8 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 438775A51734143F003EFBD8 /* PushPlugin.m */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
@@ -105,6 +109,12 @@
 		30E5649113A7FCAF007403D8 /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		32CA4F630368D1EE00C91783 /* XWikiMobile-Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "XWikiMobile-Prefix.pch"; sourceTree = "<group>"; };
 		43083ACB172A86CC000762CF /* AssetsLibrary.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AssetsLibrary.framework; path = /Applications/Xcode.app/Contents/Developer/Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS6.1.sdk/System/Library/Frameworks/AssetsLibrary.framework; sourceTree = "<absolute>"; };
+		436CC0801735321800979524 /* ChildBrowserCommand.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserCommand.h; sourceTree = "<group>"; };
+		436CC0811735321800979524 /* ChildBrowserCommand.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserCommand.m; sourceTree = "<group>"; };
+		436CC0821735321800979524 /* ChildBrowserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ChildBrowserViewController.h; sourceTree = "<group>"; };
+		436CC0831735321800979524 /* ChildBrowserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ChildBrowserViewController.m; sourceTree = "<group>"; };
+		436CC0841735321800979524 /* ChildBrowserViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = ChildBrowserViewController.xib; sourceTree = "<group>"; };
+		436CC0881735326A00979524 /* ChildBrowser.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = ChildBrowser.bundle; sourceTree = "<group>"; };
 		438775A21734143F003EFBD8 /* AppDelegate+notification.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AppDelegate+notification.h"; sourceTree = "<group>"; };
 		438775A31734143F003EFBD8 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+notification.m"; sourceTree = "<group>"; };
 		438775A41734143F003EFBD8 /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPlugin.h; sourceTree = "<group>"; };
@@ -207,6 +217,7 @@
 		29B97317FDCFA39411CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				436CC0881735326A00979524 /* ChildBrowser.bundle */,
 				30A0434214DC770100060A13 /* de.lproj */,
 				30A0434514DC770100060A13 /* se.lproj */,
 				1F766FDB13BBADB100FB74C0 /* en.lproj */,
@@ -253,6 +264,11 @@
 		307C750510C5A3420062BCA9 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
+				436CC0801735321800979524 /* ChildBrowserCommand.h */,
+				436CC0811735321800979524 /* ChildBrowserCommand.m */,
+				436CC0821735321800979524 /* ChildBrowserViewController.h */,
+				436CC0831735321800979524 /* ChildBrowserViewController.m */,
+				436CC0841735321800979524 /* ChildBrowserViewController.xib */,
 				438775A21734143F003EFBD8 /* AppDelegate+notification.h */,
 				438775A31734143F003EFBD8 /* AppDelegate+notification.m */,
 				438775A41734143F003EFBD8 /* PushPlugin.h */,
@@ -394,6 +410,8 @@
 				3088BBC1154F3926009F9C59 /* Default@2x~iphone.png in Resources */,
 				3088BBC2154F3926009F9C59 /* Default~iphone.png in Resources */,
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
+				436CC0871735321800979524 /* ChildBrowserViewController.xib in Resources */,
+				436CC0891735326A00979524 /* ChildBrowser.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -426,6 +444,8 @@
 				302D95F114D2391D003F00A1 /* MainViewController.m in Sources */,
 				438775A61734143F003EFBD8 /* AppDelegate+notification.m in Sources */,
 				438775A71734143F003EFBD8 /* PushPlugin.m in Sources */,
+				436CC0851735321800979524 /* ChildBrowserCommand.m in Sources */,
+				436CC0861735321800979524 /* ChildBrowserViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
