@@ -35,7 +35,7 @@ function XWikiService(options) {
     this.xemresturl = (options.xemresturl==undefined) ? "" : options.xemresturl;
     this.username = options.username;
     this.password = options.password;
-    this.automatic = (options.automatic==undefined) ? "0" : options.automatic;
+    this.automatic = (options.automatic==undefined) ? "1" : options.automatic;
     this.autoconnect = (options.autoconnect) ? options.autoconnect : false;
     this.protocol = (options.protocol) ? options.protocol : 3;
     
