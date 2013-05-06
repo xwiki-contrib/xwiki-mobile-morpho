@@ -67,14 +67,8 @@
      NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
      */
     
-    // set size
-    CGRect bigFrame = self.viewController.view.frame;
-    CGFloat newX = bigFrame.origin.x;
-    CGFloat newY = bigFrame.origin.y + 25;
-    
-    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
-    
-    self.pageBrowser.view.frame = newFrame;
+    // make sure the view port is the right size
+    [self updateFrameSize:FALSE];
 
     // [self.viewController presentViewController:PageBrowser animated:YES  completion:NULL];
     // make a normal sub view so that it does not take all screen
@@ -102,28 +96,49 @@
 }
 
 
+- (void)updateFrameSize:(CGFloat)withSideMenu
+{
+    CGFloat navBarSize = 25;
+    if([[UIScreen mainScreen] respondsToSelector:@selector(scale)] &&
+       [[UIScreen mainScreen] scale] == 2.0)
+    {
+        navBarSize = 50;
+    }
+    CGFloat sideMenuSize = (withSideMenu) ? 200 : 0;
+    CGFloat newX;
+    CGFloat newY;
+    CGFloat newWidth;
+    CGFloat newHeight;
+    CGRect bigFrame = self.viewController.view.frame;
+    
+    if (UIInterfaceOrientationIsPortrait([UIApplication sharedApplication].statusBarOrientation)) {
+        newX = sideMenuSize;
+        newY = bigFrame.origin.y + navBarSize;
+        newWidth = bigFrame.size.width - sideMenuSize;
+        newHeight = bigFrame.size.height - navBarSize;
+    } else {
+        // set size
+        navBarSize = 50;
+        newY = navBarSize;
+        newX = bigFrame.origin.y + sideMenuSize;
+        newHeight = bigFrame.size.width - navBarSize;
+        newWidth = bigFrame.size.height - sideMenuSize;
+        
+    }
+    
+    CGRect newFrame = CGRectMake(newX, newY, newWidth, newHeight );
+    self.pageBrowser.view.frame = newFrame;
+}
+
+
 - (void)showSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args:
 {
-    // set size
-    CGRect bigFrame = self.viewController.view.frame;
-    CGFloat newX = 200;
-    CGFloat newY = bigFrame.origin.y + 25;
-    
-    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
-    
-    self.pageBrowser.view.frame = newFrame;
+    [self updateFrameSize:TRUE];
 }
 
 - (void)hideSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args:
 {
-    // set size
-    CGRect bigFrame = self.viewController.view.frame;
-    CGFloat newX = 0;
-    CGFloat newY = bigFrame.origin.y + 25;
-    
-    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
-    
-    self.pageBrowser.view.frame = newFrame;
+    [self updateFrameSize:FALSE];
 }
 
 

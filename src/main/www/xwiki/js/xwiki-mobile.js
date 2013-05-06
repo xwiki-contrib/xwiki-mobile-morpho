@@ -395,9 +395,15 @@ XWikiMobile.prototype.fixHTMLForPageBrowser = function(html, wikiName, pageName)
 }
 
 XWikiMobile.prototype.toggleSideMenu = function() {
-    $.ui.toggleSideMenu();
-    // make sure the page browser makes room for the menu
-    pageBrowser.toggleSideMenu();
+    if ($("#menu").hasClass("on")) {
+     $.ui.toggleSideMenu(false);
+     // make sure the page browser makes room for the menu
+     pageBrowser.toggleSideMenu(false);
+    } else {
+     $.ui.toggleSideMenu(true);
+     // make sure the page browser makes room for the menu
+     pageBrowser.toggleSideMenu(true);
+    }
 }
 
 XWikiMobile.prototype.goBack = function() {

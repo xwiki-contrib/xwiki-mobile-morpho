@@ -92,9 +92,13 @@
  };
 
  // Make room/Hide side menu for the side menu to show
- PageBrowser.prototype.toggleSideMenu = function(html)
+ PageBrowser.prototype.toggleSideMenu = function(force)
  {
- if (this.sidemenu==false) {
+ if (force==undefined) {
+  force = !this.sidemenu;
+ }
+ 
+ if (force) {
  this.showSideMenu();
  this.sidemenu = true;
  } else {

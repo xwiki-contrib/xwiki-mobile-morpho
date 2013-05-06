@@ -15,6 +15,7 @@
 - (void)showSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)hideSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)realClose;
+- (void)updateFrameSize:(CGFloat)withSideMenu;
 - (void)onChildLocationChange:(NSString*)newLoc;
 - (void)onChildBeforeLocationChange:(NSString*)newLoc;
 - (void)onChildShouldLocationChange:(NSString*)newLoc;

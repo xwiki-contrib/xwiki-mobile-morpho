@@ -28,7 +28,7 @@
  };
  
  // Make room/Hide side menu for the side menu to show
- iFramePageBrowser.prototype.toggleSideMenu = function(html)
+ iFramePageBrowser.prototype.toggleSideMenu = function(force)
  {
  // do nothing in xpage browser
  }

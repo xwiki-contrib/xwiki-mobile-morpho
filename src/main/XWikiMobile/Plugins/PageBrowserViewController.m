@@ -245,7 +245,7 @@
         return [self.orientationDelegate supportedInterfaceOrientations];
     }
 
-    return UIInterfaceOrientationMaskPortrait;
+    return UIInterfaceOrientationMaskAll;
 }
 
 - (BOOL)shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
