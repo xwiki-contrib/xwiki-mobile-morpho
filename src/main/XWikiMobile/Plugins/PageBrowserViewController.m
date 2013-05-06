@@ -2,9 +2,9 @@
 //  Copyright 2010 Nitobi. All rights reserved.
 //  Copyright 2012, Randy McMillan
 
-#import "ChildBrowserViewController.h"
+#import "PageBrowserViewController.h"
 
-@implementation ChildBrowserViewController
+@implementation PageBrowserViewController
 
 @synthesize imageURL, isImage;
 @synthesize delegate, orientationDelegate;
@@ -37,7 +37,7 @@
     return resource; // if all else fails
 }
 
-- (ChildBrowserViewController*)initWithScale:(BOOL)enabled
+- (PageBrowserViewController*)initWithScale:(BOOL)enabled
 {
     self = [super init];
     self.scaleEnabled = enabled;
@@ -49,10 +49,10 @@
 {
     [super viewDidLoad];
 
-    self.refreshBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/but_refresh"]];
-    self.backBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_left"]];
-    self.fwdBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/arrow_right"]];
-    self.safariBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"ChildBrowser.bundle/compass"]];
+    self.refreshBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"PageBrowser.bundle/but_refresh"]];
+    self.backBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"PageBrowser.bundle/arrow_left"]];
+    self.fwdBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"PageBrowser.bundle/arrow_right"]];
+    self.safariBtn.image = [UIImage imageNamed:[[self class] resolveImageResource:@"PageBrowser.bundle/compass"]];
 
     self.webView.delegate = self;
     self.webView.scalesPageToFit = TRUE;
@@ -100,12 +100,17 @@
     if (self.delegate != nil) {
         [self.delegate onClose];
     }
+    
+    /*
     if ([self respondsToSelector:@selector(presentingViewController)]) {
         // Reference UIViewController.h Line:179 for update to iOS 5 difference - @RandyMcMillan
         [[self presentingViewController] dismissViewControllerAnimated:YES completion:nil];
     } else {
         [[self parentViewController] dismissModalViewControllerAnimated:YES];
     }
+    */
+    //[self.delegate.viewController.view addSubview:self.PageBrowser.view];
+    [self.delegate realClose];
 }
 
 - (IBAction)onDoneButtonPress:(id)sender
@@ -165,7 +170,7 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
 {
-    NSLog(@"should load");
+    NSLog(@"Should load");
    
     if (self.delegate != NULL) {
         [self.delegate onChildShouldLocationChange:request.URL.absoluteString];
@@ -196,7 +201,7 @@
     NSLog(@"Finish load");
 
     NSLog(@"New Address is : %@", request.URL.absoluteString);
-    self.addressLabel.text = request.URL.absoluteString;
+    self.addressLabel.text = @""; // request.URL.absoluteString;
     self.backBtn.enabled = self.webView.canGoBack;
     self.fwdBtn.enabled = self.webView.canGoForward;
     [self.spinner stopAnimating];

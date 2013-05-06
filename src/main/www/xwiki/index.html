@@ -15,14 +15,15 @@
                 <script type="text/javascript" charset="utf-8" src="../js/jquery.i18n.properties.js"></script>
                 <script type="text/javascript" charset="utf-8" src="../js/squeezeFrame.js"></script>
                 <script type="text/javascript" charset="utf-8" src="../js/PushNotification.js"></script>
-                <script type="text/javascript" charset="utf-8" src="../js/ChildBrowser.js"></script>
+                <script type="text/javascript" charset="utf-8" src="js/xwiki-pagebrowser.js"></script>
+                <script type="text/javascript" charset="utf-8" src="js/xwiki-iframepagebrowser.js"></script>
                 <script type="text/javascript" charset="utf-8" src="js/xwiki.js"></script>
                 </head>
     <body>
         <div id="jQUi">
             <!-- this is the header div -->
             <div id="header">
-                <a id='menubadge' onclick='jq.ui.toggleSideMenu()'></a>
+                <a id='menubadge' onclick='xmobile.toggleSideMenu();'></a>
                 <a id='networkstatus' href="#xstatus" style="display: none;"><img src="../img/ajax-loader.gif" /></a>
                 <input id="open" type="button" value="Open" style="display: none; float: right;" onclick="xmobile.open();"/>
             </div>

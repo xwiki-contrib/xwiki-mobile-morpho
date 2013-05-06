@@ -23,6 +23,7 @@
  */
 
 var withPush = false;
+var withPageBrowser = true;
 
 // load require js modules
 require.config({
@@ -132,68 +133,30 @@ function initXMobile() {
     $.ui.loadContent(hash ,false,false,"up");
     $.ui.toggleNavMenu(false);
     $.ui.showNavMenu = false;
+    
+    /* hack to take control of the side menu button */
+    $("#menu_scroller")[0].getElementsByTagName("a")[0].onclick = function() {
+        xmobile.toggleSideMenu(false);
+        return false;
+    }
+    
     xmobile.router.navigate(hash, true);
     
     document.addEventListener("deviceready", function() {
                               console.log("Device is ready");
                               
                               // After device ready, activate push
-                              if (withPush) {
+                              // push notifications are currently only supported on iOS
+                              if (withPush && device.platform=="iOS") {
                               pushNotification = (window.plugins) ? window.plugins.pushNotification : null;
                               pushNotification.register(tokenHandler, errorHandler ,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
                               }
                               
-                              childBrowser = window.plugins.childBrowser;
-                              
-                              if(childBrowser != null) {
-                               childBrowserLoaded = false;
-                               childBrowser.onLocationChange = function(loc){
-                                 console.log("loc change: " + loc);
-                                 return true;
-                               };
-                              childBrowser.onBeforeLocationChange = function(loc){
-                              console.log("before loc change: " + loc);
-                              return true;
-                              };
-                              childBrowser.onShouldLocationChange = function(url){
-                              try {
-                              console.log("should loc change: " + url);
-                              var baseurl = xmobile.getCurrentService().getViewURL(xmobile.getCurrentWiki(), xmobile.getCurrentPage());
-                              var domainurl = baseurl;
-                              var pos = baseurl.indexOf('/',9);
-                              if (pos!=-1)
-                              domainurl = baseurl.substring(0,pos);
-                              url = url.substring(7);
-                              console.log("URL is : " + url);
-                              
-                              // local url
-                              if (url[0]=='/' && url.indexOf("/view/")!=-1) {
-                              var i1 = url.lastIndexOf("/");
-                              var i2 = url.lastIndexOf("/", i1-1);
-                              if (i2!=-1) {
-                              var page = url.substring(i2+1);
-                              page = page.replace('/', '.');
-                              console.log("Found page: " + page);
-                              
-                              xmobile.router.navigate("#xpage/" + xmobile.getCurrentFullConfig() + "/" + page, {trigger: true, replace: false});
-                              return false;
-                              }
-                              }
-                              
-                              return true;
-                              } catch(e) {
-                              console.log("Error in navigate: " + e);
-                              }
-                              };
-                               childBrowser.onClose = function(){
-                                 childBrowserLoaded = false;
-                                 $.ui.goBack();
-                               };
-                               childBrowser.onOpenExternal = function(){
-                                 console.log("open external");
-                               };
-                              }
-                              
+                              // page browser is currently only supported on iOS
+                              // without it it will fallback to the iframe page browser
+                              if (withPageBrowser && device.platform=="iOS") {
+                              pageBrowser = window.plugins.pageBrowser;
+                              }                              
                               }, false);
 }
 
@@ -225,14 +188,6 @@ function initi18n(locale) {
 }
 
 require(["xscreen" , "xscreenapps" ], function() {
-        
-        /*
-         if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
-         var script=document.createElement("script");
-         script.src="../js/jq.desktopBrowsers.js";
-         var tag=$("head").append(script);
-         }
-         */
         
         // declare backbone routes
         var Router = Backbone.Router.extend({

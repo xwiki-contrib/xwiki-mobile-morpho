@@ -52,6 +52,11 @@ function XWikiScreen(options) {
 };
 
 XWikiScreen.prototype.showScreen = function() {
+    // force closing of page browser
+    // this only has effect with the native pageBrowser
+    if (window.pageBrowser)
+        window.pageBrowser.close();
+    
     var title = $.i18n.map[this.name + ".title"];
     if (title==undefined)
         title = this.title;
@@ -814,79 +819,18 @@ XWikiMobile.prototype.addDefaultScreens = function() {
         var result = nq.getResult(xmobile.getCurrentConfig() + "." + wikiName + ".xpage." + pageName);
         if (result==null || cache==false) {
             this.addPageRequest(wikiName, pageName, "high", cache);
-            return (result==null) ? null : this.fixHTMLOnline(result.data, wikiName, pageName);
+            return (result==null) ? null : xmobile.fixHTMLForPageBrowser(result.data, wikiName, pageName);
         } else if (result.status==4 || result.status==3) {
-            return this.fixHTMLOnline(result.data, wikiName, pageName);
+            return xmobile.fixHTMLForPageBrowser(result.data, wikiName, pageName);
         } else {
             return null;
         }
     }
     
     xpageScreen.setPageContent = function(html) {
-        try {
-            if (childBrowserLoaded == false) {
-                console.log("PAGE: In first loading");
-             childBrowser.showHTML("<html><body>" + html + "</body></html>");
-             childBrowserLoaded = true;
-            } else {
-                console.log("PAGE: In second loading");
-                childBrowser.setHTML("<html><body>" + html + "</body></html>");
-            }
-        }
-        catch (err)
-        {
-            console.log(err);
-        }
-        /*
-        var frame = document.getElementById('xpageframe');
-        // force content in frame in case it was replayed
-        if (frame!=undefined && (frame.contentDocument!=undefined)) {
-            var pageContentEl = frame.contentDocument.getElementById('xwikipagecontent');
-            if (pageContentEl != undefined) {
-                pageContentEl.innerHTML = (html == null) ? "" : html;
-                if (html!="") {
-                    squeezeFrame();
-                }
-            } else {
-                var that = this;
-                frame.contentDocument.addEventListener( "DOMContentLoaded", function() {
-                                                       that.setPageContent(html);
-                                                       }, false);
-                frame.src = "pageframe.html";
-            }
-        }
-        */
+        pageBrowser.setPageContent(html);
     }
     
-    xpageScreen.fixHTMLOnline = function(html, wikiName, pageName) {
-        var baseurl = xmobile.getCurrentService().getViewURL(wikiName, pageName);
-        var domainurl = baseurl;
-        var pos = baseurl.indexOf('/',9);
-        if (pos!=-1)
-            domainurl = baseurl.substring(0,pos);
-        var pattern1 = new RegExp("(<img.*?src\s*=\s*[\"\'])(.*?)([\"\'])", "g");
-        var pattern2 = new RegExp("(<a.*?href\s*=\s*[\"\'])(.*?)([\"\'])", "g");
-        var newhtml = html.replace(pattern1,function(match) {
-                                   if (arguments[2][0]=='/') {
-                                   var url = domainurl + arguments[2];
-                                   var result = (url==null) ? arguments[1] + arguments[2] + arguments[3]: arguments[1] + url + arguments[3];
-                                   return result;
-                                   } else {
-                                   return arguments[0];
-                                   }
-                                   });
-        /*
-        With the child browser we don't use this anymore
-        newhtml = newhtml.replace(pattern2,function(match) {
-                                  if ( arguments[2][0]=='#') {
-                                  return arguments[0];
-                                  } else {
-                                  return arguments[1] + "javascript:void(0)" + arguments[3] + " onclick=\"return parent.xmobile.showlinkOnline(\'" + arguments[2] + "','" + domainurl + "\');\"";
-                                  }
-                                  });
-        */
-        return newhtml;
-    }
     
     
     this.addScreen(xpageScreen);

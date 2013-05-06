@@ -3,15 +3,18 @@
 //  Copyright 2012, Randy McMillan
 
 #import <Cordova/CDVPlugin.h>
-#import "ChildBrowserViewController.h"
+#import "PageBrowserViewController.h"
 
-@interface ChildBrowserCommand : CDVPlugin <ChildBrowserDelegate>{}
+@interface PageBrowserCommand : CDVPlugin <PageBrowserDelegate>{}
 
-@property (nonatomic, strong) ChildBrowserViewController* childBrowser;
+@property (nonatomic, strong) PageBrowserViewController* pageBrowser;
 
 - (void)showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)showHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
 - (void)setHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)showSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)hideSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options;
+- (void)realClose;
 - (void)onChildLocationChange:(NSString*)newLoc;
 - (void)onChildBeforeLocationChange:(NSString*)newLoc;
 - (void)onChildShouldLocationChange:(NSString*)newLoc;

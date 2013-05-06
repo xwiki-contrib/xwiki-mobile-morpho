@@ -4,7 +4,7 @@
 
 #import <UIKit/UIKit.h>
 
-@protocol ChildBrowserDelegate <NSObject>
+@protocol PageBrowserDelegate <NSObject>
 
 /*
  *  onChildLocationChanging:newLoc
@@ -26,7 +26,7 @@
 
 @end
 
-@interface ChildBrowserViewController : UIViewController <UIWebViewDelegate>{}
+@interface PageBrowserViewController : UIViewController <UIWebViewDelegate>{}
 
 @property (nonatomic, strong) IBOutlet UIWebView* webView;
 @property (nonatomic, strong) IBOutlet UIBarButtonItem* closeBtn;
@@ -38,14 +38,14 @@
 @property (nonatomic, strong) IBOutlet UIActivityIndicatorView* spinner;
 
 // unsafe_unretained is equivalent to assign - used to prevent retain cycles in the two properties below
-@property (nonatomic, unsafe_unretained) id <ChildBrowserDelegate> delegate;
+@property (nonatomic, unsafe_unretained) id <PageBrowserDelegate> delegate;
 @property (nonatomic, unsafe_unretained) id orientationDelegate;
 
 @property (copy) NSString* imageURL;
 @property (assign) BOOL isImage;
 @property (assign) BOOL scaleEnabled;
 
-- (ChildBrowserViewController*)initWithScale:(BOOL)enabled;
+- (PageBrowserViewController*)initWithScale:(BOOL)enabled;
 - (IBAction)onDoneButtonPress:(id)sender;
 - (IBAction)onSafariButtonPress:(id)sender;
 - (void)loadURL:(NSString*)url;
