@@ -1,0 +1,189 @@
+//  Created by Jesse MacFadyen on 10-05-29.
+//  Copyright 2010 Nitobi. All rights reserved.
+//  Copyright 2012, Randy McMillan
+
+#import "PageBrowserCommand.h"
+#import <Cordova/CDVViewController.h>
+#import <AVFoundation/AVFoundation.h>
+
+@implementation PageBrowserCommand
+
+@synthesize pageBrowser;
+
+- (void)showWebPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
+{
+    /* setting audio session category to "Playback" (since iOS 6) */
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    BOOL ok = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!ok) {
+        NSLog(@"Error setting AVAudioSessionCategoryPlayback: %@", setCategoryError);
+    };
+
+    if (self.pageBrowser == nil) {
+#if __has_feature(objc_arc)
+        self.pageBrowser = [[PageBrowserViewController alloc] initWithScale:NO];
+#else
+        self.pageBrowser = [[[PageBrowserViewController alloc] initWithScale:NO] autorelease];
+#endif
+        self.pageBrowser.delegate = self;
+        self.pageBrowser.orientationDelegate = self.viewController;
+    }
+
+    /* // TODO: Work in progress
+     NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
+     NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
+     */
+
+    [self.viewController presentViewController:pageBrowser animated:YES completion:NULL];
+
+    NSString* url = (NSString*)[arguments objectAtIndex:0];
+
+    [self.pageBrowser loadURL:url];
+}
+
+- (void)showHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
+{
+    /* setting audio session category to "Playback" (since iOS 6) */
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *setCategoryError = nil;
+    BOOL ok = [audioSession setCategory:AVAudioSessionCategoryPlayback error:&setCategoryError];
+    if (!ok) {
+        NSLog(@"Error setting AVAudioSessionCategoryPlayback: %@", setCategoryError);
+    };
+    
+    if (self.pageBrowser == nil) {
+#if __has_feature(objc_arc)
+        self.pageBrowser = [[PageBrowserViewController alloc] initWithScale:NO];
+#else
+        self.pageBrowser = [[[PageBrowserViewController alloc] initWithScale:NO] autorelease];
+#endif
+        self.pageBrowser.delegate = self;
+        self.pageBrowser.orientationDelegate = self.viewController;
+    }
+    
+    /* // TODO: Work in progress
+     NSString* strOrientations = [ options objectForKey:@"supportedOrientations"];
+     NSArray* supportedOrientations = [strOrientations componentsSeparatedByString:@","];
+     */
+    
+    // set size
+    CGRect bigFrame = self.viewController.view.frame;
+    CGFloat newX = bigFrame.origin.x;
+    CGFloat newY = bigFrame.origin.y + 25;
+    
+    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
+    
+    self.pageBrowser.view.frame = newFrame;
+
+    // [self.viewController presentViewController:PageBrowser animated:YES  completion:NULL];
+    // make a normal sub view so that it does not take all screen
+    [self.viewController.view addSubview:self.pageBrowser.view];
+    
+    NSString* html = (NSString*)[arguments objectAtIndex:0];
+    
+    [self.pageBrowser loadHTML:html];
+}
+
+
+- (void)setHTML:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args: url
+{
+    NSString* html = (NSString*)[arguments objectAtIndex:0];
+    // NSLog(@"Opening HTML : %@", html);
+    [self.pageBrowser loadHTML:html];
+}
+
+
+- (void)getPage:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options
+{
+    NSString* url = (NSString*)[arguments objectAtIndex:0];
+
+    [self.pageBrowser loadURL:url];
+}
+
+
+- (void)showSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args:
+{
+    // set size
+    CGRect bigFrame = self.viewController.view.frame;
+    CGFloat newX = 200;
+    CGFloat newY = bigFrame.origin.y + 25;
+    
+    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
+    
+    self.pageBrowser.view.frame = newFrame;
+}
+
+- (void)hideSideMenu:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options  // args:
+{
+    // set size
+    CGRect bigFrame = self.viewController.view.frame;
+    CGFloat newX = 0;
+    CGFloat newY = bigFrame.origin.y + 25;
+    
+    CGRect newFrame = CGRectMake(newX, newY, bigFrame.size.width, bigFrame.size.height);
+    
+    self.pageBrowser.view.frame = newFrame;
+}
+
+
+- (void)close:(NSMutableArray*)arguments withDict:(NSMutableDictionary*)options // args: url
+{
+    [self realClose];
+}
+
+- (void)realClose
+{
+    [self.pageBrowser.view removeFromSuperview];
+}
+
+- (void)onClose
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"window.plugins.pageBrowser.onClose();"];
+}
+
+- (void)onOpenInSafari
+{
+    [self.webView stringByEvaluatingJavaScriptFromString:@"window.plugins.pageBrowser.onOpenExternal();"];
+}
+
+- (void)onChildLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
+    NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.pageBrowser.onLocationChange('%@');", encUrl];
+
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+}
+
+- (void)onChildBeforeLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
+    NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.pageBrowser.onBeforeLocationChange('%@');", encUrl];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+}
+
+- (void)onChildShouldLocationChange:(NSString*)newLoc
+{
+    NSString* tempLoc = [NSString stringWithFormat:@"%@", newLoc];
+    NSString* encUrl = [tempLoc stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];
+    
+    NSString* jsCallback = [NSString stringWithFormat:@"window.plugins.pageBrowser.onShouldLocationChange('%@');", encUrl];
+    
+    [self.webView stringByEvaluatingJavaScriptFromString:jsCallback];
+}
+
+#if !__has_feature(objc_arc)
+- (void)dealloc
+{
+    self.pageBrowser = nil;
+
+    [super dealloc];
+}
+#endif
+
+@end

@@ -387,28 +387,23 @@ XWikiMobile.prototype.getPageHTML = function(fullConfigName, val, withxem) {
     return str;
 }
 
-XWikiMobile.prototype.showlinkOnline = function(url, domainurl) {
-    // local url
-    if (url[0]=='/' && url.indexOf("/view/")!=-1) {
-        var i1 = url.lastIndexOf("/");
-        var i2 = url.lastIndexOf("/", i1-1);
-        if (i2!=-1) {
-            var page = url.substring(i2+1);
-            page = page.replace('/', '.');
-            
-            router.navigate("#xpage/" + this.getCurrentFullConfig() + "/" + page, {trigger: true, replace: false});
-        }
-        return false;
-    } else {
-        if (confirm("This is an external URL. Would you like to open it ?")) {
-            var frame = document.getElementById('xpageframe');
-            if (frame!=undefined)
-                frame.src = url;
-        }
-        return false;
-    }
-    return false;
+XWikiMobile.prototype.fixHTMLForPageBrowser = function(html, wikiName, pageName) {
+    if (pageBrowser)
+        return pageBrowser.fixHTMLForPageBrowser(html, wikiName, pageName);
+    else
+        return html;
 }
+
+XWikiMobile.prototype.toggleSideMenu = function() {
+    $.ui.toggleSideMenu();
+    // make sure the page browser makes room for the menu
+    pageBrowser.toggleSideMenu();
+}
+
+XWikiMobile.prototype.goBack = function() {
+    $.ui.goBack();
+}
+
 
 /*
  API to open the current page in a separate browser

@@ -43,6 +43,7 @@
         <plugin name="InAppBrowser" value="CDVInAppBrowser" />
         <plugin name="Globalization" value="CDVGlobalization" />
         <plugin name="PushPlugin" value="PushPlugin" />
+        <plugin name="PageBrowserCommand" value="PageBrowserCommand" />
         <!--
          <plugin name="PushPlugin" value="PushPlugin" />
          <plugin name="Compass" value="CDVLocation" />

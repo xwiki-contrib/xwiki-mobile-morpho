@@ -23,6 +23,7 @@
  */
 
 var withPush = false;
+var withPageBrowser = true;
 
 // load require js modules
 require.config({
@@ -103,7 +104,6 @@ function onNotificationAPN(event) {
         pushNotification.setApplicationIconBadgeNumber(successHandler, event.badge);
     }
 }
- 
 
 function initXMobile() {
     // start network queue
@@ -133,17 +133,30 @@ function initXMobile() {
     $.ui.loadContent(hash ,false,false,"up");
     $.ui.toggleNavMenu(false);
     $.ui.showNavMenu = false;
+    
+    /* hack to take control of the side menu button */
+    $("#menu_scroller")[0].getElementsByTagName("a")[0].onclick = function() {
+        xmobile.toggleSideMenu(false);
+        return false;
+    }
+    
     xmobile.router.navigate(hash, true);
     
     document.addEventListener("deviceready", function() {
                               console.log("Device is ready");
                               
                               // After device ready, activate push
-                              if (withPush) {
+                              // push notifications are currently only supported on iOS
+                              if (withPush && device.platform=="iOS") {
                               pushNotification = (window.plugins) ? window.plugins.pushNotification : null;
                               pushNotification.register(tokenHandler, errorHandler ,{"badge":"true","sound":"true","alert":"true","ecb":"onNotificationAPN"});
                               }
                               
+                              // page browser is currently only supported on iOS
+                              // without it it will fallback to the iframe page browser
+                              if (withPageBrowser && device.platform=="iOS") {
+                              pageBrowser = window.plugins.pageBrowser;
+                              }                              
                               }, false);
 }
 
@@ -175,14 +188,6 @@ function initi18n(locale) {
 }
 
 require(["xscreen" , "xscreenapps" ], function() {
-        
-        /*
-         if(!((window.DocumentTouch&&document instanceof DocumentTouch)||'ontouchstart' in window)){
-         var script=document.createElement("script");
-         script.src="../js/jq.desktopBrowsers.js";
-         var tag=$("head").append(script);
-         }
-         */
         
         // declare backbone routes
         var Router = Backbone.Router.extend({
