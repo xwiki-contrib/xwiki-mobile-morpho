@@ -136,23 +136,28 @@
  }
  return false;
  }
-
- iFramePageBrowser.prototype.setPageContent = function(html) {
-  var frame = document.getElementById('xpageframe');
-  // force content in frame in case it was replayed
-  if (frame!=undefined && (frame.contentDocument!=undefined)) {
-  var pageContentEl = frame.contentDocument.getElementById('xwikipagecontent');
-  if (pageContentEl != undefined) {
-  pageContentEl.innerHTML = (html == null) ? "" : html;
-  if (html!="") {
-   squeezeFrame();
-  }
+ 
+ iFramePageBrowser.prototype.setPageContent = function(header, html) {
+ var frame = document.getElementById('xpageframe');
+ // force content in frame in case it was replayed
+ if (frame!=undefined && (frame.contentDocument!=undefined)) {
+ var pageHeaderEl = frame.contentDocument.getElementById('xwikipageheader');
+ if (pageHeaderEl != undefined) {
+ pageHeaderEl.innerHTML = (header == null) ? "" : header;
+ }
+ 
+ var pageContentEl = frame.contentDocument.getElementById('xwikipagecontent');
+ if (pageContentEl != undefined) {
+ pageContentEl.innerHTML = (html == null) ? "" : html;
+ if (html!="") {
+ squeezeFrame();
+ }
  } else {
-  var that = this;
-  frame.contentDocument.addEventListener( "DOMContentLoaded", function() {
-  that.setPageContent(html);
-  }, false);
-  frame.src = "pageframe.html";
+ var that = this;
+ frame.contentDocument.addEventListener( "DOMContentLoaded", function() {
+                                        that.setPageContent(html);
+                                        }, false);
+ frame.src = "pageframe.html";
  }
  }
 };

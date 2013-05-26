@@ -746,7 +746,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xsearchScreen.getSearchURL = function(wikiName, keyword) {
         var query = keyword + " AND hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().prototcol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
         return xmobile.getCurrentService().getRestURL(wikiName, searchurl);
     }
     
@@ -790,12 +790,32 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                       },
                                       showCallback: function(cache) {
                                       $("#open").show();
-                                      this.setPageContent("");
+                                      this.setPageContent(null, "");
                                       console.log("In xpage show callback");
-                                      var data = this.getPage(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
-                                      if (data!=null) {
-                                       this.setPageContent(data);
+                                      
+                                      var pageInfo = null
+                                      var pagePlain = null;
+                                      
+                                      console.log("Loading with protocol " + xmobile.getCurrentService().protocol);
+                                      if (xmobile.getCurrentService().protocol==4) {
+                                        // we only need the page info if we have the new apis
+                                        try {
+                                         pageInfo = this.getPageInfo(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
+                                        } catch (Exc) {
+                                         console.log("ERROR - Failed to get page info for page: " + xmobile.getCurrentPage() + ": " + Exc);
+                                         pagePlain = this.getPage(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
+                                        }
+                                      } else {
+                                         // if not then we need the plain data from another request as well as the list of attachments
+                                         pagePlain = this.getPage(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
+                                         try {
+                                           pageInfo = this.getPageInfo(xmobile.getCurrentWiki(), xmobile.getCurrentPage(), cache);
+                                         } catch (Exc) {
+                                           console.log("ERROR - Failed to get page info for page: " + xmobile.getCurrentPage() + ": " + Exc);
+                                         }
                                       }
+                                      
+                                       this.setPageContent(pageInfo, pagePlain);
                                       }
                                       }
                                       );
@@ -828,9 +848,99 @@ XWikiMobile.prototype.addDefaultScreens = function() {
             return null;
         }
     }
+ 
+    // adding network functions
+    xpageScreen.addPageInfoRequest = function(wikiName, pageName, priority, cache) {
+        if (cache==null)
+            cache = true;
+        var pageURL = this.getPageInfoURL(wikiName, pageName);
+        nq.addRequest(xmobile.getCurrentService(), xmobile.getCurrentConfig() + "." + wikiName + ".xpageinfo." + pageName, pageURL, priority, cache, null);
+    }
     
-    xpageScreen.setPageContent = function(html) {
-        pageBrowser.setPageContent(html);
+    
+    xpageScreen.getPageInfoURL = function(wikiName, pageName) {
+        var i1 = pageName.indexOf(".");
+        var spaceName = pageName.substring(0, i1);
+        var shortPageName = pageName.substring(i1+1);
+        var pageurl = "spaces/" + spaceName + "/pages/" + shortPageName + "?media=json&prettyNames=true&renderedContent=true&attachments=true&objects=true";
+        return xmobile.getCurrentService().getRestURL(wikiName, pageurl);
+    }
+    
+    xpageScreen.getPageInfo = function(wikiName, pageName, cache) {
+        var result = nq.getResult(xmobile.getCurrentConfig() + "." + wikiName + ".xpageinfo." + pageName);
+        if (result==null || cache==false) {
+            this.addPageInfoRequest(wikiName, pageName, "high", cache);
+            return (result==null) ? null : $.parseJSON(result.data);
+        } else if (result.status==4 || result.status==3) {
+            return $.parseJSON(result.data);
+        } else {
+            return null;
+        }
+    }
+    
+    xpageScreen.getPageHeader = function(pageInfo) {
+        var title = "", modifierName = "", docData = "" , nbAttachments = "", updateDate = "";
+        var header = "";
+        
+        if (pageInfo!=null) {
+        // extract pageInfo data
+        if (pageInfo.title!=null) {
+            title = pageInfo.title;
+        } else {
+            title = "";
+        }
+        if (pageInfo.modifierName!=null) {
+            modifierName = pageInfo.modifierName;
+        } else if (pageInfo.modifier) {
+            modifierName = pageInfo.modified;
+        }
+        if (pageInfo.modified!=null) {
+            docDate = xmobile.getDate(pageInfo.modified);
+        }
+        if (pageInfo.attachments) {
+            nbAttachments = "" + pageInfo.attachments.attachments.length;
+        }
+
+        header += "<div id='xwikipagetitle'><h1>" + title + "</h1></div>";
+
+        // modifier
+        header += "<div id='xwikimetadata'>"
+        
+        if (modifierName!="") {
+            header += "<span id='xwikimodifier'>modified by " + modifierName + "</span>";
+        }
+        
+        if (updateDate!="") {
+            header += "<span id='xwikimodified'>on " + updateDate + "</span>";
+        }
+        
+        if (nbAttachments!="") {
+            header += "<span id='xwikinbattachments'> " + nbAttachments + " attachments</span>";
+        }
+        
+        header += "</div>";
+        }
+        return header;
+    }
+    
+    xpageScreen.setPageContent = function(pageInfo, html) {
+        var content = "";
+        var header = this.getPageHeader(pageInfo);
+        
+        if (pageInfo!=null) {
+            if (pageInfo.renderedContent!=null) {
+                content = pageInfo.renderedContent;
+                if (content=="")
+                    content = html;
+            }
+        }
+        
+        if (content=="" && (html!=null)) {
+            content = html
+        }
+        console.log("PAGE HEADER: " + header);
+        console.log("PAGE CONTENT: " + content);
+        pageBrowser.setPageContent(header, content);
     }
     
     
@@ -1082,7 +1192,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xxemsearchScreen.getSearchURL = function(wikiName, keyword) {
         var query = keyword + " AND hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().prototcol>=3) ? "&orderField=date&order=desc&prettyNames=true&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
         var wikis = xmobile.getCurrentService().wikis;
         if (wikis!=undefined && wikis!="")
             searchurl += encodeURIComponent(wikis);

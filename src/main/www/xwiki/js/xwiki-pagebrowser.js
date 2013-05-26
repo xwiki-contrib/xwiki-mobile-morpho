@@ -128,16 +128,20 @@
  //PhoneGap.exec("PageBrowserCommand.jsExec",jsString);
  };
  
- PageBrowser.prototype.setPageContent = function(html) {
-  try {
-   if (this.loaded == false) {
-   console.log("PAGE: In first loading");
-   this.showHTML("<html><body>" + html + "</body></html>");
-   this.loaded = true;
-  } else {
-   console.log("PAGE: In second loading");
-   this.setHTML("<html><body>" + html + "</body></html>");
-  }
+ PageBrowser.prototype.setPageContent = function(header, html) {
+ try {
+ var content = "<html><body><div id='xwikipageheader'>" + header + "</div>";
+ 
+ content +=  "<div id='xwikipagecontent'>" + html + "</div></body></html>";
+ 
+ if (this.loaded == false) {
+ console.log("PAGE: In first loading");
+ this.showHTML(content);
+ this.loaded = true;
+ } else {
+ console.log("PAGE: In second loading");
+ this.setHTML(content);
+ }
  }
  catch (err)
  {

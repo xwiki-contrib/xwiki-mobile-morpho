@@ -98,11 +98,11 @@
 
 - (void)updateFrameSize:(CGFloat)withSideMenu
 {
-    CGFloat navBarSize = 25;
+    CGFloat navBarSize = 28;
     if([[UIScreen mainScreen] respondsToSelector:@selector(scale)] &&
        [[UIScreen mainScreen] scale] == 2.0)
     {
-        navBarSize = 50;
+        navBarSize = 28;
     }
     CGFloat sideMenuSize = (withSideMenu) ? 200 : 0;
     CGFloat newX;
@@ -118,7 +118,7 @@
         newHeight = bigFrame.size.height - navBarSize;
     } else {
         // set size
-        navBarSize = 50;
+        navBarSize = 48;
         newY = navBarSize;
         newX = bigFrame.origin.y + sideMenuSize;
         newHeight = bigFrame.size.width - navBarSize;

@@ -198,11 +198,12 @@ XWikiMobile.prototype.xwikiCallback = function(request) {
         
         
     var i1 = screenName.indexOf("/");
-    if (i1!=-1)
+        if (i1!=-1) {
         screenName = screenName.substring(0, i1);
+        }
         console.log("ScreenName: " + screenName);
    
-        var reqname = request.name;
+        var reqname = request.name.replace(".xpageinfo.", ".xpage.");
         console.log("Request name: " + reqname);
         
     if (reqname == this.getCurrentScreenPageName(screenName)) {
@@ -353,9 +354,16 @@ XWikiMobile.prototype.getNetworkStatus = function() {
 
 
 XWikiMobile.prototype.getDate = function(gregorianDate) {
-    var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
-    var d = new Date(parseInt(time));
-    return moment(d).format($.i18n.map["dateformat"]);
+    if (gregorianDate==null) {
+        return "";
+    } else if (typeof gregorianDate == "string") {
+        var time = gregorianDate.replace(/.*time=(.*?),.*/, "$1");
+        var d = new Date(parseInt(time));
+        return moment(d).format($.i18n.map["dateformat"]);
+    } else {
+        var d = new Date(parseInt(gregorianDate));
+        return moment(d).format($.i18n.map["dateformat"]);
+    }
 }
 
 XWikiMobile.prototype.getPageHTML = function(fullConfigName, val, withxem) {
