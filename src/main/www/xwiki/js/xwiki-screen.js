@@ -878,9 +878,21 @@ XWikiMobile.prototype.addDefaultScreens = function() {
         }
     }
     
+    xpageScreen.getAttachmentHTML = function(attach) {
+        var html = '<div class="xwikiattachment" style="border: 1px solid grey; padding: 15px; width: 400px; margin: 5px;">'
+        html += '<div><span class="xa_name"><a href="' + attach.xwikiRelativeUrl + '">' + attach.name + '</a></span>';
+        html += '</div><div style="font-size: 12px;">';
+        html += '<span class="xa_publisher">Last updated by ' + attach.authorName + '</span>';
+        html += '<span class="xa_date" style="margin-left: 5px;">on ' + xmobile.getDate(attach.date) + '</span>';
+        html += '<span class="xa_size" style="margin-left: 5px;">(' + Math.floor(attach.size/1024) + ' kb)</span>';
+        html += '</div></div>'
+        return html;
+    }
+    
     xpageScreen.getPageHeader = function(pageInfo) {
         var title = "", modifierName = "", docData = "" , nbAttachments = "", updateDate = "";
         var header = "";
+        var attachhtml = "";
         
         if (pageInfo!=null) {
         // extract pageInfo data
@@ -915,11 +927,22 @@ XWikiMobile.prototype.addDefaultScreens = function() {
         }
         
         if (nbAttachments!="") {
-            header += "<span id='xwikinbattachments'> " + nbAttachments + " attachments</span>";
+            header += "<span id='xwikinbattachments'> <a href='javascript:void(0)' onclick='var el = document.getElementById(\"xwikiattachments\"); if (el.style.display==\"none\") el.style.display=\"block\"; else el.style.display=\"none\"; return false;'>" + nbAttachments + " attachments</a></span>";
         }
         
         header += "</div>";
+            
+            if (pageInfo.attachments && pageInfo.attachments.attachments) {
+                attachhtml = "<div id='xwikiattachments' style='display: none;'>"
+                var that = this;
+                $.each(pageInfo.attachments.attachments, function(key, val) {
+                       attachhtml += that.getAttachmentHTML(val);
+                       });
+                attachhtml += "</div>";
+            }
+            
         }
+        header += attachhtml;
         return header;
     }
     
@@ -939,7 +962,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
             content = html
         }
         console.log("PAGE HEADER: " + header);
-        console.log("PAGE CONTENT: " + content);
+        // console.log("PAGE CONTENT: " + content);
         pageBrowser.setPageContent(header, content);
     }
     
