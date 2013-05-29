@@ -50,12 +50,9 @@
 		438775A71734143F003EFBD8 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 438775A51734143F003EFBD8 /* PushPlugin.m */; };
 		43C10D6817567737002CDAB8 /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6017567737002CDAB8 /* icon-29.png */; };
 		43C10D6917567737002CDAB8 /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6117567737002CDAB8 /* icon-50.png */; };
-		43C10D6A17567737002CDAB8 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6217567737002CDAB8 /* icon-72.png */; };
-		43C10D6B17567737002CDAB8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6317567737002CDAB8 /* icon.png */; };
 		43C10D6C17567737002CDAB8 /* icon@2x-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6417567737002CDAB8 /* icon@2x-29.png */; };
 		43C10D6D17567737002CDAB8 /* icon@2x-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6517567737002CDAB8 /* icon@2x-50.png */; };
 		43C10D6E17567737002CDAB8 /* icon@2x-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6617567737002CDAB8 /* icon@2x-72.png */; };
-		43C10D6F17567737002CDAB8 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6717567737002CDAB8 /* icon@2x.png */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
@@ -135,6 +132,7 @@
 		43C10D6517567737002CDAB8 /* icon@2x-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x-50.png"; sourceTree = "<group>"; };
 		43C10D6617567737002CDAB8 /* icon@2x-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x-72.png"; sourceTree = "<group>"; };
 		43C10D6717567737002CDAB8 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
+		43C10D70175678C9002CDAB8 /* XWikiMobile.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = XWikiMobile.entitlements; path = XWikiMobile/XWikiMobile.entitlements; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* XWikiMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "XWikiMobile-Info.plist"; path = "../XWikiMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = XWikiMobile/config.xml; sourceTree = "<group>"; };
@@ -207,6 +205,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				43C10D70175678C9002CDAB8 /* XWikiMobile.entitlements */,
 				F840E1F0165FE0F500CFE078 /* config.xml */,
 				301BF56E109A69640062928A /* www */,
 				301BF52D109A57CC0062928A /* CordovaLib.xcodeproj */,
@@ -438,12 +437,9 @@
 				432C1CF51737989700E2BE6E /* PageBrowserViewController.xib in Resources */,
 				43C10D6817567737002CDAB8 /* icon-29.png in Resources */,
 				43C10D6917567737002CDAB8 /* icon-50.png in Resources */,
-				43C10D6A17567737002CDAB8 /* icon-72.png in Resources */,
-				43C10D6B17567737002CDAB8 /* icon.png in Resources */,
 				43C10D6C17567737002CDAB8 /* icon@2x-29.png in Resources */,
 				43C10D6D17567737002CDAB8 /* icon@2x-50.png in Resources */,
 				43C10D6E17567737002CDAB8 /* icon@2x-72.png in Resources */,
-				43C10D6F17567737002CDAB8 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -532,6 +528,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_ENTITLEMENTS = XWikiMobile/XWikiMobile.entitlements;
 				COPY_PHASE_STRIP = NO;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
@@ -551,6 +548,7 @@
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ENABLE_OBJC_ARC = NO;
+				CODE_SIGN_ENTITLEMENTS = XWikiMobile/XWikiMobile.entitlements;
 				COPY_PHASE_STRIP = YES;
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "XWikiMobile/XWikiMobile-Prefix.pch";
