@@ -235,6 +235,10 @@ input.jq-ui-forms-add, input.jq-ui-forms-search {
     min-height: 60px;
 }
 
+#setting_form label {
+    font-size: 10px;
+}
+
 #menubadge .jq-badge {
     top: -9px;
     right: -12px;
