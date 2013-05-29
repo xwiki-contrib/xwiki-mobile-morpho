@@ -82,7 +82,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                      
                                      $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='#main'>" + $.i18n.map["sidebar.home"] + "</a></li>");
                                      $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='javascript:void(0)' onclick='xmobile.relogin(); return false;'>" + $.i18n.map["sidebar.relogin"] + "</a></li>");
-                                     $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='javascript:void(0)' onclick='squeezeFrame(); return false;'>" + $.i18n.map["sidebar.squeeze"] + "</a></li>");
+                                     if (!withPageBrowser)
+                                      $("#menu_scroller #sidemenu").append("<li><a class='x-icon-small x-icon-user' href='javascript:void(0)' onclick='squeezeFrame(); return false;'>" + $.i18n.map["sidebar.squeeze"] + "</a></li>");
                                      $("#menu_scroller #sidemenu").append("<li><a href='javascript:void(0)' id='navbar_refresh' class='x-icon-small x-icon-refresh' onclick='xmobile.reloadCurrentPage(); return false;'>" +
                                                                           $.i18n.map["main.refresh"] + "</a></li>");
                                      

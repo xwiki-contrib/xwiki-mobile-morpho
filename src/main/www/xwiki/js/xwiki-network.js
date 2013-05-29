@@ -221,7 +221,9 @@ NetworkQueue.prototype.nextRequest = function() {
     }
 };
 
-
+NetworkQueue.prototype.filterURL = function(url) {
+        return url.replace(new RegExp("password=(.*)?&"), "password=passwordremoved&");
+}
 
 NetworkQueue.prototype.getQueueStatus = function() {
     var status = "";
@@ -239,7 +241,7 @@ NetworkQueue.prototype.getQueueStatus = function() {
            status += "<li>" + req.name + " " + req.priority + "</li>"
            + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li></ul></li>";
+           + "<li>" + that.filterURL(req.url) + "</li></ul></li>";
            });
     status += "</ul></li>"
     + "<li>LP Queue: "
@@ -249,7 +251,7 @@ NetworkQueue.prototype.getQueueStatus = function() {
            status += "<li>" + req.name + " " + req.priority + "</li>"
            + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li></ul></li>";
+           + "<li>" + that.filterURL(req.url) + "</li></ul></li>";
            });
     status += "</ul></li>"
     + "<li>Running Queue: "
@@ -259,7 +261,7 @@ NetworkQueue.prototype.getQueueStatus = function() {
            status += "<li>" + req.name + " " + req.priority + "</li>"
            + "<li><ul><li>" + req.startDate + "</li>"
            + "<li>status " + req.status + "</li>"
-           + "<li>" + req.url + "</li></ul></li>";
+           + "<li>" + that.filterURL(req.url) + "</li></ul></li>";
            });
     status += "</ul></li>"
     status += "<li>Last results: " + this.lastResults.length
@@ -272,7 +274,7 @@ NetworkQueue.prototype.getQueueStatus = function() {
            status += "<li>" + req.name + " " + req.priority + "</li>"
            + "<li><ul><li>status " + req.status + " " + req.resultCode + "</li>"
            + "<li>" + req.startDate + "</li>"
-           + "<li>" + req.url + "</li></ul></li>";
+           + "<li>" + that.filterURL(req.url) + "</li></ul></li>";
            }
            });
     status += "</ul></li>"
