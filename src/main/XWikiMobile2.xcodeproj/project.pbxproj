@@ -48,6 +48,14 @@
 		436CC0891735326A00979524 /* ChildBrowser.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 436CC0881735326A00979524 /* ChildBrowser.bundle */; };
 		438775A61734143F003EFBD8 /* AppDelegate+notification.m in Sources */ = {isa = PBXBuildFile; fileRef = 438775A31734143F003EFBD8 /* AppDelegate+notification.m */; };
 		438775A71734143F003EFBD8 /* PushPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 438775A51734143F003EFBD8 /* PushPlugin.m */; };
+		43C10D6817567737002CDAB8 /* icon-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6017567737002CDAB8 /* icon-29.png */; };
+		43C10D6917567737002CDAB8 /* icon-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6117567737002CDAB8 /* icon-50.png */; };
+		43C10D6A17567737002CDAB8 /* icon-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6217567737002CDAB8 /* icon-72.png */; };
+		43C10D6B17567737002CDAB8 /* icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6317567737002CDAB8 /* icon.png */; };
+		43C10D6C17567737002CDAB8 /* icon@2x-29.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6417567737002CDAB8 /* icon@2x-29.png */; };
+		43C10D6D17567737002CDAB8 /* icon@2x-50.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6517567737002CDAB8 /* icon@2x-50.png */; };
+		43C10D6E17567737002CDAB8 /* icon@2x-72.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6617567737002CDAB8 /* icon@2x-72.png */; };
+		43C10D6F17567737002CDAB8 /* icon@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 43C10D6717567737002CDAB8 /* icon@2x.png */; };
 		D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */ = {isa = PBXBuildFile; fileRef = D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */; };
 		F840E1F1165FE0F500CFE078 /* config.xml in Resources */ = {isa = PBXBuildFile; fileRef = F840E1F0165FE0F500CFE078 /* config.xml */; };
 /* End PBXBuildFile section */
@@ -119,6 +127,14 @@
 		438775A31734143F003EFBD8 /* AppDelegate+notification.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AppDelegate+notification.m"; sourceTree = "<group>"; };
 		438775A41734143F003EFBD8 /* PushPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PushPlugin.h; sourceTree = "<group>"; };
 		438775A51734143F003EFBD8 /* PushPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PushPlugin.m; sourceTree = "<group>"; };
+		43C10D6017567737002CDAB8 /* icon-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-29.png"; sourceTree = "<group>"; };
+		43C10D6117567737002CDAB8 /* icon-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-50.png"; sourceTree = "<group>"; };
+		43C10D6217567737002CDAB8 /* icon-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon-72.png"; sourceTree = "<group>"; };
+		43C10D6317567737002CDAB8 /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = icon.png; sourceTree = "<group>"; };
+		43C10D6417567737002CDAB8 /* icon@2x-29.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x-29.png"; sourceTree = "<group>"; };
+		43C10D6517567737002CDAB8 /* icon@2x-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x-50.png"; sourceTree = "<group>"; };
+		43C10D6617567737002CDAB8 /* icon@2x-72.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x-72.png"; sourceTree = "<group>"; };
+		43C10D6717567737002CDAB8 /* icon@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "icon@2x.png"; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* XWikiMobile-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "XWikiMobile-Info.plist"; path = "../XWikiMobile-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 		D4A0D8751607E02300AEF8BB /* Default-568h@2x~iphone.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Default-568h@2x~iphone.png"; sourceTree = "<group>"; };
 		F840E1F0165FE0F500CFE078 /* config.xml */ = {isa = PBXFileReference; lastKnownFileType = text.xml; name = config.xml; path = XWikiMobile/config.xml; sourceTree = "<group>"; };
@@ -281,6 +297,14 @@
 		308D052D1370CCF300D202BF /* icons */ = {
 			isa = PBXGroup;
 			children = (
+				43C10D6017567737002CDAB8 /* icon-29.png */,
+				43C10D6117567737002CDAB8 /* icon-50.png */,
+				43C10D6217567737002CDAB8 /* icon-72.png */,
+				43C10D6317567737002CDAB8 /* icon.png */,
+				43C10D6417567737002CDAB8 /* icon@2x-29.png */,
+				43C10D6517567737002CDAB8 /* icon@2x-50.png */,
+				43C10D6617567737002CDAB8 /* icon@2x-72.png */,
+				43C10D6717567737002CDAB8 /* icon@2x.png */,
 				308D052E1370CCF300D202BF /* icon-72.png */,
 				308D052F1370CCF300D202BF /* icon.png */,
 				308D05301370CCF300D202BF /* icon@2x.png */,
@@ -412,6 +436,14 @@
 				D4A0D8761607E02300AEF8BB /* Default-568h@2x~iphone.png in Resources */,
 				436CC0891735326A00979524 /* ChildBrowser.bundle in Resources */,
 				432C1CF51737989700E2BE6E /* PageBrowserViewController.xib in Resources */,
+				43C10D6817567737002CDAB8 /* icon-29.png in Resources */,
+				43C10D6917567737002CDAB8 /* icon-50.png in Resources */,
+				43C10D6A17567737002CDAB8 /* icon-72.png in Resources */,
+				43C10D6B17567737002CDAB8 /* icon.png in Resources */,
+				43C10D6C17567737002CDAB8 /* icon@2x-29.png in Resources */,
+				43C10D6D17567737002CDAB8 /* icon@2x-50.png in Resources */,
+				43C10D6E17567737002CDAB8 /* icon@2x-72.png in Resources */,
+				43C10D6F17567737002CDAB8 /* icon@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -508,7 +540,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "XWikiMobile/XWikiMobile-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = XWikiMobile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -525,7 +557,7 @@
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				INFOPLIST_FILE = "XWikiMobile/XWikiMobile-Info.plist";
-				IPHONEOS_DEPLOYMENT_TARGET = 4.3;
+				IPHONEOS_DEPLOYMENT_TARGET = 4.0;
 				PRODUCT_NAME = XWikiMobile;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -539,8 +571,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ludovic Dubost (9YN84XSZD2)";
+				CODE_SIGN_IDENTITY = "iPhone Developer: Ludovic Dubost (767CS72A42)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ludovic Dubost (767CS72A42)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -566,8 +598,8 @@
 					"-all_load",
 					"-Obj-C",
 				);
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B0F39BE2-1A6D-4166-AC38-2E95B8497989";
+				PROVISIONING_PROFILE = "0E557DBE-7B82-43B1-908A-611A1D613E31";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "0E557DBE-7B82-43B1-908A-611A1D613E31";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
@@ -582,8 +614,8 @@
 				CLANG_WARN_ENUM_CONVERSION = YES;
 				CLANG_WARN_INT_CONVERSION = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "iPhone Distribution";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer: Ludovic Dubost (9YN84XSZD2)";
+				CODE_SIGN_IDENTITY = "iPhone Distribution: XWiki (R3HB5LD68N)";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Distribution: XWiki (R3HB5LD68N)";
 				GCC_C_LANGUAGE_STANDARD = c99;
 				GCC_THUMB_SUPPORT = NO;
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
@@ -609,8 +641,8 @@
 					"-all_load",
 					"-Obj-C",
 				);
-				PROVISIONING_PROFILE = "";
-				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "B0F39BE2-1A6D-4166-AC38-2E95B8497989";
+				PROVISIONING_PROFILE = "4E02CCB3-14EE-4898-BB05-5229636B9028";
+				"PROVISIONING_PROFILE[sdk=iphoneos*]" = "4E02CCB3-14EE-4898-BB05-5229636B9028";
 				SDKROOT = iphoneos;
 				SKIP_INSTALL = NO;
 				USER_HEADER_SEARCH_PATHS = "";
