@@ -49,6 +49,12 @@ function XWikiScreen(options) {
     
     // set initiliazed to false
     this.initialized = false;
+
+    // default has more data
+    this.hasmoredata = (options.hasmoredata == undefined) ? false : options.hasmoredata;
+
+    // default number of elements
+    this.max = (options.max == undefined) ? 20 : options.max;
 };
 
 XWikiScreen.prototype.showScreen = function() {
@@ -475,6 +481,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         parent: "xwikihome",
                                         panelcontent: "<ul id='xwikirecentdocslist'></ul>",
                                         route: "xrecent/:wikiName",
+                                        hasmoredata : true,
+                                        max : 20,
                                         addMainMenus: function() {
                                         },
                                         addParentMenus: function() {
@@ -489,9 +497,16 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         
                                         this.showScreen();
                                         },
-                                        showCallback: function(cache) {
+                                        showCallback: function(cache, moredata) {
                                         console.log("In xrecent show callback");
                                         
+                                        if (moredata) {
+                                        console.log("Adding more data to results");
+                                        this.max += 20;
+                                        } else if (cache==false) {
+                                        this.max = 20;
+                                        }
+
                                         $("#xwikirecentdocslist").html("");
                                         var data = this.getRecentDocs(xmobile.getCurrentWiki(), cache);
                                         if (data!=null) {
@@ -499,7 +514,18 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                         $.each(data.searchResults, function(key, val) {
                                                items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentFullConfig(), val, false) + '</li>';
                                                });
+                                        if (this.hasmoredata) {
+                                          items += '<li><a id="xrecent-moredata" href="javascript:void(0)">More data</li>';
+                                          var that = this;
+                                        }
                                         $("#xwikirecentdocslist").html(items);
+                                        if ($('#xrecent-moredata')) {
+                                        $('#xrecent-moredata').bind('click', function() {
+                                                                    console.log("Loading more data");
+                                                                    that.showCallback(false, true);
+                                                                    console.log("Loading more data done");
+                                                                    });
+                                        }
                                         }
                                         }
                                         }
@@ -516,7 +542,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xrecentScreen.getRecentDocsURL = function(wikiName) {
         var query = "hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true" : "&orderfield=date&order=desc&prettynames=true&number=20");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true&number=" + this.max : "&orderfield=date&order=desc&prettynames=true&number=" + this.max);
         return xmobile.getCurrentService().getRestURL(wikiName, searchurl);
     }
     
@@ -1069,6 +1095,8 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            parent: "xemhome",
                                            panelcontent: "<ul id='xemrecentdocslist'>here</ul>",
                                            route: "xxemrecent/:wikiName",
+                                           hasmoredata : true,
+                                           max : 20,
                                            addMainMenus: function() {
                                            },
                                            addParentMenus: function() {
@@ -1085,9 +1113,15 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            
                                            this.showScreen();
                                            },
-                                           showCallback: function(cache) {
+                                           showCallback: function(cache, moredata) {
                                            console.log("In xxemrecent show callback");
                                            
+                                           if (moredata) {
+                                            console.log("Adding more data to results");
+                                            this.max += 20;
+                                           } else if (cache==false) {
+                                            this.max = 20;
+                                           }
                                            
                                            $("#xemrecentdocslist").html("");
                                            var data = this.getRecentDocs(xmobile.getCurrentWiki(), cache);
@@ -1097,7 +1131,18 @@ XWikiMobile.prototype.addDefaultScreens = function() {
                                            $.each(data.searchResults, function(key, val) {
                                                   items += '<li>' + xmobile.getPageHTML(xmobile.getCurrentConfig() + ":" + val.wiki, val, true) + '</li>';
                                                   });
-                                            $("#xemrecentdocslist").html(items);
+                                           if (this.hasmoredata) {
+                                           items += '<li><a id="xrecent-moredata" href="javascript:void(0)">More data</li>';
+                                           var that = this;
+                                           }
+                                           $("#xemrecentdocslist").html(items);
+                                           if ($('#xrecent-moredata')) {
+                                           $('#xrecent-moredata').bind('click', function() {
+                                                                       console.log("Loading more data");
+                                                                       that.showCallback(false, true);
+                                                                       console.log("Loading more data done");
+                                                                       });
+                                           }
                                            }
                                            }
                                            }
@@ -1114,7 +1159,7 @@ XWikiMobile.prototype.addDefaultScreens = function() {
     
     xxemrecentScreen.getRecentDocsURL = function(wikiName) {
         var query = "hidden:false AND type:wikipage AND lang:default AND NOT space:XWiki AND NOT space:Scheduler";
-        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=20&wikis=");
+        var searchurl = "query?media=json&type=lucene&q=" + query + ((xmobile.getCurrentService().protocol>=3) ? "&orderField=date&order=desc&prettyNames=true&number=" + this.max + "&wikis=" : "&orderfield=date&order=desc&prettynames=true&number=" + this.max + "&wikis=");
         var wikis = xmobile.getCurrentService().wikis;
         if (wikis!=undefined && wikis!="")
             searchurl += encodeURIComponent(wikis);

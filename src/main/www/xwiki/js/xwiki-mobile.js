@@ -155,7 +155,7 @@ XWikiMobile.prototype.updateNetworkActive = function() {
     }
 }
 
-XWikiMobile.prototype.reloadCurrentPage = function() {
+XWikiMobile.prototype.reloadCurrentPage = function(moredata) {
     var screenName = location.hash.substring(1);
     var i1 = screenName.indexOf("/");
     if (i1!=-1)
@@ -164,7 +164,7 @@ XWikiMobile.prototype.reloadCurrentPage = function() {
     // we are forcing a reload of the current page
     if (this.xscreens[screenName]!=null) {
         console.log("Forcing refresh of page " + screenName);
-        this.xscreens[screenName].showCallback(false);
+        this.xscreens[screenName].showCallback(false, moredata);
     }
 }
 
@@ -224,6 +224,7 @@ XWikiMobile.prototype.addScreen = function(screen) {
 
 XWikiMobile.prototype.initScreens = function() {
     console.log("Initializing screens");
+    var that = this;
     $.each(this.xscreens, function(key, screen) {
            if (screen.initialized==false) {
            console.log("Initializing screen: " + screen.name);
@@ -246,6 +247,11 @@ XWikiMobile.prototype.initScreens = function() {
            mytitle = screen.name;
            console.log("Adding panel " + screen.name + " with title " + mytitle);
            $.ui.addContentDiv(screen.name,screen.panelcontent,mytitle);
+           $.ui.scrollingDivs[screen.name].addPullToRefresh();
+           $.bind($.ui.scrollingDivs[screen.name],"refresh-release",function(){
+                  that.reloadCurrentPage();
+                  return true;
+                  });
            }
            // adding menus
            screen.addMainMenus(screen);
