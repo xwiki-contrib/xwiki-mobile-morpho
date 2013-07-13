@@ -8,7 +8,7 @@
                 <link rel="stylesheet" type="text/css" href="../css/jq.ui.css" title="default" />
                 <link rel="stylesheet" type="text/css" href="../css/icons.css" title="default" />
                 <link rel="stylesheet" type="text/css" href="css/xwiki.css" title="default" />
-                <script type="text/javascript" src="../cordova-2.6.0.js"></script>
+                <script type="text/javascript" src="../cordova-2.6.0-firefoxos.js"></script>
                 <script type="text/javascript" charset="utf-8" src="../js/require.js"></script>
                 <script type="text/javascript" charset="utf-8" src="../js/jq.mobi.js"></script>
                 <script type="text/javascript" charset="utf-8" src="../js/jq.ui.js"></script>
@@ -23,9 +23,9 @@
         <div id="jQUi">
             <!-- this is the header div -->
             <div id="header">
-                <a id='menubadge' onclick='xmobile.toggleSideMenu();'></a>
+                <a id='menubadge'></a>
                 <a id='networkstatus' href="#xstatus" style="display: none;"><img src="../img/ajax-loader.gif" /></a>
-                <input id="open" type="button" value="Open" style="display: none; float: right;" onclick="xmobile.open();"/>
+                <input id="open" type="button" value="Open" style="display: none; float: right;" />
             </div>
             
             <div id="content">
@@ -43,66 +43,69 @@
                     <form id="setting_form">
                         <label for="setting_id" id="i18n_settings_name">name: </label>
                         <input type='text' id='setting_id' name='id' value='' class="jq-ui-forms" />
-                        </br>
+                        <br />
                         <label for="setting_name" id="i18n_settings_displayname">display name: </label>
                         <input type='text' id='setting_name' name='name' value='' class="jq-ui-forms" />
-                        </br>
+                        <br />
                         <label for="setting_url" id="i18n_settings_url">url: </label>
                         <input type='text' id='setting_url' name='url' value='' class="jq-ui-forms" />
-                        </br>
-                        <input type='radio' id='setting_xe' name='type' value='xe' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
+                        <br />
+                        <input type='radio' id='setting_xe' name='type' value='xe' class="jq-ui-forms" />
                         <label for="setting_xe" id="i18n_settings_xe">xe</label>
-                        <input type='radio' id='setting_xefromxem' name='type' value='xefromxem' class="jq-ui-forms" onclick="$('#setting_form_wikis').hide();" />
+                        <input type='radio' id='setting_xefromxem' name='type' value='xefromxem' class="jq-ui-forms" />
                         <label for="setting_xefromxem" id="i18n_settings_xefromxem">xefromxem</label>
-                        <input type='radio' id='setting_dnsxem' name='type' value='dnsxem' class="jq-ui-forms"  onclick="$('#setting_form_wikis').show();"  />
+                        <input type='radio' id='setting_dnsxem' name='type' value='dnsxem' class="jq-ui-forms" />
                         <label for="setting_dnsxem" id="i18n_settings_dnsxem">dnsxem</label>
-                        <input type='radio' id='setting_urlxem' name='type' value='urlxem' class="jq-ui-forms"  onclick="$('#setting_form_wikis').show();"  />
+                        <input type='radio' id='setting_urlxem' name='type' value='urlxem' class="jq-ui-forms" />
                         <label for="setting_urlxem" id="i18n_settings_urlxem">urlxem</label>
-                        </br>
+                        <br />
                         <div id="setting_form_wikis" style="display: none;">
                             <label for="setting_wikis" id="i18n_settings_wikis">wikis: </label>
-                            <input type='text' id='setting_wikis' name='wikis' value='' class="jq-ui-forms" /></br>
+                            <input type='text' id='setting_wikis' name='wikis' value='' class="jq-ui-forms" />
+                            <br />
                         </div>
                         <label for="setting_username" id="i18n_settings_username">username: </label>
-                        <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" /></br>
+                        <input type='text' id='setting_username' name='username' value='' class="jq-ui-forms" />
+                        <br />
                         <br />
                         <label for="setting_password" id="i18n_settings_password">password: </label>
-                        <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" /></br>
+                        <input type='password' id='setting_password' name='password' value='' class="jq-ui-forms" />
                         <br />
-                         <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms" onclick="$('#setting_form_advanced').hide();"/>
+                        <br />
+                         <input type='radio' id='setting_automatic' name='automatic' value='1' class="jq-ui-forms" />
                             <label for="setting_automatic" id="i18n_settings_automatic">automatic</label>
                             <br />
-                            <input type='radio' id='setting_manual' name='automatic' value='0' class="jq-ui-forms" onclick="$('#setting_form_advanced').show();"/>
+                            <input type='radio' id='setting_manual' name='automatic' value='0' class="jq-ui-forms" />
                             <label for="setting_manual" id="i18n_settings_manual">manual</label>
-                            </br>
+                            <br />
                         <div id="setting_form_advanced" style="display: none;">
                             <br />
                             <label for="setting_baseurl" id="i18n_settings_baseurl">base url: </label>
                             <input type='text' id='setting_baseurl' name='baseurl' value='' class="jq-ui-forms" />
-                            </br>
+                            <br />
                             <label for="setting_viewurl" id="i18n_settings_viewurl">view url: </label>
                             <input type='text' id='setting_viewurl' name='viewurl' value='' class="jq-ui-forms" />
-                            </br>
+                            <br />
                             <label for="setting_resturl" id="i18n_settings_resturl">rest url: </label>
                             <input type='text' id='setting_resturl' name='resturl' value='' class="jq-ui-forms" />
-                            </br>
+                            <br />
                             <div id="setting_form_xemurls" style="display: none;">
                                 <label for="setting_xembaseurl" id="i18n_settings_xembaseurl">xem base url: </label>
                                 <input type='text' id='setting_xembaseurl' name='xembaseurl' value='' class="jq-ui-forms" />
-                                </br>
+                                <br />
                                 <label for="setting_xemresturl" id="i18n_settings_xemresturl">xem rest url: </label>
                                 <input type='text' id='setting_xemresturl' name='xemresturl' value='' class="jq-ui-forms" />
-                                </br>
+                                <br />
                             </div>
                             <label for="setting_protocol" id="i18n_settings_protocol">protocol version: </label>
                             <input type='text' id='setting_protocol' name='protocol' value='' class="jq-ui-forms" />
-                            </br>
+                            <br />
                         </div>
                         <br />
                         <br />
                         
-                        <input id="i18n_settings_save" type="button" name="save" value="Save" onclick="this.form.screen.save(this.form);" />
-                        <input id="i18n_settings_delete" type="button" name="delete" value="Delete" onclick="this.form.screen.deleteConnection(this.form);" />
+                        <input id="i18n_settings_save" type="button" name="save" value="Save" />
+                        <input id="i18n_settings_delete" type="button" name="delete" value="Delete" />
                     </form>
                 </div>
             </div>

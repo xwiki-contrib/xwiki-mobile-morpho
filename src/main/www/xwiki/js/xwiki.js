@@ -23,7 +23,7 @@
  */
 
 var withPush = false;
-var withPageBrowser = true;
+var withPageBrowser = false;
 
 // load require js modules
 require.config({
@@ -38,6 +38,7 @@ require.config({
                xnetwork: "js/xwiki-network",
                xservice: "js/xwiki-service",
                xscreen: "js/xwiki-screen",
+               xscreenpush: "js/xwiki-screen-push",
                xscreenapps: "js/xwiki-screen-apps"
                },
                shim: {
@@ -68,6 +69,9 @@ require.config({
                },
                'xscreenapps' : {
                deps: ['xscreen']
+               },
+               'xscreenpush' : {
+               deps: ['xscreen']
                }
                }
                });
@@ -87,6 +91,7 @@ function tokenHandler (result) {
     // Your iOS push server needs to know the token before it can push to this device
     // here is where you might want to send it the token for later use.
     console.log('device token = '+result)
+    xmobile.devicetoken = result;
 }
 
 // iOS
@@ -122,6 +127,9 @@ function initXMobile() {
     // initialize screens
     xmobile.addDefaultScreens();
     xmobile.addAppsScreens();
+    if (withPush) {
+      xmobile.addPushScreens();
+    }
     xmobile.initScreens();
     
     // launch login
@@ -140,6 +148,19 @@ function initXMobile() {
         return false;
     }
     
+    $("#menubadge")[0].onclick = function() { xmobile.toggleSideMenu(); };
+    $("#open")[0].onclick = function() { xmobile.open(); };
+    $("#setting_xe")[0].onclick = function() { $('#setting_form_wikis').hide(); };
+    $("#setting_xefromxem")[0].onclick = function() { $('#setting_form_wikis').hide(); };
+    $("#setting_dnsxem")[0].onclick = function() { $('#setting_form_wikis').show(); };
+    $("#setting_urlxem")[0].onclick = function() { $('#setting_form_wikis').show(); };
+    $("#setting_automatic")[0].onclick = function() { $('#setting_form_advanced').hide(); };
+    $("#setting_manual")[0].onclick = function() { this.form.screen.save(this.form); };
+    $("#i18n_settings_save")[0].onclick = function() { this.form.screen.save(this.form); };
+    $("#i18n_settings_delete")[0].onclick = function() { this.form.screen.deleteConnection(this.form); };
+
+
+
     xmobile.router.navigate(hash, true);
     
     document.addEventListener("deviceready", function() {
@@ -187,7 +208,7 @@ function initi18n(locale) {
         
 }
 
-require(["xscreen" , "xscreenapps" ], function() {
+require(["xscreen" , "xscreenapps" , "xscreenpush"], function() {
         
         // declare backbone routes
         var Router = Backbone.Router.extend({

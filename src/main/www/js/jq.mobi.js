@@ -1600,8 +1600,8 @@ if (!window.jq || typeof (jq) !== "function") {
                 var protocol = /^([\w-]+:)\/\//.test(settings.url) ? RegExp.$1 : window.location.protocol;
 				
 				//ok, we are really using xhr
-				xhr = new window.XMLHttpRequest();
-				
+				xhr = new window.XMLHttpRequest({mozSystem: true});
+				var a = 0;
 				
                 xhr.onreadystatechange = function() {
                     var mime = settings.dataType;

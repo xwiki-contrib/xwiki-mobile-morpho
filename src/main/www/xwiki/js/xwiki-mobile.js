@@ -37,6 +37,7 @@ function XWikiMobile(xservices) {
 
     // list of screens
     this.xscreens = {};
+    this.devicetoken = "";
     
     this.router = null;
 }
@@ -262,9 +263,15 @@ XWikiMobile.prototype.initScreens = function() {
 
 XWikiMobile.prototype.insertChildMenus = function(parentscreen) {
     $.each(this.xscreens, function(key, screen) {
-           if (screen.parent==parentscreen.name && screen.addParentMenus != undefined) {
-           screen.addParentMenus();
+           var parents = screen.parent;
+           if (typeof(screen.parent)=="string") {
+           parents = [screen.parent];
            }
+           $.each(parents, function(key, parent) {
+                  if (parent==parentscreen.name && screen.addParentMenus != undefined) {
+                  screen.addParentMenus();
+                  }
+                  });
            });
 }
 
@@ -431,11 +438,16 @@ XWikiMobile.prototype.goBack = function() {
 XWikiMobile.prototype.open = function() {
     var xs = this.getCurrentService();
     var url = xs.getViewURL(this.getCurrentWiki(), this.getCurrentPage());
-    if (device && device.platform == "iOS") {
-     window.open(url, "_system");
-    } else {
-     console.log(navigator.app);
-     navigator.app.loadUrl(url, { openExternal:true });
+    try {
+     if (device!="undefined" && device.platform == "iOS") {
+      window.open(url, "_system");
+     } else {
+      console.log(navigator.app);
+      navigator.app.loadUrl(url, { openExternal:true });
+     }
+    } catch (e) {
+     console.log("Falling back on window.open");
+     window.open(url);   
     }
 }
 

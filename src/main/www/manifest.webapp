@@ -1,0 +1,19 @@
+{
+  "name": "XWiki Mobile",
+  "description": "FirefoxOS Mobile application to access XWiki Servers",
+  "launch_path": "/xwiki/index.html",
+  "icons": {
+    "60": "/xwiki/img/icon-60.png",
+    "128": "/xwiki/img/icon-128.png"
+  },
+  "developer": {
+    "name": "XWiki SAS",
+    "url": "http://www.xwiki.com"
+  },
+  "installs_allowed_from": ["*"],
+  "default_locale": "en",
+  "permissions": {
+        "systemXHR": { "description" : "Needed to call remove XWiki instances" }
+  },
+  "type": "privileged"
+}

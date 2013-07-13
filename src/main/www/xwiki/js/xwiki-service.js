@@ -117,6 +117,23 @@ XWikiService.prototype.getNetworkStatus = function() {
     return str;
 }
 
+
+XWikiService.prototype.readConfig = function(config) {
+    if (config.js!="") {
+        eval(config.js);
+    // force refresh
+    xmobile.initScreens();
+    xmobile.reloadCurrentPage();
+    }
+    
+    this.notifications = false;
+    if (config.notifications!=undefined) {
+        this.notifications = true;
+        this.pushinterval = config.pushinterval;
+        this.pushwikis = config.pushwikis;
+        }
+}
+
 XWikiService.prototype.getWikiConfig = function(wikiName, cache) {
     if (this.type=="dnsxem" || this.type=="urlxem") {
         console.log("getting wikiconfig of xem subwiki");
@@ -125,17 +142,15 @@ XWikiService.prototype.getWikiConfig = function(wikiName, cache) {
         if ((result==null || cache==false)) {
             // we don't have a request we should add it in the queue
             var url = this.baseurl.replace("__wiki__", wikiName) + "/bin/view/XWiki/MobileConfig?xpage=plain&json=1&outputSyntax=plain";
+            if (xmobile.devicetoken && xmobile.devicetoken!="") {
+                url += "&deviceid=" + xmobile.devicetoken;
+            }
+
+            var that = this;
             nq.addRequest(xmobile.getCurrentService(), this.id + "." + wikiName + ".wikiconfig", url, "high", cache, function(xhr) {
                            // parse result
                            var config = $.parseJSON(xhr.data);
-                           // if we
-                          
-                           if (config.js!="") {
-                            eval(config.js);
-                            // force refresh
-                            xmobile.initScreens();
-                            xmobile.reloadCurrentPage();
-                           }
+                           that.readConfig(config);
                           });
             return null;
         } else if (result == undefined) {
@@ -183,13 +198,7 @@ XWikiService.prototype.login = function(wikiName, cache) {
                   try {
                   if (req.data) {
                   var config = $.parseJSON(req.data);
-                  // if we
-                  if (config.js!="") {
-                  eval(config.js);
-                  // force refresh
-                  xmobile.initScreens();
-                  xmobile.reloadCurrentPage();
-                  }
+                  that.readConfig(config);
                   }
                   } catch(e) {
                   console.log("Exception while parsing js data " + e);
@@ -206,10 +215,10 @@ XWikiService.prototype.getLoginURL = function(wikiName) {
     } else {
     if (this.type=="dnsxem")
         return this.xembaseurl + "/bin/loginsubmit/XWiki/XWikiLogin?"
-        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
+        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain%26deviceid%3D" + xmobile.devicetoken;
     else
         return this.baseurl.replace(/__wiki__/g, wikiName) + "/bin/loginsubmit/XWiki/XWikiLogin?"
-        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain";
+        + "j_username=" + this.username + "&j_password=" + this.password + "&j_rememberme=true&xredirect=%2Fxwiki%2Fbin%2Fview%2FXWiki%2FMobileConfig%3Fxpage%3Dplain%26json%3D1%26outputSyntax%3Dplain%26deviceid%3D" + xmobile.devicetoken;
     }
 }
 

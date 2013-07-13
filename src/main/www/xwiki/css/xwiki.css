@@ -306,3 +306,7 @@ ul > li {
     padding-left: 10px;
     font-weight: bold;
 }
+
+.jqmScrollPanel {
+    height: 100%;
+}
